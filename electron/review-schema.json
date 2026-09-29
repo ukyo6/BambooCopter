@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["pass", "fail"]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": { "type": "string" },
+          "hint": { "type": "string" }
+        },
+        "required": ["message", "hint"]
+      }
+    }
+  },
+  "required": ["verdict", "summary", "issues"]
+}

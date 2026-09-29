@@ -1,0 +1,58 @@
+{
+  "name": "bamboo-copter",
+  "productName": "Bamboo Copter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LeetCode Hot 100 practice desk",
+  "main": "electron/main.js",
+  "scripts": {
+    "postinstall": "node scripts/copy-monaco.js",
+    "start": "electron .",
+    "dist": "node scripts/copy-monaco.js && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dir"
+  },
+  "build": {
+    "appId": "local.bamboo-copter",
+    "productName": "Bamboo Copter",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*",
+      "renderer/**/*",
+      "assets/**/*"
+    ],
+    "asarUnpack": [
+      "**/sql.js/dist/*.wasm"
+    ],
+    "npmRebuild": false,
+    "electronDownload": {
+      "mirror": "https://npmmirror.com/mirrors/electron/"
+    },
+    "mac": {
+      "icon": "assets/icon.png",
+      "category": "public.app-category.developer-tools",
+      "identity": null,
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^37.2.6",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.52.2",
+    "sql.js": "^1.13.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": ["html", "gif", "image", "text"]
+    },
+    "caption": {
+      "type": "string"
+    },
+    "html": {
+      "type": "string"
+    },
+    "svg": {
+      "type": "string"
+    },
+    "media": {
+      "type": "string"
+    }
+  },
+  "required": ["kind", "caption", "html", "svg", "media"]
+}
