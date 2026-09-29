@@ -29,9 +29,11 @@ jobs:
             args: --linux AppImage
     steps:
       - uses: actions/checkout@v5
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 10
+      - name: 安装 pnpm
+        shell: bash
+        run: |
+          npm install --prefix "${RUNNER_TEMP}/pnpm-bootstrap" pnpm@10
+          echo "${RUNNER_TEMP}/pnpm-bootstrap/node_modules/.bin" >> "$GITHUB_PATH"
       - uses: actions/setup-node@v7
         with:
           node-version: 22
