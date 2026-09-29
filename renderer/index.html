@@ -7,9 +7,11 @@
 </head>
 <body>
   <div id="bootSkeleton" class="boot-skeleton" aria-busy="true" aria-label="正在加载">
-    <div class="boot-mark">
-      <img class="boot-blades" src="../assets/boot-blades.png" alt="">
-      <img class="boot-body" src="../assets/boot-body.png" alt="">
+    <div class="boot-mark" aria-hidden="true">
+      <div class="boot-rotor-plane">
+        <img class="boot-blades" src="../assets/copter-rotor.png" alt="" draggable="false">
+      </div>
+      <img class="boot-body" src="../assets/copter-body.png" alt="" draggable="false">
     </div>
   </div>
   <nav class="window-nav" aria-label="窗口">
@@ -87,7 +89,7 @@
       </header>
       <div class="messages-wrap">
         <div class="chat-empty-mark" aria-hidden="true">
-          <img src="../assets/chat-empty-mark.png" alt="">
+          <img src="../assets/copter-mark.png" alt="" draggable="false">
         </div>
         <div id="messages" class="messages"></div>
       </div>
@@ -110,10 +112,10 @@
         </div>
       </form>
   </section>
-  <div id="explainPip" class="explain-pip is-closed">
+  <div id="explainPip" class="explain-pip is-closed" role="dialog" aria-label="题解动画" tabindex="-1">
     <div class="explain-pip-bar">
-      <div id="explainPipDrag" class="explain-pip-drag" title="拖动题解窗">
-        <span>题解</span>
+      <div id="explainPipDrag" class="explain-pip-drag" data-tip="拖动移动题解窗口">
+        <span id="explainTitle">题解</span>
       </div>
       <div id="explainPlayer" class="explain-player" hidden>
         <div class="explain-transport" role="group" aria-label="播放控制">
@@ -123,14 +125,9 @@
           <button id="explainReplay" class="transport-button" type="button" data-tip="重播" aria-label="重播">
             <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M8 2.4a5.6 5.6 0 1 1-4.7 2.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2.2 2.8v3.2h3.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
+          <button id="explainStep" class="transport-button transport-step" type="button" data-tip="暂停并前进到下一步" aria-label="下一步">下一步</button>
           <button id="explainRate" class="transport-button" type="button" data-tip="播放倍率 1x" aria-label="播放倍率 1x" data-rate="1">
-            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
-              <path d="M8 2.4A6.1 6.1 0 0 0 2.4 12h11.2A6.1 6.1 0 0 0 8 2.4z" fill="none" stroke="currentColor" stroke-width="1.4"/>
-              <g data-rate-needle transform="rotate(-28 8 8.2)">
-                <path d="M8 8.2 11.2 4.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                <circle cx="8" cy="8.2" r="1.2" fill="currentColor"/>
-              </g>
-            </svg>
+            <span data-rate-label>1×</span>
           </button>
         </div>
       </div>
@@ -141,8 +138,20 @@
     <div id="explainView" class="explain-pip-view">
       <div id="explainBody"></div>
     </div>
-    <div id="explainCaption" class="explain-pip-caption"></div>
-    <div id="explainPipResize" class="explain-pip-handle" title="等比例缩放"></div>
+    <div id="explainError" class="explain-error" role="status" hidden></div>
+    <details id="explainDetails" class="explain-details">
+      <summary>思路说明</summary>
+      <div id="explainCaption" class="explain-pip-caption"></div>
+    </details>
+    <div class="explain-footer">
+      <div class="explain-zoom" role="group" aria-label="题解缩放">
+        <button id="explainZoomOut" type="button" data-tip="缩小" aria-label="缩小">−</button>
+        <button id="explainZoomValue" type="button" data-tip="恢复原始大小" aria-label="恢复原始大小">100%</button>
+        <button id="explainZoomIn" type="button" data-tip="放大" aria-label="放大">+</button>
+        <button id="explainFit" type="button" data-tip="适应当前窗口" aria-label="适应窗口">适应窗口</button>
+      </div>
+      <div id="explainPipResize" class="explain-pip-handle" role="slider" tabindex="0" aria-label="拖动缩放题解" aria-valuemin="50" aria-valuemax="180" aria-valuenow="100" data-tip="拖动缩放 · 双击适应窗口" data-keys="← →"></div>
+    </div>
   </div>
   <dialog id="historyDialog">
     <div class="dialog-head">

@@ -1,0 +1,75 @@
+:root {
+  color-scheme: dark;
+  --explain-bg: #1c1c1c;
+  --explain-surface: #242526;
+  --explain-line: #373a3d;
+  --explain-text: #e2e5e8;
+  --explain-muted: #9aa1a9;
+}
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  background: var(--explain-bg) !important;
+  color: var(--explain-text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.lc-explain-content {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 16px !important;
+}
+h1, .lc-explain-content > .title {
+  margin: 0 0 8px !important;
+  color: #f0f2f4 !important;
+  font-size: 16px !important;
+  font-weight: 650 !important;
+  line-height: 1.4 !important;
+}
+.lead, .intro, .desc, .summary, .footer, .foot {
+  color: var(--explain-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.panel, .card, .metric, .stat {
+  border-color: var(--explain-line) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+.panel, .card { background-color: var(--explain-surface); }
+.panel-title, .card-title {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+}
+.mono, .array, .chars, .stack, .queue, table {
+  font-family: "SF Mono", Monaco, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+.cell, .node, .char, .num-cell {
+  font-variant-numeric: tabular-nums;
+  transition-property: background-color, border-color, color, opacity, transform;
+  transition-duration: 220ms;
+  transition-timing-function: ease-out;
+}
+.index, .idx, .marker { color: #a3a9b1; }
+.status, .rule, .formula, .explain {
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+/* 只统一文字和表面样式, 保留每道题的柱高、连线、网格与语义色. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
