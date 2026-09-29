@@ -1,7 +1,8 @@
-# 推送标签 v1.0.0 时打包并发布. 普通 push 不会触发.
+# 版本标签触发打包并发布; 手动运行仅打包验证.
 name: 发布安装包
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
@@ -23,15 +24,15 @@ jobs:
           - os: windows-latest
             label: Windows
             args: --win nsis
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             label: Linux
             args: --linux AppImage
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v5
         with:
           version: 10
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: pnpm
@@ -40,7 +41,7 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
         run: pnpm exec electron-builder ${{ matrix.args }} --publish never
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.label }}
           if-no-files-found: error
@@ -50,15 +51,16 @@ jobs:
             dist/*.AppImage
 
   publish:
-    name: 发布到 Release
+    name: 汇总安装包与发布
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           path: artifacts
           merge-multiple: true
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         with:
           files: artifacts/*
           generate_release_notes: true

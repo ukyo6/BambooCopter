@@ -4,6 +4,7 @@
   "version": "1.0.1",
   "private": true,
   "description": "LeetCode Hot 100 practice desk",
+  "author": "hewei",
   "main": "electron/main.js",
   "scripts": {
     "postinstall": "node scripts/copy-monaco.js",
@@ -40,6 +41,9 @@
           ]
         }
       ]
+    },
+    "win": {
+      "icon": "assets/icon.png"
     }
   },
   "devDependencies": {
