@@ -41,6 +41,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: 检查 Java 补全
         run: pnpm check:java
+      - name: 检查题解
+        run: node scripts/check-explains.js
       - name: 打包
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"

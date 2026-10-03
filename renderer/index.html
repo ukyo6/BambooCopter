@@ -112,44 +112,47 @@
         </div>
       </form>
   </section>
-  <div id="explainPip" class="explain-pip is-closed" role="dialog" aria-label="题解动画" tabindex="-1">
+  <div id="explainPip" class="explain-pip is-closed" role="dialog" aria-label="题解工作区" tabindex="-1">
     <div class="explain-pip-bar">
       <div id="explainPipDrag" class="explain-pip-drag" data-tip="拖动移动题解窗口">
-        <span id="explainTitle">题解</span>
+        <span class="explain-eyebrow">题解</span>
+        <span id="explainTitle">算法演示</span>
       </div>
-      <div id="explainPlayer" class="explain-player" hidden>
-        <div class="explain-transport" role="group" aria-label="播放控制">
-          <button id="explainPause" class="transport-button" type="button" data-tip="暂停" aria-label="暂停">
-            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M5 3.5h2.2v9H5zm3.8 0H11v9H8.8z" fill="currentColor"/></svg>
-          </button>
-          <button id="explainReplay" class="transport-button" type="button" data-tip="重播" aria-label="重播">
-            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M8 2.4a5.6 5.6 0 1 1-4.7 2.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2.2 2.8v3.2h3.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button id="explainStep" class="transport-button transport-step" type="button" data-tip="暂停并前进到下一步" aria-label="下一步">下一步</button>
-          <button id="explainRate" class="transport-button" type="button" data-tip="播放倍率 1x" aria-label="播放倍率 1x" data-rate="1">
-            <span data-rate-label>1×</span>
-          </button>
-        </div>
-      </div>
-      <button id="closeExplain" class="transport-button explain-close" type="button" data-tip="关闭" aria-label="关闭">
-        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M4.2 4.2 11.8 11.8M11.8 4.2 4.2 11.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <button id="explainThoughts" class="explain-header-button" type="button" aria-label="思路说明" aria-controls="explainDetails" aria-expanded="false" data-tip="查看思路说明">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 4v9M2.5 3.5c2-.8 3.5-.4 5.5.5 2-.9 3.5-1.3 5.5-.5v8c-2-.7-3.5-.3-5.5.5-2-.8-3.5-1.2-5.5-.5z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        <span>思路</span>
+      </button>
+      <button id="closeExplain" class="explain-header-button explain-close" type="button" data-tip="关闭题解" data-keys="Esc" aria-label="关闭题解">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="m4.2 4.2 7.6 7.6m0-7.6-7.6 7.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
     </div>
-    <div id="explainView" class="explain-pip-view">
-      <div id="explainBody"></div>
-    </div>
+    <div id="explainView" class="explain-pip-view"><div id="explainBody"></div></div>
     <div id="explainError" class="explain-error" role="status" hidden></div>
-    <details id="explainDetails" class="explain-details">
-      <summary>思路说明</summary>
-      <div id="explainCaption" class="explain-pip-caption"></div>
-    </details>
+    <section id="explainComplexity" class="explain-complexity" aria-label="算法复杂度" hidden>
+      <dl><div><dt>时间复杂度</dt><dd id="explainTimeComplexity"></dd></div><div><dt>空间复杂度</dt><dd id="explainSpaceComplexity"></dd></div></dl>
+      <p id="explainComplexityNote" tabindex="0" aria-label="复杂度说明"></p>
+    </section>
+    <section id="explainDetails" class="explain-details" aria-label="思路说明" hidden>
+      <div class="explain-details-head"><span>思路说明</span><button id="explainDetailsClose" type="button" aria-label="收起思路说明" data-tip="收起思路说明"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="m4.2 4.2 7.6 7.6m0-7.6-7.6 7.6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button></div>
+      <div id="explainCaption" class="explain-pip-caption" tabindex="0"></div>
+    </section>
+    <div id="explainPlayer" class="explain-player" hidden>
+      <div class="explain-transport" role="group" aria-label="播放控制">
+        <button id="explainBack" class="transport-button transport-step" type="button" data-tip="回到上一步并暂停" data-keys="←" aria-label="上一步" disabled><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>上一步</span></button>
+        <button id="explainPause" class="transport-button transport-play" type="button" data-tip="暂停" data-keys="空格" aria-label="暂停"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M5 3.5h2.2v9H5zm3.8 0H11v9H8.8z" fill="currentColor"/></svg></button>
+        <button id="explainStep" class="transport-button transport-step" type="button" data-tip="前进到下一步并暂停" data-keys="→" aria-label="下一步"><span>下一步</span><svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <div class="explain-playback-options">
+        <button id="explainReplay" class="transport-button" type="button" data-tip="从头重播" aria-label="重播"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2.4a5.6 5.6 0 1 1-4.7 2.5M2.2 2.8v3.2h3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <select id="explainRate" aria-label="播放速度" data-tip="选择播放速度" data-rate="1"><option value="0.5">0.5×</option><option value="1">1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+      </div>
+    </div>
     <div class="explain-footer">
       <div class="explain-zoom" role="group" aria-label="题解缩放">
-        <button id="explainZoomOut" type="button" data-tip="缩小" aria-label="缩小">−</button>
-        <button id="explainZoomValue" type="button" data-tip="恢复原始大小" aria-label="恢复原始大小">100%</button>
-        <button id="explainZoomIn" type="button" data-tip="放大" aria-label="放大">+</button>
-        <button id="explainFit" type="button" data-tip="适应当前窗口" aria-label="适应窗口">适应窗口</button>
+        <button id="explainZoomOut" type="button" data-tip="缩小画布" aria-label="缩小">−</button><button id="explainZoomValue" type="button" data-tip="恢复原始大小" aria-label="恢复原始大小">100%</button><button id="explainZoomIn" type="button" data-tip="放大画布" aria-label="放大">+</button>
+        <button id="explainFit" type="button" data-tip="让画布适应当前窗口" aria-label="适应窗口"><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path d="M6 2.5H2.5V6m7.5-3.5h3.5V6M2.5 10v3.5H6m7.5-3.5v3.5H10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>适应</span></button>
       </div>
+      <span id="explainPlaybackStatus" class="explain-playback-status">自动播放</span>
       <div id="explainPipResize" class="explain-pip-handle" role="slider" tabindex="0" aria-label="拖动缩放题解" aria-valuemin="50" aria-valuemax="180" aria-valuenow="100" data-tip="拖动缩放 · 双击适应窗口" data-keys="← →"></div>
     </div>
   </div>

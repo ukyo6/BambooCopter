@@ -1,10 +1,13 @@
 :root {
   color-scheme: dark;
   --explain-bg: #1c1c1c;
-  --explain-surface: #242526;
-  --explain-line: #373a3d;
-  --explain-text: #e2e5e8;
-  --explain-muted: #9aa1a9;
+  --explain-surface: #222426;
+  --explain-line: #34383c;
+  --explain-text: #dce0e4;
+  --explain-muted: #969da5;
+  --explain-accent: #9bb3c9;
+  --explain-accent-line: #637d94;
+  --explain-accent-surface: #28343e;
 }
 html, body {
   margin: 0 !important;
@@ -25,48 +28,150 @@ html, body {
   max-width: none !important;
   min-height: 0 !important;
   margin: 0 !important;
-  padding: 16px !important;
+  padding: 12px 14px !important;
 }
 h1, .lc-explain-content > .title {
-  margin: 0 0 8px !important;
-  color: #f0f2f4 !important;
-  font-size: 16px !important;
-  font-weight: 650 !important;
-  line-height: 1.4 !important;
+  margin: 0 0 6px !important;
+  color: #e8ebee !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.45 !important;
 }
-.lead, .intro, .desc, .summary, .footer, .foot {
+.lead, .intro, .desc, .summary, .subtitle, .note, .footer, .foot {
   color: var(--explain-muted);
   font-size: 12px;
   line-height: 1.6;
 }
-.panel, .card, .metric, .stat {
+.card, .metric, .stat, .work-card, .tree-card, .formula-box, .result-box {
   border-color: var(--explain-line) !important;
-  border-radius: 8px !important;
+  border-radius: 3px !important;
+  background-color: var(--explain-surface);
   box-shadow: none !important;
 }
-.panel, .card { background-color: var(--explain-surface); }
+.panel {
+  border-color: transparent !important;
+  border-top-color: var(--explain-line) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
 .panel-title, .card-title {
   font-size: 12px !important;
   font-weight: 600 !important;
-  letter-spacing: 0.02em;
+  color: #c1c8cf;
+  letter-spacing: 0;
+}
+.card-label, .index, .idx, .marker {
+  color: var(--explain-muted);
+}
+.accent, .card-value, .rule-key, .result-number,
+.status strong, .status b, .rule strong, .rule b, .rule code, .rule em,
+.formula strong, .formula b, .result strong {
+  color: var(--explain-accent);
+}
+.chain .node {
+  border-radius: 3px !important;
+  box-shadow: none !important;
+}
+.chain .value {
+  font-size: 13px;
+  font-weight: 600;
+}
+.chain .role {
+  color: var(--explain-muted);
 }
 .mono, .array, .chars, .stack, .queue, table {
   font-family: "SF Mono", Monaco, Menlo, monospace;
   font-variant-numeric: tabular-nums;
 }
-.cell, .node, .char, .num-cell {
+.cell, .node, .char, .num-cell, .num {
   font-variant-numeric: tabular-nums;
   transition-property: background-color, border-color, color, opacity, transform;
   transition-duration: 220ms;
-  transition-timing-function: ease-out;
+  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
 }
-.index, .idx, .marker { color: #a3a9b1; }
 .status, .rule, .formula, .explain {
   font-size: 12px;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
 /* 只统一文字和表面样式, 保留每道题的柱高、连线、网格与语义色. */
+.status:not(.fail), .rule, .formula, .explain, .zone {
+  border-color: transparent !important;
+  border-left-color: var(--explain-line) !important;
+  border-left-width: 1px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.link, .op, .rule-card, .rule-item {
+  border-color: var(--explain-line);
+  border-radius: 2px !important;
+  background-color: transparent;
+  box-shadow: none !important;
+}
+.result:not(.done, .done-true, .done-false) {
+  border-color: var(--explain-line) !important;
+  border-radius: 2px !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+/* 这些组合在题内表示蓝色的当前操作. 错误、成功和其他语义状态保持原色. */
+.cell:is(.active, .mid, .current, .found, .max, .changed, .target, .answer, .focus, .hot, .in, .pick, .pivot, .result, .write):not(.water, .blocked, .conflict, .correct, .missing, .mismatch),
+.node:is(.active, .current, .answer, .copy, .focus, .head, .hot, .on, .path, .queued, .returned, .shared, .visible, .visited):not(.bad, .cut, .target, .ok, .mismatch, .moved, .pre, .best),
+.char.active, .num-cell.active, .char-cell.active, .dp-cell:is(.current, .focus),
+.num.endpoint, .answer:is(.current, .found), .card.current,
+:is(.bucket, .call, .counter, .course, .frame, .letter, .number-card, .segment, .solution, .stage, .stat, .step-card, .stop, .tab, .word).active:not(.bad, .blocked, .done),
+.value-card.active:not(.bad), .house.current, .level:is(.current, .latest),
+.step:is(.active, .current, .on), .op:is(.active, .on), .link.on,
+.rule.on, .rule .on, .rule-card.on, .pills .pill:is(.active, .on),
+.result:is(.found, .latest, .ready, .show), .result-cell.filled {
+  background-color: var(--explain-accent-surface) !important;
+  border-color: var(--explain-accent-line) !important;
+  color: #e0e9f0 !important;
+  box-shadow: none !important;
+}
+/* 操作说明和编号使用同一轻强调, 避免整行成为高饱和色块. */
+.link.on, .op:is(.active, .on), .rule.on, .rule .on, .rule-card.on {
+  background-color: #232b32 !important;
+}
+.progress .dot {
+  border-radius: 2px !important;
+  border-color: var(--explain-line);
+}
+.progress .dot:is(.on, .current) {
+  background-color: var(--explain-accent-surface) !important;
+  border-color: var(--explain-accent-line) !important;
+  color: #d5e1eb !important;
+}
+.dot:is(.active, .current, .blue, .now), .progress > .pill.on {
+  background-color: var(--explain-accent-line) !important;
+  border-color: var(--explain-accent-line) !important;
+}
+.progress > .bar { background-color: var(--explain-accent-line) !important; }
+.node:is(.active, .current, .path, .child):not(.bad, .ok, .mismatch) circle {
+  fill: var(--explain-accent-surface) !important;
+  stroke: var(--explain-accent-line) !important;
+}
+
+/* SVG 的颜色位于形状本身, 与 HTML 的背景过渡分开处理. */
+svg circle, svg rect, svg path, svg line, svg text {
+  transition: fill 220ms cubic-bezier(.22, 1, .36, 1), stroke 220ms cubic-bezier(.22, 1, .36, 1), opacity 220ms ease-out;
+}
+/* 回看时保留原运行节点和闭包, 历史画面使用相同的题内样式. */
+body.lc-reviewing > :not([data-lc-history]) {
+  position: absolute !important;
+}
+body.lc-reviewing > :not([data-lc-history]),
+body.lc-reviewing > :not([data-lc-history]) * {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+[data-lc-history] *, [data-lc-history] *::before, [data-lc-history] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

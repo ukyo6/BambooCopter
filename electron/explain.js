@@ -8,6 +8,8 @@ const EXPLAIN_INSTRUCTION = [
   '为这道固定题目写一份可视化题解. 不要参考用户代码, 也不要给出完整可提交的 Java 代码.',
   '只输出 schema 要求的 JSON. 未使用的字符串字段填空字符串.',
   'caption 用 2 到 4 句中文说明思路, 不要标题党.',
+  'time_complexity 和 space_complexity 分别填演示算法的时间与辅助空间复杂度, 如 O(n). 不计可视化和播放器开销.',
+  'complexity_note 简短解释公式中的变量, 哈希平均或最坏情况, 递归栈以及结果集合是否计入空间. 数据结构需区分各操作的复杂度.',
   '按题目选一种形式:',
   '1. html: 过程会变化时用自包含 HTML 动画. html 必须是完整文档, 从 <!DOCTYPE html> 开始.',
   '只用内联 CSS 和 JS, 自动循环播放. 背景 #1c1c1c 或 #171717, 正文 #d4d4d4, 强调 #3794ff, 高亮块 #0e639c.',
@@ -15,6 +17,8 @@ const EXPLAIN_INSTRUCTION = [
   '页面宽度 100%, 目标内容宽约 640px. 中文标签. 用题目中的示例数据.',
   '优先由真实算法生成不可变的步骤快照, 再逐帧渲染. 输入、指针、临时状态、已确定结果和当前说明必须属于同一步.',
   '展示关键机制而非直接跳到答案: 回溯要显示选择与撤销, 链表要显示实际 next, 动态规划要显示候选比较与状态更新.',
+  '同一元素跨步骤应保留 DOM 身份. 新节点轻量入场, 已确认状态降低强调, 当前操作强强调; 不要每步重建整个画面或让全部元素同时闪动.',
+  '使用约 200-300ms 的 ease-out 过渡, 支持 prefers-reduced-motion. SVG 在实际图形上过渡 fill/stroke/opacity, 保留准确坐标与连线.',
   '重播必须恢复全部数据、文字、颜色、透明度与高亮. 播放、单步、倍速和缩放由外层统一控制, 页面不要重复放播放器按钮.',
   '版式必须紧凑、像桌面讲解, 不要幻灯片大卡片:',
   '- 字号: 正文 13px, 标题 16px, 卡片标签 11-12px, 卡片数值 14px, 字母/数字小字块 14-16px.',
@@ -27,7 +31,7 @@ const EXPLAIN_INSTRUCTION = [
   '不要外链, 不要网络请求, 不要 alert, 不要完整解题代码.',
   '2. image: 一张静态图就够时, svg 放完整 <svg>...</svg>, 背景 #1e1e1e, 中文标签. html 和 media 为空字符串.',
   '3. gif: 只有能给出 data:image/gif;base64 开头的内容时才用, 放在 media. 否则不要选 gif.',
-  '4. text: 确实无法画出来时才用, 只填 caption.',
+  '4. text: 确实无法画出来时才用, 填写 caption 和三个复杂度字段, html、svg、media 为空字符串.',
 ].join('\n');
 
 function buildExplainPrompt(problem, statement) {
@@ -43,6 +47,9 @@ function buildExplainPrompt(problem, statement) {
 function normalizeExplain(data) {
   const kind = KINDS.includes(data.kind) ? data.kind : 'text';
   const caption = String(data.caption || '').trim().slice(0, 2000);
+  const time_complexity = String(data.time_complexity || '').trim().slice(0, 300);
+  const space_complexity = String(data.space_complexity || '').trim().slice(0, 300);
+  const complexity_note = String(data.complexity_note || '').trim().slice(0, 1000);
   let html = String(data.html || '').trim();
   let svg = String(data.svg || '').trim();
   let media = String(data.media || '').trim();
@@ -50,12 +57,13 @@ function normalizeExplain(data) {
   if (svg.length > 120000) svg = svg.slice(0, 120000);
   if (media.length > 2000000) media = '';
   if (!caption) throw new Error('题解缺少说明文字');
+  if (!time_complexity || !space_complexity) throw new Error('题解缺少时间或空间复杂度');
   if (kind === 'html' && !/<\w+/.test(html)) throw new Error('题解缺少 HTML');
   if (kind === 'image' && !/<svg[\s>]/i.test(svg) && !/^data:image\/(png|svg\+xml|jpeg|webp)/i.test(media)) {
     throw new Error('题解缺少静态图');
   }
   if (kind === 'gif' && !/^data:image\/gif/i.test(media)) throw new Error('题解缺少 GIF');
-  return JSON.stringify({ kind, caption, html, svg, media });
+  return JSON.stringify({ kind, caption, time_complexity, space_complexity, complexity_note, html, svg, media });
 }
 
 function userDataDir() {

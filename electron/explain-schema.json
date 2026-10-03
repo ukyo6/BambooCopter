@@ -9,6 +9,15 @@
     "caption": {
       "type": "string"
     },
+    "time_complexity": {
+      "type": "string"
+    },
+    "space_complexity": {
+      "type": "string"
+    },
+    "complexity_note": {
+      "type": "string"
+    },
     "html": {
       "type": "string"
     },
@@ -19,5 +28,5 @@
       "type": "string"
     }
   },
-  "required": ["kind", "caption", "html", "svg", "media"]
+  "required": ["kind", "caption", "time_complexity", "space_complexity", "complexity_note", "html", "svg", "media"]
 }

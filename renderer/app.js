@@ -331,22 +331,26 @@ function bindExplainPip() {
   document.getElementById('explainZoomIn').onclick = () => changeExplainScale(explainScale + 0.1);
   document.getElementById('explainZoomValue').onclick = () => changeExplainScale(1);
   document.getElementById('explainFit').onclick = fitExplainWindow;
-  document.getElementById('explainDetails').addEventListener('toggle', applyPipScale);
+  document.getElementById('explainThoughts').onclick = () => setExplainThoughts(document.getElementById('explainDetails').hidden);
+  document.getElementById('explainDetailsClose').onclick = () => setExplainThoughts(false, { focus: true });
   pip.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape') return;
-    event.preventDefault();
-    setExplainOpen(false);
+    if (event.key === 'Escape') { event.preventDefault(); setExplainOpen(false); return; }
+    if (event.target?.closest?.('button,select,input,textarea,a,[role=slider],[contenteditable=true],#explainDetails,#explainComplexity')) return;
+    if (handleExplainShortcut(event.key)) event.preventDefault();
   });
   window.addEventListener('message', (event) => {
     const data = event.data;
     const frame = document.querySelector('#explainBody iframe');
     if (!data || !frame || event.source !== frame.contentWindow) return;
     if (data.lcExplainKey === 'Escape') return setExplainOpen(false);
+    if (data.lcExplainKey) return handleExplainShortcut(data.lcExplainKey);
     if (data.lcExplainPlayer === true) {
+      document.getElementById('explainBack').disabled = data.canBack !== true;
       if (data.error) {
         const error = document.getElementById('explainError');
         error.textContent = '本段演示暂时中断, 请重播后再试.';
         error.hidden = false;
+        applyPipScale();
       }
       return;
     }
@@ -400,10 +404,20 @@ function changeExplainScale(scale) {
   savePipState();
 }
 
+function explainChromeHeight() {
+  const pip = document.getElementById('explainPip');
+  return Array.from(pip.children).filter(node => node.id !== 'explainView' && !node.classList.contains('explain-pip-handle')).reduce((height, node) => height + node.offsetHeight, 2);
+}
+
 function fitExplainWindow() {
-  const captionHeight = document.getElementById('explainDetails').offsetHeight;
-  const availableHeight = window.innerHeight - captionHeight - 144;
-  changeExplainScale(Math.min(1, maxExplainScale(), availableHeight / explainNatural.height));
+  // 先按候选宽度排版说明, 再量外框, 避免窄窗口的换行使比例估算偏小.
+  explainScale = Math.min(1, maxExplainScale());
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    applyPipScale();
+    const availableHeight = window.innerHeight - explainChromeHeight() - 32;
+    explainScale = clampPip(Math.min(1, maxExplainScale(), availableHeight / explainNatural.height), minExplainScale(), maxExplainScale());
+  }
+  changeExplainScale(explainScale);
 }
 
 function defaultExplainScale() {
@@ -415,23 +429,22 @@ function applyPipScale() {
   const pip = document.getElementById('explainPip');
   const view = document.getElementById('explainView');
   const body = document.getElementById('explainBody');
-  const padX = 0;
-  const padTop = 0;
-  const padBottom = 0;
-  const captionHeight = document.getElementById('explainDetails').offsetHeight;
-  const maxHeight = Math.max(160, window.innerHeight - captionHeight - 132);
   explainScale = clampPip(explainScale, minExplainScale(), maxExplainScale());
   const width = Math.round(explainNatural.width * explainScale);
   const height = Math.round(explainNatural.height * explainScale);
-  pip.style.width = `${width + padX * 2}px`;
-  view.style.width = `${width + padX * 2}px`;
-  view.style.height = `${Math.min(height, maxHeight) + padTop + padBottom}px`;
-  view.style.padding = `${padTop}px ${padX}px ${padBottom}px`;
+  const shellWidth = Math.max(340, width);
+  pip.style.width = `${shellWidth}px`;
+  pip.classList.toggle('is-compact', shellWidth < 520);
+  const maxHeight = Math.max(100, window.innerHeight - explainChromeHeight() - 32);
+  view.style.width = '100%';
+  view.style.height = `${Math.min(height, maxHeight)}px`;
+  view.style.padding = '0';
   view.style.overflowX = 'hidden';
   view.style.overflowY = 'auto';
   body.style.width = `${explainNatural.width}px`;
   body.style.height = `${explainNatural.height}px`;
   body.style.margin = '0';
+  body.style.marginLeft = `${Math.max(0, (shellWidth - width) / 2)}px`;
   body.style.zoom = '1';
   body.style.transform = explainScale === 1 ? 'none' : `scale(${explainScale})`;
   body.style.transformOrigin = 'top left';
@@ -693,8 +706,13 @@ function bindControls() {
   document.getElementById('explainReplay').onclick = () => {
     const frame = document.querySelector('#explainBody iframe');
     setExplainPaused(false);
+    document.getElementById('explainBack').disabled = true;
     document.getElementById('explainError').hidden = true;
     if (frame && currentExplainHtml) frame.srcdoc = currentExplainHtml;
+  };
+  document.getElementById('explainBack').onclick = () => {
+    setExplainPaused(true);
+    postExplainPlayer({ type: 'lc-player', action: 'back' });
   };
   document.getElementById('explainStep').onclick = () => {
     setExplainPaused(true);
@@ -1232,6 +1250,56 @@ function setExplainOpen(open) {
   else if (document.getElementById('explainPip').contains(document.activeElement)) button.focus({ preventScroll: true });
 }
 
+function handleExplainShortcut(key) {
+  const pip = document.getElementById('explainPip');
+  if (pip.classList.contains('is-closed') || document.getElementById('explainPlayer').hidden) return false;
+  const action = { ' ': 'explainPause', ArrowLeft: 'explainBack', ArrowRight: 'explainStep' }[key];
+  if (!action) return false;
+  const button = document.getElementById(action);
+  if (!button.disabled) button.click();
+  return true;
+}
+
+function setExplainThoughts(open, { focus = false, persist = true } = {}) {
+  const button = document.getElementById('explainThoughts');
+  const expanded = !!open && !button.disabled;
+  document.getElementById('explainDetails').hidden = !expanded;
+  button.setAttribute('aria-expanded', String(expanded));
+  setControlTip(button, expanded ? '收起思路说明' : '查看思路说明');
+  if (persist) localStorage.setItem('lc-explain-details-open', expanded ? '1' : '0');
+  applyPipScale();
+  clampPipPosition();
+  if (focus) button.focus({ preventScroll: true });
+}
+
+function renderExplainCaption(text) {
+  const caption = document.getElementById('explainCaption');
+  caption.replaceChildren();
+  const paragraphs = String(text || '').trim().split(/(?<=[。！？])\s*|\n+/).filter(Boolean);
+  const terms = /(?:prev\.next(?:\.next)?|dummy\.next|O\([^)]+\)|\b(?:dummy|prev|first|second|head|next)\b)/g;
+  for (const paragraph of paragraphs) {
+    const row = document.createElement('p');
+    let start = 0;
+    for (const match of paragraph.matchAll(terms)) {
+      row.append(document.createTextNode(paragraph.slice(start, match.index)));
+      const code = document.createElement('code'); code.textContent = match[0]; row.append(code);
+      start = match.index + match[0].length;
+    }
+    row.append(document.createTextNode(paragraph.slice(start))); caption.append(row);
+  }
+  document.getElementById('explainThoughts').disabled = !paragraphs.length;
+  setExplainThoughts(paragraphs.length && localStorage.getItem('lc-explain-details-open') === '1', { persist: false });
+}
+
+function renderExplainComplexity(data = {}) {
+  const time = String(data.time_complexity || '').trim();
+  const space = String(data.space_complexity || '').trim();
+  document.getElementById('explainTimeComplexity').textContent = time;
+  document.getElementById('explainSpaceComplexity').textContent = space;
+  document.getElementById('explainComplexityNote').textContent = String(data.complexity_note || '').trim();
+  document.getElementById('explainComplexity').hidden = !time || !space;
+}
+
 function syncExplainPlayback() {
   const hidden = document.getElementById('explainPip').classList.contains('is-closed');
   const paused = document.getElementById('explainPause').dataset.paused === '1';
@@ -1242,15 +1310,13 @@ function renderExplain(body) {
   clearInterval(stepTimer);
   explainMeasured = false;
   document.getElementById('explainError').hidden = true;
-  document.getElementById('explainTitle').textContent = `题解 · ${document.getElementById('problemTitle').textContent}`;
+  document.getElementById('explainTitle').textContent = document.getElementById('problemTitle').textContent || '算法演示';
   setExplainPlayer(false);
   const root = document.getElementById('explainBody');
   root.replaceChildren();
-  const caption = document.getElementById('explainCaption');
-  const details = document.getElementById('explainDetails');
-  details.hidden = true;
+  renderExplainCaption('');
+  renderExplainComplexity();
   if (!body) {
-    caption.textContent = '';
     root.textContent = '本题暂无题解.';
     rememberVisualSize(360, 96);
     return;
@@ -1259,18 +1325,16 @@ function renderExplain(body) {
   try {
     data = JSON.parse(body);
   } catch {
-    caption.textContent = '';
     root.textContent = body;
     rememberVisualSize(360, 120);
     return;
   }
+  renderExplainComplexity(data);
   if (data.mode) {
-    caption.textContent = '';
     renderLegacyExplain(root, data);
     return;
   }
-  caption.textContent = data.caption || '';
-  details.hidden = !caption.textContent;
+  renderExplainCaption(data.caption);
   if ((data.kind === 'html' && data.html) || (data.kind === 'image' && data.svg)) {
     explainNatural = { width: 640, height: 320 };
     const saved = loadPipState();
@@ -1329,6 +1393,7 @@ function renderLegacyExplain(root, data) {
 function setExplainPlayer(visible) {
   const player = document.getElementById('explainPlayer');
   player.hidden = !visible;
+  document.getElementById('explainBack').disabled = true;
   setExplainPaused(false);
   setExplainRate(Number(localStorage.getItem('lc-explain-rate')) || 1, { notify: false });
   if (!visible) currentExplainHtml = '';
@@ -1336,9 +1401,12 @@ function setExplainPlayer(visible) {
 
 function setExplainPaused(paused) {
   const button = document.getElementById('explainPause');
-  const tip = paused ? '继续' : '暂停';
+  const tip = paused ? '继续播放' : '暂停';
   button.dataset.paused = paused ? '1' : '0';
   button.setAttribute('aria-pressed', String(paused));
+  const status = document.getElementById('explainPlaybackStatus');
+  status.textContent = document.getElementById('explainPlayer').hidden ? '静态题解' : paused ? '已暂停' : '自动播放';
+  status.classList.toggle('is-paused', paused || document.getElementById('explainPlayer').hidden);
   setControlTip(button, tip);
   const icon = button.querySelector('svg');
   if (icon) {
@@ -1370,51 +1438,21 @@ function explainRateValue() {
   return normalizeExplainRate(button?.dataset.rate);
 }
 
-function setExplainRate(rate, { notify = true, flash = false } = {}) {
+function setExplainRate(rate, { notify = true } = {}) {
   const next = normalizeExplainRate(rate);
-  const button = document.getElementById('explainRate');
-  const tip = `播放速度 ${next}× · 点击切换`;
-  button.dataset.rate = String(next);
-  setControlTip(button, tip);
-  button.querySelector('[data-rate-label]').textContent = `${next}×`;
+  const control = document.getElementById('explainRate');
+  control.dataset.rate = String(next);
+  control.value = String(next);
+  setControlTip(control, `播放速度 ${next}×`);
   localStorage.setItem('lc-explain-rate', String(next));
-  if (flash) {
-    button.classList.remove('is-rate-flash');
-    void button.offsetWidth;
-    button.classList.add('is-rate-flash');
-    clearTimeout(button._rateFlashTimer);
-    button._rateFlashTimer = setTimeout(() => button.classList.remove('is-rate-flash'), 180);
-  }
   if (notify) postExplainPlayer({ type: 'lc-player', action: 'rate', rate: next });
   return next;
 }
 
-function cycleExplainRate() {
-  const current = explainRateValue();
-  const index = Math.max(0, EXPLAIN_RATES.indexOf(current));
-  const next = EXPLAIN_RATES[(index + 1) % EXPLAIN_RATES.length];
-  return setExplainRate(next, { notify: false, flash: true });
-}
-
-function activateExplainRate(event) {
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-  const next = cycleExplainRate();
-  postExplainPlayer({ type: 'lc-player', action: 'rate', rate: next });
-}
-
 function bindExplainRateButton() {
-  const button = document.getElementById('explainRate');
-  button.addEventListener('pointerdown', (event) => {
-    event.stopPropagation();
-  });
-  button.onclick = (event) => activateExplainRate(event);
-  for (const id of ['explainPause', 'explainReplay', 'explainStep', 'closeExplain']) {
-    document.getElementById(id).addEventListener('pointerdown', (event) => {
-      event.stopPropagation();
-    });
+  document.getElementById('explainRate').onchange = event => setExplainRate(event.target.value);
+  for (const id of ['explainPause', 'explainReplay', 'explainBack', 'explainStep', 'explainThoughts', 'closeExplain', 'explainRate']) {
+    document.getElementById(id).addEventListener('pointerdown', event => event.stopPropagation());
   }
 }
 
