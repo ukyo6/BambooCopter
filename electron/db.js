@@ -76,15 +76,51 @@ async function openDatabase(file) {
       slug TEXT NOT NULL,
       role TEXT NOT NULL,
       body TEXT NOT NULL,
-      created_at INTEGER NOT NULL
+      created_at INTEGER NOT NULL,
+      kind TEXT NOT NULL DEFAULT 'chat'
     );
     CREATE TABLE IF NOT EXISTS settings (
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL
     );
   `);
+  if (!all('PRAGMA table_info(messages)').some((column) => column.name === 'kind')) {
+    db.run("ALTER TABLE messages ADD COLUMN kind TEXT NOT NULL DEFAULT 'chat'");
+    markLegacyReviewMessages();
+  }
   persist();
   return { all, run, runQuiet, flush: persist, getSetting, setSetting };
+}
+
+function markLegacyReviewMessages() {
+  const submissions = all('SELECT slug, created_at, verdict, summary, issues_json FROM submissions ORDER BY slug, id');
+  for (let index = 0; index < submissions.length; index += 1) {
+    const submission = submissions[index];
+    const next = submissions[index + 1];
+    const nextTime = next?.slug === submission.slug ? next.created_at : null;
+    let issues;
+    try {
+      issues = JSON.parse(submission.issues_json || '[]');
+      if (!Array.isArray(issues)) continue;
+    } catch {
+      continue;
+    }
+    const verdict = submission.verdict === 'pass' ? '可以通过' : '不能通过';
+    const lines = [`判断: ${verdict}`, submission.summary || ''];
+    for (const issue of issues) {
+      if (!issue || typeof issue !== 'object') continue;
+      lines.push(`- ${issue.message} 提示: ${issue.hint}`);
+    }
+    const body = lines.filter(Boolean).join('\n');
+    // 只匹配旧提交后紧邻的完整正文, 保留有歧义或仅包含判断字样的普通问答.
+    const matches = all(
+      `SELECT id FROM messages WHERE slug = ? AND role = 'assistant' AND kind = 'chat'
+       AND body = ? AND created_at >= ? AND created_at <= ?
+       AND (? IS NULL OR created_at < ?)`,
+      [submission.slug, body, submission.created_at, submission.created_at + 5000, nextTime, nextTime],
+    );
+    if (matches.length === 1) db.run("UPDATE messages SET kind = 'review' WHERE id = ?", [matches[0].id]);
+  }
 }
 
 function getSetting(key) {

@@ -4,6 +4,9 @@ const difficultyClass = { EASY: 'diff-easy', MEDIUM: 'diff-medium', HARD: 'diff-
 const verdictLabel = { pass: '可以通过', fail: '不能通过', uncertain: '不确定' };
 
 let editor;
+let historyEditor;
+let historyDecorations = [];
+let historyRequest = 0;
 let problems = [];
 let currentSlug = '';
 let currentJavaTemplate = '';
@@ -737,6 +740,8 @@ function bindControls() {
     const input = document.getElementById('chatInput');
     const text = input.value.trim();
     if (!text || !currentSlug || busy) return;
+    const slug = currentSlug;
+    const code = editor.getValue();
     input.value = '';
     resizeComposer();
     appendChatMessage('user', text);
@@ -744,9 +749,9 @@ function bindControls() {
     scrollChatToEnd();
     await withStatus('正在回复', async () => {
       try {
-        const result = await window.lc.sendChat({ slug: currentSlug, code: editor.getValue(), text });
+        const result = await window.lc.sendChat({ slug, code, text });
         if (!result.ok) throw new Error(result.error || '发送失败');
-        await loadChat(currentSlug);
+        if (currentSlug === slug) await loadChat(slug);
       } catch (error) {
         if (pending.isConnected) {
           const body = pending.querySelector('.message-body');
@@ -1157,7 +1162,7 @@ function launchFireworks(parent) {
   requestAnimationFrame(frame);
 }
 
-function playVerdictToast(verdict, { detail = false } = {}) {
+function playVerdictToast(verdict, { detail = false, onDetail } = {}) {
   document.querySelector('.verdict-layer')?.remove();
   const pass = verdict === 'pass';
   const uncertain = verdict === 'uncertain';
@@ -1179,12 +1184,10 @@ function playVerdictToast(verdict, { detail = false } = {}) {
     const more = document.createElement('button');
     more.type = 'button';
     more.className = 'verdict-more';
-    more.textContent = '点击查看详细失败原因';
+    more.textContent = '查看提交记录';
     more.addEventListener('click', () => {
-      setChatOpen(true);
-      const root = document.getElementById('messages');
-      if (root) root.scrollTop = root.scrollHeight;
-      layer.remove();
+      dismiss(true);
+      if (onDetail) onDetail();
     });
     hit.appendChild(more);
   }
@@ -1194,11 +1197,11 @@ function playVerdictToast(verdict, { detail = false } = {}) {
   const life = reduced ? 1600 : pass ? 2600 : 3800;
   let timer = 0;
   let removed = false;
-  const dismiss = () => {
+  const dismiss = (immediate = false) => {
     if (removed) return;
     removed = true;
     clearTimeout(timer);
-    if (reduced) {
+    if (reduced || immediate) {
       layer.remove();
       return;
     }
@@ -1206,30 +1209,38 @@ function playVerdictToast(verdict, { detail = false } = {}) {
     setTimeout(() => layer.remove(), 340);
   };
   const arm = (ms) => {
+    if (removed) return;
     clearTimeout(timer);
     timer = setTimeout(dismiss, ms);
   };
   arm(life);
+  layer.addEventListener('click', () => dismiss(true));
   hit.addEventListener('pointerenter', () => clearTimeout(timer));
   hit.addEventListener('pointerleave', () => arm(900));
 }
 
 async function submitReview() {
   if (!currentSlug || busy) return;
+  const slug = currentSlug;
+  const code = editor.getValue();
   const button = document.getElementById('reviewCode');
   button.classList.add('is-loading');
   button.setAttribute('aria-busy', 'true');
   try {
-    await saveDraft();
     await withStatus('', async () => {
-      const result = await window.lc.submitReview({ slug: currentSlug, code: editor.getValue() });
+      clearTimeout(saveTimer);
+      await window.lc.saveDraft(slug, code);
+      const result = await window.lc.submitReview({ slug, code });
       if (!result.ok) throw new Error(result.error);
-      await loadChat(currentSlug);
       await loadBoard();
       const review = result.data;
       const hasReason = Boolean((review.summary || '').trim()) || (review.issues || []).length > 0;
+      if (currentSlug !== slug) return;
       setStatus(verdictLabel[review.verdict] || '已记录');
-      playVerdictToast(review.verdict, { detail: review.verdict !== 'pass' && hasReason });
+      playVerdictToast(review.verdict, {
+        detail: review.verdict !== 'pass' && hasReason,
+        onDetail: () => openHistory({ slug, submissionId: review.submissionId }),
+      });
     });
   } finally {
     button.classList.remove('is-loading');
@@ -1585,7 +1596,7 @@ function appendChatMessage(role, bodyText, createdAt = Date.now()) {
   item.className = `message ${role === 'user' ? 'user' : 'assistant'}`;
   const body = document.createElement('div');
   body.className = 'message-body';
-  fillMessageBody(body, bodyText, { collapsible: role === 'assistant' });
+  fillMessageBody(body, bodyText);
   const time = document.createElement('time');
   time.className = 'message-time';
   time.dateTime = new Date(Number(createdAt)).toISOString();
@@ -1614,6 +1625,7 @@ function appendPendingAssistant() {
 
 async function loadChat(slug) {
   const result = await window.lc.listChat(slug);
+  if (currentSlug !== slug) return;
   const root = document.getElementById('messages');
   root.innerHTML = '';
   if (!result.ok) {
@@ -1621,57 +1633,196 @@ async function loadChat(slug) {
     return;
   }
   for (const message of result.data) {
+    if (message.kind === 'review') continue;
     appendChatMessage(message.role === 'user' ? 'user' : 'assistant', message.body, message.created_at);
   }
   scrollChatToEnd();
 }
 
-async function openHistory() {
-  if (!currentSlug) return;
-  const result = await window.lc.listHistory(currentSlug);
+function ensureHistoryEditor() {
+  if (historyEditor) return historyEditor;
+  historyEditor = monaco.editor.create(document.getElementById('historyCode'), {
+    value: '',
+    language: 'java',
+    theme: 'lc-codex',
+    readOnly: true,
+    domReadOnly: true,
+    ariaLabel: '本次提交的 Java 代码, 只读',
+    fontSize: 13,
+    fontFamily: '"SF Mono", Monaco, Menlo, Courier, monospace',
+    lineNumbers: 'on',
+    minimap: { enabled: false },
+    automaticLayout: true,
+    tabSize: 4,
+    scrollBeyondLastLine: false,
+    renderLineHighlight: 'none',
+    padding: { top: 12, bottom: 12 },
+    overviewRulerLanes: 0,
+    hideCursorInOverviewRuler: true,
+    folding: false,
+    renderValidationDecorations: 'on',
+    scrollbar: { verticalScrollbarSize: 6, horizontalScrollbarSize: 6 },
+  });
+  return historyEditor;
+}
+
+function disposeHistoryEditor() {
+  if (!historyEditor) return;
+  const model = historyEditor.getModel();
+  historyEditor.dispose();
+  model?.dispose();
+  historyEditor = undefined;
+  historyDecorations = [];
+}
+
+function showHistoryState(text) {
+  const state = document.getElementById('historyEmpty');
+  state.textContent = text;
+  state.hidden = false;
+  document.getElementById('historyResult').hidden = true;
+  document.getElementById('historyCode').hidden = true;
+  disposeHistoryEditor();
+}
+
+function renderHistoryItem(item) {
+  document.getElementById('historyEmpty').hidden = true;
+  document.getElementById('historyResult').hidden = false;
+  document.getElementById('historyCode').hidden = false;
+  const view = ensureHistoryEditor();
+  view.setValue(String(item.code || ''));
+  view.setScrollTop(0);
+  view.setScrollLeft(0);
+  const verdict = document.getElementById('historyVerdict');
+  verdict.className = item.verdict || '';
+  verdict.textContent = verdictLabel[item.verdict] || '已记录';
+  const time = document.getElementById('historyTime');
+  const date = new Date(Number(item.created_at));
+  time.textContent = Number.isNaN(date.getTime()) ? '' : date.toLocaleString();
+  if (!Number.isNaN(date.getTime())) time.dateTime = date.toISOString();
+  const summary = document.getElementById('historySummary');
+  summary.textContent = item.summary || '';
+  summary.hidden = !summary.textContent;
+  const issues = BambooReviewUtils.normalizeIssues(parseIssues(item.issues_json), item.code || '');
+  const list = document.getElementById('historyIssues');
+  list.replaceChildren();
+  list.hidden = issues.length === 0;
+  const markers = [];
+  const decorations = [];
+  for (const issue of issues) {
+    const row = document.createElement('li');
+    row.className = 'history-issue';
+    const located = issue.line_start > 0;
+    const location = document.createElement(located ? 'button' : 'span');
+    location.className = located ? 'history-line-link' : 'history-line-unknown';
+    location.textContent = located
+      ? issue.line_end > issue.line_start ? `第 ${issue.line_start}–${issue.line_end} 行` : `第 ${issue.line_start} 行`
+      : '未定位具体行';
+    if (located) {
+      location.type = 'button';
+      location.setAttribute('aria-label', `${location.textContent}, 定位错误代码`);
+      location.onclick = () => {
+        view.revealLineInCenter(issue.line_start, monaco.editor.ScrollType.Smooth);
+        view.setSelection(new monaco.Range(issue.line_start, 1, issue.line_end, view.getModel().getLineMaxColumn(issue.line_end)));
+        view.focus();
+      };
+      markers.push({
+        startLineNumber: issue.line_start,
+        endLineNumber: issue.line_end,
+        startColumn: 1,
+        endColumn: view.getModel().getLineMaxColumn(issue.line_end),
+        severity: item.verdict === 'fail' ? monaco.MarkerSeverity.Error : monaco.MarkerSeverity.Warning,
+        message: `${issue.message}${issue.hint ? `\n提示: ${issue.hint}` : ''}`,
+      });
+      decorations.push({
+        range: new monaco.Range(issue.line_start, 1, issue.line_end, 1),
+        options: { isWholeLine: true, className: 'history-error-line', linesDecorationsClassName: 'history-error-gutter' },
+      });
+    }
+    const message = document.createElement('p');
+    message.textContent = issue.message;
+    row.append(location, message);
+    if (issue.hint) {
+      const hint = document.createElement('p');
+      hint.className = 'history-issue-hint';
+      hint.textContent = `提示: ${issue.hint}`;
+      row.append(hint);
+    }
+    list.append(row);
+  }
+  monaco.editor.setModelMarkers(view.getModel(), 'submission-review', markers);
+  historyDecorations = view.deltaDecorations(historyDecorations, decorations);
+  requestAnimationFrame(() => {
+    if (historyEditor === view) view.layout();
+  });
+}
+
+async function openHistory({ slug = currentSlug, submissionId } = {}) {
+  if (!slug) return;
+  const request = ++historyRequest;
   const list = document.getElementById('historyList');
-  const code = document.getElementById('historyCode');
-  list.innerHTML = '';
-  code.textContent = '';
+  list.replaceChildren();
+  showHistoryState('正在加载提交记录');
+  const problem = problems.find(item => item.slug === slug);
+  document.getElementById('historyTitle').textContent = problem ? `提交记录 · ${problem.translated_title || problem.title}` : '提交记录';
+  const dialog = document.getElementById('historyDialog');
+  dialog.classList.remove('is-closing');
+  if (!dialog.open) dialog.showModal();
+  let result;
+  try {
+    result = await window.lc.listHistory(slug);
+  } catch (error) {
+    if (request === historyRequest && dialog.open) showHistoryState(error.message || '加载提交记录失败');
+    return;
+  }
+  if (request !== historyRequest || !dialog.open) return;
   if (!result.ok) {
-    code.textContent = result.error;
+    showHistoryState(result.error || '加载提交记录失败');
   } else if (result.data.length === 0) {
-    code.textContent = '这道题还没有提交记录';
+    showHistoryState('这道题还没有提交记录');
   } else {
+    let selected;
     for (const item of result.data) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'history-item';
-      const time = new Date(item.created_at).toLocaleString();
-      button.innerHTML = `<div>${time}</div><div class="${item.verdict || ''}">${verdictLabel[item.verdict] || ''}</div>`;
+      const time = document.createElement('time');
+      time.textContent = new Date(Number(item.created_at)).toLocaleString();
+      const label = document.createElement('span');
+      label.className = item.verdict || '';
+      label.textContent = verdictLabel[item.verdict] || '已记录';
+      button.append(time, label);
       button.onclick = () => {
-        for (const child of list.children) child.classList.remove('active');
+        for (const child of list.children) {
+          child.classList.remove('active');
+          child.setAttribute('aria-pressed', 'false');
+        }
         button.classList.add('active');
-        const issues = parseIssues(item.issues_json);
-        const hint = issues.map((issue) => `- ${issue.message} 提示: ${issue.hint}`).join('\n');
-        code.textContent = `${item.summary || ''}\n${hint}\n\n${item.code}`;
+        button.setAttribute('aria-pressed', 'true');
+        renderHistoryItem(item);
       };
+      button.setAttribute('aria-pressed', 'false');
       list.appendChild(button);
+      if (String(item.id) === String(submissionId)) selected = button;
     }
-    list.firstChild.click();
+    (selected || list.firstChild).click();
   }
-  const dialog = document.getElementById('historyDialog');
-  dialog.classList.remove('is-closing');
-  dialog.showModal();
 }
 
 function closeHistoryDialog() {
   const dialog = document.getElementById('historyDialog');
   if (!dialog.open || dialog.classList.contains('is-closing')) return;
+  const closingRequest = ++historyRequest;
   dialog.classList.add('is-closing');
   const finish = () => {
     dialog.removeEventListener('transitionend', onEnd);
     clearTimeout(fallback);
+    if (historyRequest !== closingRequest || !dialog.classList.contains('is-closing')) return;
     if (!dialog.open) {
       dialog.classList.remove('is-closing');
       return;
     }
     dialog.close();
+    disposeHistoryEditor();
     dialog.classList.remove('is-closing');
   };
   const onEnd = (event) => {

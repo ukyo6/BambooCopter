@@ -12,6 +12,7 @@ const {
   reviewSchema,
 } = require('./agent');
 const { explainFile, presentExplain } = require('./explain');
+const { numberCode, normalizeReview } = require('../renderer/review-utils');
 
 nativeTheme.themeSource = 'dark';
 
@@ -286,7 +287,7 @@ function readExplain(slug) {
 
 function addMessage(slug, role, body) {
   api.run(
-    'INSERT INTO messages(slug, role, body, created_at) VALUES(?, ?, ?, ?)',
+    "INSERT INTO messages(slug, role, body, created_at, kind) VALUES(?, ?, ?, ?, 'chat')",
     [slug, role, body, Date.now()],
   );
 }
@@ -299,8 +300,8 @@ function contextPrompt(problem, code, instruction) {
     `难度: ${problem.difficulty}`,
     '题面:',
     statement || '(题面尚未加载)',
-    '当前 Java 代码:',
-    code || '(空)',
+    '当前 Java 代码 (左侧为原始行号, 空行也计数, 行号和竖线不属于代码):',
+    code ? numberCode(code) : '(空)',
   ].join('\n\n');
 }
 
@@ -334,7 +335,7 @@ app.whenReady().then(async () => {
     [slug],
   ));
   handle('chat:list', ({ slug }) => api.all(
-    'SELECT id, role, body, created_at FROM messages WHERE slug = ? ORDER BY id',
+    "SELECT id, role, body, created_at FROM messages WHERE slug = ? AND kind = 'chat' ORDER BY id",
     [slug],
   ));
   handle('chat:send', async ({ slug, code, text }) => {
@@ -342,12 +343,12 @@ app.whenReady().then(async () => {
     const { link, model, reasoning, fast } = await requireAgent();
     addMessage(slug, 'user', text);
     const history = api.all(
-      'SELECT role, body FROM messages WHERE slug = ? ORDER BY id DESC LIMIT 8',
+      "SELECT role, body FROM messages WHERE slug = ? AND kind = 'chat' ORDER BY id DESC LIMIT 8",
       [slug],
     ).reverse();
     const transcript = history.map((item) => `${item.role === 'user' ? '用户' : '助手'}: ${item.body}`).join('\n');
     const prompt = [
-      contextPrompt(problem, code, '你在 Bamboo Copter 里协助用户写这道 Hot 100. 用中文回答. 用户没有要求时不要直接给出完整正确代码, 先给提示.'),
+      contextPrompt(problem, code, '你在 Bamboo Copter 里协助用户写这道 Hot 100. 用中文回答. 用户没有要求时不要直接给出完整正确代码, 先给提示. 指出代码错误时引用当前代码的原始行号和对应片段. 无法定位或无法确认时明确说明, 不要编造行号.'),
       '最近对话:',
       transcript,
     ].join('\n\n');
@@ -361,21 +362,16 @@ app.whenReady().then(async () => {
     const prompt = contextPrompt(
       problem,
       code,
-      '你是算法题评审. 判断这份 Java 代码能否通过该题的全部测试用例. verdict 只能是 pass 或 fail, 必须二选一. 不能确认会通过全部用例时判 fail, 并把原因写进 issues. 不要给出完整正确代码. 不要运行命令. 只输出 schema 要求的 JSON.',
+      '你是算法题评审. 判断这份 Java 代码能否通过该题的全部测试用例. verdict 只能是 pass 或 fail, 必须二选一. 不能确认会通过全部用例时判 fail, 并把原因写进 issues. 不要给出完整正确代码. 不要运行命令. 每条 issue 的 line_start 和 line_end 为当前代码原始行号, 从 1 开始, code_excerpt 必须逐字引用对应代码片段, 不包含行号前缀. 范围必须准确覆盖片段. 无法定位的整体逻辑问题使用 line_start=0,line_end=0,code_excerpt=空字符串, 不要编造行号. message 和 hint 不重复写行号. 只输出 schema 要求的 JSON.',
     );
     const text = await complete(link, { model, reasoning, fast, prompt, schema: reviewSchema, timeoutMs: 180000 });
-    const review = parseJsonText(text);
-    if (review.verdict !== 'pass') review.verdict = 'fail';
+    const review = normalizeReview(parseJsonText(text), code);
     api.run(
       'INSERT INTO submissions(slug, code, created_at, verdict, summary, issues_json, provider, model) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
       [slug, code, Date.now(), review.verdict, review.summary, JSON.stringify(review.issues || []), link.id, model],
     );
-    const lines = [`判断: ${labelVerdict(review.verdict)}`, review.summary || ''];
-    for (const issue of review.issues || []) {
-      lines.push(`- ${issue.message} 提示: ${issue.hint}`);
-    }
-    addMessage(slug, 'assistant', lines.filter(Boolean).join('\n'));
-    return review;
+    const submissionId = api.all('SELECT id FROM submissions ORDER BY id DESC LIMIT 1')[0].id;
+    return { ...review, submissionId };
   });
   if (process.platform === 'darwin' && app.dock) {
     app.dock.setIcon(path.join(__dirname, '..', 'assets', 'icon.png'));
@@ -416,11 +412,6 @@ function practiceBoard() {
     bySlug,
     passed,
   };
-}
-
-function labelVerdict(verdict) {
-  if (verdict === 'pass') return '可以通过';
-  return '不能通过';
 }
 
 app.on('window-all-closed', () => {

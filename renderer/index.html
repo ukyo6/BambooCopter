@@ -158,17 +158,26 @@
   </div>
   <dialog id="historyDialog">
     <div class="dialog-head">
-      <strong>提交记录</strong>
+      <strong id="historyTitle">提交记录</strong>
       <button id="closeHistory" class="icon-button" type="button" data-tip="关闭" aria-label="关闭">关闭</button>
     </div>
     <div class="history-layout">
-      <div id="historyList" class="history-list"></div>
-      <pre id="historyCode"></pre>
+      <div id="historyList" class="history-list" aria-label="历史提交"></div>
+      <section class="history-detail" aria-label="提交详情">
+        <div id="historyEmpty" class="history-empty" role="status">正在加载提交记录</div>
+        <div id="historyResult" class="history-result" hidden>
+          <div class="history-result-head"><strong id="historyVerdict"></strong><time id="historyTime"></time></div>
+          <p id="historySummary"></p>
+          <ul id="historyIssues" class="history-issues"></ul>
+        </div>
+        <div id="historyCode" class="history-code" hidden aria-label="本次提交的 Java 代码"></div>
+      </section>
     </div>
   </dialog>
   <script src="vendor/vs/loader.js"></script>
   <script src="java-library.js"></script>
   <script src="java-complete.js"></script>
+  <script src="review-utils.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
