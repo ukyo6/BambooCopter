@@ -1,0 +1,19 @@
+{
+  "order": 74,
+  "title": "数组中的第K个最大元素",
+  "slug": "kth-largest-element-in-an-array",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"74  数组中的第 K 个最大元素\". Subtitle \"快速选择只追踪目标所在的一侧\". Input \"nums=[3,2,1,5,6,4], k=2\". Explain \"升序目标下标 t=n-k=4\". Main three six-cell array states with separateindexes0-5: original[3,2,1,5,6,4], pivot4 atindex5; afterpartition[3,2,1,4,6,5], pivot4atindex3; thenpartitionrightindices4-5 withpivot5 gives[3,2,1,4,5,6], pivot5atindex4. Accurate swap arrows originalindex3/value5↔index5/value4 for firstpartition; secondindex4/value6↔index5/value5. Step2 \"枢轴下标3<目标4, 仅保留右区间[4,5]\". Step3 \"枢轴下标4=目标4, 返回5\". First prefix need not sorted [3,2,1]. Rule \"小于枢轴的移左侧; 分区后枢轴位置确定; 重复值也计入排名\". Footer \"随机枢轴期望时间 O(n), 最坏 O(n²)    辅助空间 O(1)\" \"n为数组长度, 迭代式原地分区; 示例固定末尾枢轴便于复算\". Do not claim deterministic worst-case linear.",
+  "edits": [],
+  "review": {
+    "example": "[3,2,1,5,6,4],k=2转换目标升序下标4, 返回5.",
+    "steps": "第一次枢轴4分区后[3,2,1,4,6,5], 枢轴下标3, 保留[4,5]. 第二次枢轴5交换后[3,2,1,4,5,6], 枢轴下标4命中. 未把小值区误画成已排序.",
+    "complexity": "随机枢轴迭代快速选择期望O(n), 最坏O(n²), 原地辅助空间O(1). 示例固定末尾用于复算, 不保证最坏线性.",
+    "text": "两次分区的6格及下标准确, 交换箭头实际关联3↔5、4↔5, 第一次小值区[3,2,1]未误称排序. n-k=4、返回数值5及期望/最坏复杂度均可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "66a9d40ad0bcfa303f1bc9d37d2495158995a3d1a73591eb577f41a7e3ecfa7f",
+  "sourceFile": "exec-78a070b4-1945-49c1-8c8a-ea383e67a61e.png"
+}

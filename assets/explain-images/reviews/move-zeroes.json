@@ -1,0 +1,18 @@
+{
+  "order": 4,
+  "title": "移动零",
+  "slug": "move-zeroes",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"04  移动零\". Subtitle: \"先压缩非零元素，再把尾部补零\".\nInput: \"nums = [0, 1, 0, 3, 12]\". Indices 0,1,2,3,4.\nStep 1 diagram: two pointers with explicit meanings, \"read：检查当前元素\", \"write：下一个非零数的落点\". Zero skips, nonzero gets written in scan order 1 then3 then12. Draw direct accurate arrows from original indexes1,3,4 to new indexes0,1,2.\nStep 2 draw THREE intermediate array rows accurately: after writing1: [1,1,0,3,12], confirmed prefix only index0; after writing3: [1,3,0,3,12], confirmed prefix indexes0-1; after writing12: [1,3,12,3,12], confirmed prefix indexes0-2. Caption \"扫描阶段，尾部旧值暂时保留\" so duplicate intermediate values are not mistakenly output. Label write = 1,2,3 after each write.\nStep 3: \"从 write = 3 开始补零\"; final five cells [1,3,12,0,0], highlight first3mint and zerosmuted.\nResult \"非零顺序仍是 1 → 3 → 12\". Rule \"原地修改，不复制数组\".\nFooter: \"时间 O(n)    辅助空间 O(1)\". \"n 为数组长度；一次扫描，再补零\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "b20a3a200346df7e90061d5f0a96cd842c0cf20e9e96a8cebfd93254043ed659",
+  "review": {
+    "example": "[0,1,0,3,12] -> [1,3,12,0,0]",
+    "steps": "三个写入映射1→0/3→1/4→2; 中间行[1,1,0,3,12]/[1,3,0,3,12]/[1,3,12,3,12], 最后补零; 原地而非新数组",
+    "complexity": "O(n); O(1). n 为数组长度. 读指针扫描一次, 写指针压缩非零元素后补零; 原地修改输入, 只使用常数个变量.",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

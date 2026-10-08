@@ -1,0 +1,19 @@
+{
+  "order": 66,
+  "title": "搜索旋转排序数组",
+  "slug": "search-in-rotated-sorted-array",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nCreate a BRAND NEW explanation, different layout from earlier. Title \"66  搜索旋转排序数组\". Subtitle \"看有序区间的数值范围, 排除一半候选\". Input \"nums=[4,5,6,7,0,1,2], target=0\". Draw one main seven-cellarray values4,5,6,7,0,1,2 andseparateindexrow0-6. Below use 3wide step panels with tiny rangebrackets and text, avoid words右半 or 左半 in all sectiontitles. Step1 \"[left,mid,right]=[0,3,6]\": \"有序范围 nums[0..3]=[4,5,6,7]; 0不在[4,7], left=4\". Step2 \"[left,mid,right]=[4,5,6]\": \"有序范围 nums[4..5]=[0,1]; 0在[0,1), right=4\". Step3 \"[left,mid,right]=[4,4,4]\": \"nums[4]=0, 命中\". Final mint arrow from result box \"返回下标4\" directly to the ONLY value0 cell atindex4. Rule \"元素互不相同; 找不到时返回-1\". Footer \"时间 O(log n)    辅助空间 O(1)\" \"n为数组长度; 每轮排除一半位置\". Large clean readable exacttext, no other illustrations.",
+  "edits": [],
+  "review": {
+    "example": "[4,5,6,7,0,1,2], target=0, 返回下标4, 与题面示例1一致.",
+    "steps": "逐个核对主数组7格及下标0-6. 三轮边界为(0,3,6)、(4,5,6)、(4,4,4); 有序范围分别下标0..3、4..5, 排除后保留4. 结果箭头实际落在下标4的数值0格.",
+    "complexity": "n为数组长度, 元素互不相同. 迭代二分每轮排除一半候选, 时间O(log n), 常量边界和中点辅助空间O(1).",
+    "text": "最终重生图避免左右误标, 中文、下标、区间[0,1)及返回下标4可读. 主结果与三轮数组一致."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "a101303a28bbe7a5c1bf955b218e9e0063509f7f5311ee3c25452ee830769850",
+  "sourceFile": "exec-9937176e-2262-40d4-8481-08421ff8a025.png"
+}

@@ -1,0 +1,21 @@
+{
+  "order": 58,
+  "title": "组合总和",
+  "slug": "combination-sum",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"58  组合总和\". Subtitle: \"同一数可重复, 下一次只从当前下标及右侧选择\".\nInput \"candidates=[2,3,6,7], target=7\". Four cells with indexes0/1/2/3. Candidates alreadyascending.\nConcrete search states, each box shows \"path | 剩余 remain | start下标\":\n[]|7|0 →选择2(下标0)→[2]|5|0 →选择2→[2,2]|3|0.\nFrom [2,2]|3|0 TWO distinct branches:\nchoose2→[2,2,2]|1|0, then \"2>1, 无候选可放, 回退\", no answer here.\nchoose3(index1)→[2,2,3]|0|1, \"记录答案\".\nAnother root branch []|7|0 choose7(index3)→[7]|0|3, record.\nExact result \"[[2,2,3],[7]]\", equations \"2+2+3=7\", \"7=7\".\nDetailed backtrack \"撤销最后的2后, 回到[2,2],remain=3; 再试下一候选3\". Show this arrow from failingpath[2,2,2] back to[2,2], not to[2].\nRule \"选 candidates[i] 后继续从 i 开始, 因此可重复使用\". \"不能回到更小下标, 所以[3,2,2]不重复生成\". \"remain=0记录;候选>remain可停止当前循环(升序)\".\nFooter \"时间 O(D·n^D+n), 保守最坏上界    辅助空间 O(D+1)\". \"n候选数,T目标,a最小正候选,D=floor(T/a); 路径+递归栈,不含答案\". \"本例已升序; 若需预排序, 另加O(n log n)时间\". Include actual remaining values, no full code.",
+  "edits": [
+    "Replace ONLY the lower MIDDLE panel section3 '回退并尝试下一个候选' contents, preserve all other panels, numbers, result and complexity. Remove its ambiguous curved dashed arrow and old prose. Draw THREE small state boxes in a single horizontal row, joined by two short straight arrows: LEFT 'path=[2,2,2]\\nremain=1' → arrow labelled '撤销2' → CENTER 'path=[2,2]\\nremain=3' → arrow labelled '选择3' → RIGHT 'path=[2,2,3]\\nremain=0'. Arrowheads terminate on next correct state box. Caption underneath '回退到[2,2], 再选下标1的3, 记录答案'. No curved arrow reaching into upper panel. All three states exactly as specified, readable."
+  ],
+  "review": {
+    "example": "candidates[2,3,6,7],target7→[[2,2,3],[7]].",
+    "steps": "输入下标0/1/2/3和值2/3/6/7核对. 状态[]rem7start0→[2]rem5start0→[2,2]rem3start0;分支[2,2,2]rem1start0失败,[2,2,3]rem0start1成功,[7]rem0start3成功. 编辑明确三卡222/1→撤销2→22/3→选择3→223/0,箭头实际落点正确.",
+    "complexity": "n候选数,T目标,a最小候选,D=floor(T/a);已升序搜索含复制答案的保守 O(D·n^D+n),path+栈 O(D+1). 未排序预排序另 O(n log n),答案不计辅助.",
+    "text": "官方定点编辑后1536×1024全图,remain/start数字、回退目标及指数界限可读."
+  },
+  "sourceFile": "exec-5f726fbb-ca11-436a-8db0-9a31963e46d3.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "d74c3d58b08ef3a2b3c7aac1881d3f96634ed10bae483f7486872caa91352ce3"
+}

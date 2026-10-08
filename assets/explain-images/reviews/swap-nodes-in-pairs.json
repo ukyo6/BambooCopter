@@ -1,0 +1,19 @@
+{
+  "order": 30,
+  "title": "两两交换链表中的节点",
+  "slug": "swap-nodes-in-pairs",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"30  两两交换链表中的节点\". Subtitle \"只改 next, 节点的值保持不变\". Inputhead=[1,2,3,4].\nThree precise true-next chain snapshots:\n1 before dummyD→1→2→3→4→null. Pointerlabels witharrows prevD,first1,second2. Short three assignments in this order: \"first.next = second.next (1→3)\"; \"second.next = first (2→1)\"; \"prev.next = second (D→2)\".\n2 afterfirstpair D→2→1→3→4→null. prevnowpointsnode1, first3,second4. Repeat three exact updates \"3.next=null\", \"4.next=3\", \"1.next=4\". Label\"prev前进到交换后的组尾, 即原first\".\n3 final D→2→1→4→3→null, result\"[2,1,4,3]\", return dummy.next=node2. Actualreturnarrowlandsonnode2,notdummy.\nEachchaincontainsall4nodes once, no crossed oldlinks or decorative arcs; arrowsbetweenadjacentnodesexplicit. Keep originalvaluesinnodesstable.\nRule \"剩余少于2个节点就停止; 单个尾节点保持原位\".\nFooter \"时间 O(n)    辅助空间 O(1)\" \"n为节点数; 迭代交换, 仅dummy与常数个指针\". Show anatomyandactualpairworkingnotgenericicon.",
+  "edits": [],
+  "review": {
+    "example": "输入[1,2,3,4], 第一对交换后[2,1,3,4], 最终[2,1,4,3].",
+    "steps": "三个实际next链D->1->2->3->4、D->2->1->3->4、D->2->1->4->3均正确终止null. 第一轮prevD/first1/second2, 第二轮prev1/first3/second4落点准确. 三次赋值两轮均正确. 返回箭头落节点2.",
+    "complexity": "时间O(n), 辅助空间O(1), 迭代指针实现, n为节点数.",
+    "text": "original全图中文、节点值、next赋值及少于2节点停止规则清楚."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "efafd868a46f59906668fb7deecd039661b582b66b16dcf675ac79297de5ba03",
+  "sourceFile": "exec-48708302-d8fb-4e23-b4c1-45f8ccb41487.png"
+}

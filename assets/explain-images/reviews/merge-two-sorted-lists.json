@@ -1,0 +1,21 @@
+{
+  "order": 27,
+  "title": "合并两个有序链表",
+  "slug": "merge-two-sorted-lists",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"27  合并两个有序链表\". Subtitle \"每次取较小的头节点, 接到结果尾部\". Input l1=[1,2,4],l2=[1,3,4].\nAssign identities A1(1)→A2(2)→A3(4)→null and B1(1)→B2(3)→B3(4)→null. Two separate originalchains, labelsA/B distinct colors.\nRule \"相等时取 l1; 用 dummy 和 tail统一连接\". Diagram initial dummy→null,tail=dummy.\nTable exact iterations:\n1 headsA1(1)/B1(1),chooseA1, remainingheadsA2/B1.\n2 A2(2)/B1(1),chooseB1, remainingA2/B2.\n3 A2(2)/B2(3),chooseA2, remainingA3/B2.\n4 A3(4)/B2(3),chooseB2, remainingA3/B3.\n5 A3(4)/B3(4),chooseA3, l1exhausted.\n6 \"直接接上 l2剩余 B3(4)\".\nFinal actualnextchain dummy→A1(1)→B1(1)→A2(2)→B2(3)→A3(4)→B3(4)→null. \"返回 dummy.next\". Node identitiespersist, no newresultnodesexceptdummy; onlynextrewiring.\nShort pointer action \"tail.next=选中节点; tail前进; 对应链头前进\". Result \"[1,1,2,3,4,4]\".\nFooter \"时间 O(m+n)    辅助空间 O(1)\" \"m,n为两链节点数; 复用原节点, 仅常数个指针和dummy\". No misdrawn crosslink.",
+  "edits": [
+    "Fix only the arrow labelled \"返回 dummy.next\" in the bottom final-result section. It currently points to dummy(value0), which is WRONG. Move this arrow and label so the arrowhead ends at actual result head A1(value1), the FIRST green node to the right of dummy. Keep dummy circle and actual dummy→A1 next arrow unchanged. Keep all other nodes, identities, values, table, output, layout and footer unchanged. Exact label may be \"返回 dummy.next = A1\"."
+  ],
+  "review": {
+    "example": "l1=[1,2,4],l2=[1,3,4], 输出[1,1,2,3,4,4].",
+    "steps": "身份A1/A2/A3与B1/B2/B3完整且值不变. 六行选择表逐项正确, l1耗尽后拼B3. 结果真实next为dummy->A1->B1->A2->B2->A3->B3->null. 已修返回箭头落在A1, 初始化tail落dummy.",
+    "complexity": "时间O(m+n), 辅助空间O(1), m/n为两链长度, 复用输入节点.",
+    "text": "original全图中文与身份标签清晰, 相等取l1规则及返回dummy.next=A1可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "316aeec02fccabdc6d23639deb0ab5995f8576855eae12e452558297d338e751",
+  "sourceFile": "exec-18bbe54e-9ff2-43f2-91da-6c9212120484.png"
+}

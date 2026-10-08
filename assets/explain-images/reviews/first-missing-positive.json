@@ -1,0 +1,19 @@
+{
+  "order": 17,
+  "title": "缺失的第一个正数",
+  "slug": "first-missing-positive",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"17  缺失的第一个正数\". Subtitle \"把值 x 放到下标 x-1, 数组就是标记表\". Input nums=[3,4,-1,1], n=4.\nExactly four cells per row with separate indexes0,1,2,3 and expected values row1,2,3,4.\nFive states:\nInitial [3,4,-1,1].\ni=0, x=3, target2, swap(0,2) → [-1,4,3,1], number3 now correct at2.\ni=1, x=4, target3, swap(1,3) → [-1,1,3,4].\nstill i=1, x=1, target0, swap(1,0) → [1,-1,3,4].\nScan: index0 value1 correct; index1 value-1 ≠ 2, return2. Mark exact index1 amber.\nRule \"仅搬运 1≤x≤n; 目标已有x就停止, 防止重复值死循环\". \"无不匹配位置则返回 n+1\".\nShow swaps as plain exact pair text, no ambiguous crossed arcs. Result \"答案 2\". Footer \"时间 O(n)    辅助空间 O(1)\" \"每次有效交换将一个正数放到正确位置; n为数组长度\".",
+  "edits": [],
+  "review": {
+    "example": "[3,4,-1,1]输出2, 三次交换状态复算正确.",
+    "steps": "每段4格, 目标下标2、3、0和交换对(0,2)(1,3)(1,0)正确. 第二次后仍i=1处理新值1. 最后一格组高亮下标1=-1与期望2不匹配, 箭头按状态顺序连接.",
+    "complexity": "时间O(n), 辅助空间O(1), n为数组长度. 有效交换永久安置至少一个正数.",
+    "text": "original全图中文和负号清晰, 范围1<=x<=n、重复目标停止条件及n+1规则准确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "fe1e9c1654659d20ff4f8c5607d80884a33c45279d7e52da0460c8ede7bce738",
+  "sourceFile": "exec-8618af9b-7783-4955-a9cb-3ac489183b64.png"
+}

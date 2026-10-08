@@ -1,0 +1,18 @@
+{
+  "order": 10,
+  "title": "和为 K 的子数组",
+  "slug": "subarray-sum-equals-k",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"10  和为 K 的子数组\". Subtitle: \"当前前缀和，减去以前的前缀和\".\nInput: \"nums = [1, 1, 1]    k = 2\". Show arrayindexes0,1,2.\nPrimaryvisual: THREEarraycells and FOURprefixboundarymarkersatbeforeindex0, afterindex0, afterindex1, afterindex2. Prefix sums0,1,2,3 respectively. Correctbrackets highlighttwocontiguoussubarrays indexes[0,1]and[1,2], each1+1=2. Prefixequations \"2 - 0 = 2\" and \"3 - 1 = 2\".\nTimelinefourcolumns \"当前位置 i\", \"当前和 S\", \"查询 S-k\", \"新增答案\" withexactrows: i=0,S=1,query-1,0; i=1,S=2,query0,1; i=2,S=3,query1,1. Initialization \"freq = {0:1}，表示空前缀\". ExplainmapstoresfrequencyNOTposition.\nRule \"先查询 freq[S-k]，再增加 freq[S]\". Tinyedgeexample \"[0,0]，k=0 → 3 个子数组\" to showcountfrequency, notretrieveoneindex. Result \"答案 = 2\".\nFooter \"时间 O(n)，平均    辅助空间 O(n)\". \"n 为数组长度；前缀和出现次数用哈希表保存\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "5b7df8541dc0c12dce0a6538e854d408b0ffac22a995375a28c78b6ee5f61b27",
+  "review": {
+    "example": "[1,1,1], k=2 -> 2个子数组",
+    "steps": "四前缀边界0/1/2/3, 查-1/0/1新增0/1/1, 下标区间[0,1]/[1,2]; 初始freq0=1且先查后存; [0,0]边界例子三前缀节点和三个区间正确",
+    "complexity": "O(n), 平均; O(n). n 为数组长度. 哈希表保存前缀和出现次数, 查询和更新按平均 O(1) 计; 最多 n+1 个不同前缀和. 冲突退化时最坏时间 O(n²).",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

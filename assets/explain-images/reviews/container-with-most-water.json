@@ -1,0 +1,18 @@
+{
+  "order": 5,
+  "title": "盛最多水的容器",
+  "slug": "container-with-most-water",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"05  盛最多水的容器\". Subtitle: \"面积取决于短板，每次移动较短的一端\".\nInput: \"height = [1, 8, 6, 2, 5, 4, 8, 3, 7]\".\nMain accurate bar diagram: 9 thin vertical columns at indexes0-8 with these exact heights. Highlight selected boundary bars index1 height8 and index8 height7. Show translucent water rectangle bounded by x=1 andx=8 at height7, spanning width7 units. Other inner bars can be visible through water. Dimension arrow width \"8 - 1 = 7\" and vertical height \"min(8,7) = 7\". DO NOT draw rainwater pits; this is two-boundary container area.\nTwo visual snapshots: initial left0 height1 and right8 height7, formula \"(8 - 0) × min(1,7) = 8\", annotate \"左边短，左指针右移\"; then left1 right8 formula \"(8 - 1) × min(8,7) = 49\".\nWhy small clear diagram/text: \"宽度只会缩小；保留短边，高度上限不会提高\"; \"所以移动短边，才可能得到更大面积\". Explain when heights equal moveeitherend.\nResult: \"最大面积 = 49，边界下标 [1, 8]\".\nFooter: \"时间 O(n)    辅助空间 O(1)\". \"每轮移动一个端点；最多 n-1 次\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "135b90303f12147516df3d9276102d9b4a4b6e5df58832931f7d66b1de4ee506",
+  "review": {
+    "example": "[1,8,6,2,5,4,8,3,7] -> 最大面积49",
+    "steps": "初始(0,8)面积8, (1,8)宽7高7面积49; 每根柱高与边界准确, 移较短边",
+    "complexity": "O(n); O(1). n 为柱子数量. 每轮移动一个端点, 左右指针最多合计移动 n-1 次; 只保存两个指针和最大面积.",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 39,
+  "title": "对称二叉树",
+  "slug": "symmetric-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"39  对称二叉树\". Subtitle: \"比较镜像节点对, 外侧对外侧, 内侧对内侧\".\nMain input \"root = [1,2,2,3,4,4,3]\". Draw EXACT complete 7-node tree root1, left2 right2; left2 children3(left),4(right); right2 children4(left),3(right). Center vertical dashed mirror axis, no arrows masquerading as tree edges.\nSection1 \"成对入队\". Initial pair \"(左2, 右2)\". Pop and compare equal2. Enqueue pair \"(左2.left=3, 右2.right=3)\" then pair \"(左2.right=4, 右2.left=4)\". Explicit queue snapshots: \"[(2,2)] → [(3,3),(4,4)]\". Both pairs equal. Leaves' corresponding children are both null, pass. Result \"返回 true\".\nSection2 rule \"两边都为空 → 匹配; 只有一边为空 → 失败; 值不同 → 失败\". \"值相同, 继续比较 (a.left,b.right) 与 (a.right,b.left)\".\nSection3 counterexample \"root = [1,2,2,null,3,null,3]\". Tiny exact tree: root1 left2 right2, EACH2 only RIGHT child3, both left children null. Draw left/right child directions unambiguously (3s displaced to RIGHT of their own parent). Compare left2.left=null with right2.right=3, highlight \"null ≠ 3 → false\". They are NOT mirror.\nFooter \"时间 O(n)    辅助空间 O(w)\". \"n 为节点数, w 为最大层宽; 成对 BFS 队列最坏 O(n)\". No recursive stack complexity since this diagram uses BFS.",
+  "edits": [],
+  "review": {
+    "example": "对称树 [1,2,2,3,4,4,3]→true; 反例 [1,2,2,null,3,null,3]→false.",
+    "steps": "主树七节点六边, 左2孩子3/4、右2孩子4/3; 队列 [(2,2)]→[(3,3),(4,4)]. 反例两棵2子树均仅有右3, 比较左2.left=null 与右2.right=3 即失败. 镜像轴和所有方向核对.",
+    "complexity": "成对 BFS 时间 O(n), 最大层宽 w 控制队列 O(w), 最坏 O(n).",
+    "text": "中英文值、空节点规则、两棵真实拓扑、队列和结论可读, 1536×1024."
+  },
+  "sourceFile": "exec-9be8a079-02ed-475a-a7ff-3b9dbfd2d384.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "635c65449f2c57ec68ac19a853f2cb2e8df05ea45ba01405ab97a6f9b9a9895a"
+}

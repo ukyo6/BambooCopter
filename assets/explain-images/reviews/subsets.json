@@ -1,0 +1,19 @@
+{
+  "order": 56,
+  "title": "子集",
+  "slug": "subsets",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"56  子集\". Subtitle: \"每来一个数, 复制已有子集并加入它\".\nInput \"nums = [1,2,3]\". Iterative expansion, NO recursive stack.\nSection1 \"初始 result=[[]], 数量1\". \"加入1: []→[1]\". Exact resulting two subsets \"[],[1]\", count2.\nSection2 \"加入2: []→[2], [1]→[1,2]\". Exact resulting four subsets \"[],[1],[2],[1,2]\", count4.\nSection3 \"加入3, 本轮开始 size=4\". Four aligned rows with direct arrows:\nold[] → new[3]\nold[1] → new[1,3]\nold[2] → new[2,3]\nold[1,2] → new[1,2,3].\nNew subsets are directly APPENDED to result, old ones retained. No arrow from old[2] to[1,3].\nSection4 result exactly \"[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]\". Prominent \"2³ = 8 个子集\". Show quantityprogression1→2→4→8.\nRule \"每轮只遍历开始时已有的size个; 新追加的副本不再参与本轮\". \"每个元素加入或不加入, 空集也算一个; 元素互不相同\".\nFooter \"时间 O(n·2^n)    辅助空间 O(1)\". \"n为元素数; 副本直接存入结果, 无额外缓冲或递归栈; 不含O(n·2^n)结果空间\". Crisp subarray values and all eight results.",
+  "edits": [],
+  "review": {
+    "example": "nums=[1,2,3]→[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]],共8.",
+    "steps": "数量1/2/4/8和结果表索引0-7核对. 添加3时[]→[3],[1]→[1,3],[2]→[2,3],[1,2]→[1,2,3]四箭头对应正确. 固定轮初size4避免新增项再次扩展.",
+    "complexity": "复制子集总 O(n·2^n),新副本是结果内对象,只额外维护索引 O(1),无递归栈,排除 O(n·2^n)输出.",
+    "text": "1536×1024全图,空集、8子集、索引和副本的空间口径清楚."
+  },
+  "sourceFile": "exec-5d20066b-5b3f-42c8-8657-378c98df523a.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "9f67d928551d24976758240e09d1fc7e9056faa4f30164940d4a5de1bfa173b2"
+}

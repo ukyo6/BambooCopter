@@ -1,0 +1,19 @@
+{
+  "order": 16,
+  "title": "除了自身以外数组的乘积",
+  "slug": "product-of-array-except-self",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"16  除了自身以外数组的乘积\". Subtitle \"左侧乘积 × 右侧乘积, 不使用除法\". Input nums=[1,2,3,4], indexes0,1,2,3. Three visual sections:\n1. Left to right: output array initially stores products BEFORE current position, exact values [1,1,2,6]. Each cell annotation: i0空积1; i1=1; i2=1×2=2; i3=1×2×3=6. Label \"先写左积, 再乘当前值\".\n2. Right to left with rolling variable R starts1. Table processed rows i3,2,1,0: left product6,2,1,1; R before update1,4,12,24; result6,8,12,24; R after multiplying nums[i]4,12,24,24. Show only BEFORE R if too crowded, but numbers correct. Label \"先乘入 R, 再更新 R\".\n3. Align arrays by same index: nums[1,2,3,4]; left[1,1,2,6]; right[24,12,4,1]; answer[24,12,8,6]. Result highlighted.\nCallout i2 excludes3: 1×2×4=8. Rule \"空区间乘积为1; 输出数组用来保存左积\". Footer \"时间 O(n)    辅助空间 O(1)\" \"n 为数组长度; 不计返回数组 O(n), 只需滚动乘积\". No division sign or code.",
+  "edits": [],
+  "review": {
+    "example": "输入[1,2,3,4], 输出[24,12,8,6]. 下标2排除3后乘积1*2*4=8.",
+    "steps": "四列索引和值一致. 左积[1,1,2,6]. 右向扫描i3,2,1,0的R乘入前依次1,4,12,24, 乘入后结果6,8,12,24, R更新后4,12,24,24. callout箭头真实指向answer[2]=8.",
+    "complexity": "时间O(n), 辅助空间O(1), 不计返回数组O(n). 图中右积行是解释示意, 实现只保留R.",
+    "text": "original全图检查中文清晰, 空积1、乘入前/后区别明确, 乘号及输出数字正确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "e94f1e2517ee82c8a76e66d22fc7caa9b41dc242f5757e94f49189cd79e9ea6e",
+  "sourceFile": "exec-0c6d8c4e-0ca1-43d1-a44a-45d9d969b9a2.png"
+}

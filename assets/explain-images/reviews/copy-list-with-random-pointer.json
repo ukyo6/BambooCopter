@@ -1,0 +1,19 @@
+{
+  "order": 32,
+  "title": "随机链表的复制",
+  "slug": "copy-list-with-random-pointer",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"32  随机链表的复制\". Subtitle \"副本插在原节点后面, random 用原目标的 next 定位\".\nUse official example2 head=[[1,1],[2,1]]. Original identities A(value1,index0),B(value2,index1), true next A→B→null. Random A→B and B→B selfloop. A'=newcopy1,B'=newcopy2, distinctmintcopyversusamberoriginal. Legend solid=next,dashed=random. Exactoriginalrandom arrows must landB, nevernull.\nThree sections:\n1 \"穿插副本\": solidnext A(1)→A'(1)→B(2)→B'(2)→null. Label\"每个原节点后面就是它的副本\". Only solidnextinthisphase, do not inventrandom.\n2 \"设置副本 random\": clear mappingtable rows Original A.random=B -> A'.random=B' -> \"原目标B.next=B'\"; Original B.random=B -> B'.random=B' -> \"原目标B.next=B'\". Shortformula \"copy.random = original.random.next\"; null random staysnull.\n3 \"拆分并恢复\": two separate truechains Original A(1)→B(2)→null,Copy A'(1)→B'(2)→null. Each has dashedrandomfromitsAtoitsB, and selfloop atitsB. No copyarrow pointsoriginal. Output [[1,1],[2,1]], \"返回A', 全新节点, 原链表已恢复\".\nRule \"副本next与random都只指向副本\". Footer \"时间 O(n)    辅助空间 O(1)\" \"n为节点数; 三遍扫描, 不计新建输出节点 O(n)\". Simpleprecisediagrams,noextra5nodeexample.",
+  "edits": [],
+  "review": {
+    "example": "题面示例2 [[1,1],[2,1]], next为A->B, random为A->B,B->B. 副本输出同值同索引结构.",
+    "steps": "穿插实际next A->A'->B->B'->null. 映射两行均定位原目标B.next=B', 正确得到A'.random=B',B'.random=B'. 拆分后原链/副本各两节点独立, 随机箭头与自环均落在各自B/B', 无跨链副本指针.",
+    "complexity": "时间O(n), 辅助空间O(1), 新结果节点O(n)另计.",
+    "text": "original全图实线next/虚线random图例、撇号和索引0/1清晰, null处理准确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "b7b0bcf205fc22e10121351bde5dd321ed9d941f68c28b4f12e6db3498cb3907",
+  "sourceFile": "exec-41f42450-fa84-45b0-ad75-6faa81598304.png"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 38,
+  "title": "翻转二叉树",
+  "slug": "invert-binary-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"38  翻转二叉树\". Subtitle: \"每个节点交换左右孩子, 子树内部也要翻转\".\nInput: \"root = [4,2,7,1,3,6,9]\". Three tree diagrams left to right.\n1 \"原树\": exact complete seven-node tree root4; left2 with children1(left),3(right); right7 with children6(left),9(right).\n2 \"先交换根节点的两棵子树\": root4; LEFT7 with children6(left),9(right); RIGHT2 with children1(left),3(right). Only root child subtrees swapped, internal children still same. Show a clear arrow labelled \"交换 4.left 与 4.right\" between diagrams; no crossing arrows mistaken as actual tree edges.\n3 \"继续交换 7 和 2 的左右孩子\": final root4 LEFT7 with children9(left),6(right); RIGHT2 with children3(left),1(right). Exact six downward tree edges per tree, no missing edges. Highlight leaf positions before and after.\nResult \"返回 [4,7,2,9,6,3,1]\".\nRule \"当前节点: left ↔ right, 然后递归处理左右子树\". \"复用原节点, 叶子与空树直接返回\".\nFooter \"时间 O(n)    辅助空间 O(h)\". \"n 为节点数, h 为树高; 递归栈最坏 O(n), 不复制树\". Keep diagrams most of canvas.",
+  "edits": [],
+  "review": {
+    "example": "root=[4,2,7,1,3,6,9] 翻转为 [4,7,2,9,6,3,1].",
+    "steps": "核对三棵树各七节点六条实际边. 原树4.left=2、4.right=7; 中间树4.left=7、4.right=2但7孩子仍6/9、2孩子仍1/3; 终树7孩子9/6、2孩子3/1. 叶顺序三个阶段均正确.",
+    "complexity": "原地递归交换每节点一次, 时间 O(n); 递归栈 O(h), 最坏 O(n), 不复制树.",
+    "text": "所有节点、叶子顺序、输入输出和左右交换标记可读, PNG 1536×1024."
+  },
+  "sourceFile": "exec-68f4a56e-a764-4007-bc7d-f928aa00fe08.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "04f0ffc02da17e51520501872dddab7901f3fe8b5770811f641dbc26c1b742dc"
+}

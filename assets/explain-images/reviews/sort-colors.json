@@ -1,0 +1,21 @@
+{
+  "order": 98,
+  "title": "颜色分类",
+  "slug": "sort-colors",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"98  颜色分类\". Subtitle \"三指针把未知区逐步缩小\". Input\"nums = [2,0,2,1,1,0]\"; 0red,1neutralwhite,2blue, retainreadablenumerals. Exactinvariants\"[0,left) 全0；[left,scan) 全1；[scan,right] 未分类；(right,n) 全2\". Drawthree snapshots with6cellsandindexrow0-5: initial[2,0,2,1,1,0],left=0,scan=0,right=5; firstswapindexes0and5→[0,0,2,1,1,2],left=0,scan=0,right=4, label\"遇2：和right交换，right--，scan不动\"; aftertwozeroesclassified [0,0,2,1,1,2],left=2,scan=2,right=4, label\"遇0：和left交换，left++、scan++\"; nextswap2and4→[0,0,1,1,2,2],left=2,scan=2,right=3, scanstill2recheck1. Finalscan4,right3, stopscan>right. Three rules\"0：交换left，left++，scan++\";\"1：scan++\";\"2：交换right，right--，scan不动\". Result\"[0,0,1,1,2,2]，原地完成\". Footer\"时间 O(n)    辅助空间 O(1)\";\"每步缩小未分类区，不使用库排序\". Allpointerarrowmustactualindexnotlabelsbetweenincorrectcells.",
+  "edits": [
+    "Make ONE pointer clarity edit, only in the SECOND snapshot titled '2 遇2：和right交换'. Here left=0 and scan=0 must both refer to the FIRST red0 cell, but the small YELLOW scan arrow is drawn at the boundary/next cell. Remove that yellow arrow completely. Keep the existing GREEN upward arrow pointing at the FIRST red0 cell's center. Replace the two labels 'left=0' and 'scan=0' beneath that green arrow with a clear combined label 'left = scan = 0'. One shared arrow now identifies their shared index0. Preserve its right=4 BLUE arrow, every array cell/value/color, ALL other snapshot arrows/labels, the invariant ranges, rules, result[0,0,1,1,2,2], complexity, size and layout. Do not change anything outside this second snapshot's left/scan pointer annotation."
+  ],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "6d8011934a7111e294f622a8f13a35fda06657c5614eadcf197620829ef88315",
+  "sourceFile": "exec-858ec62c-ea17-4e9f-85a0-2856c209f554.png",
+  "review": {
+    "example": "[2,0,2,1,1,0] -> [0,0,1,1,2,2]",
+    "steps": "四个分区与L/scan/R索引核对; 首次交换0/5后R4 scan0, 两个0分类后L2 scan2 R4, 交换2/4后scan仍2 R3, 最终scan4>R3; scan遇2不能直接推进",
+    "complexity": "O(n); O(1). n 为数组长度. 荷兰国旗法每步缩小一个未分类位置, 即使换回的元素再次检查, 总步数仍为线性; 原地交换只使用三个指针.",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "order": 76,
+  "title": "数据流的中位数",
+  "slug": "find-median-from-data-stream",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"76  数据流的中位数\". Subtitle \"两堆守住有序序列的中间边界\". Input \"依次插入 1, 2, 3\". Main3snapshots clearly separate \"较小一半: 大顶堆 L\" and \"较大一半: 小顶堆 R\". Step1 add1: L[1],R空, median1. Step2 add2: L[1],R[2], equallysized,median(1+2)/2=1.5. Step3 add3 initiallyL[1],R[2,3] arrow moveRtop2toL, balancedL maxheaproot2 child1, R root3, median2. All heap treeedgesonly root2→child1 forL; don'tconnectheapsas tree. Rule \"L所有值≤R所有值; L大小等于R或多1\". Result \"1,2 → 1.5; 1,2,3 → 2\". Footer \"addNum: O(log n)    findMedian: O(1)    存储: O(n)\" \"n为已插入数字个数, 两堆合计保存全部数据\".",
+  "edits": [
+    "仅修正第3部分“插入3”上半部的小顶堆R=[2,3]的树形几何: 当前根节点2的唯一子节点3画在右下. 二叉堆必须是完全二叉树, 两节点堆的唯一孩子应是左孩子. 请将R中这个节点3移到根2左下方并把连线改为2连接左下3. 不修改下半部平衡后的堆, 不修改任何数字、文字、布局、动作箭头、复杂度或其它内容."
+  ],
+  "review": {
+    "example": "依次插入1、2得到中位数1.5, 再插入3得到2, 与题面调用一致.",
+    "steps": "L大顶堆保存较小一半,R小顶堆较大一半. add1后L[1]; add2后L[1],R[2]; add3后R[2,3],把R堆顶2移至L, L根2子1,R根3. 堆边只连接本堆父子.",
+    "complexity": "n为已插入数据数, addNum堆操作O(log n), findMedian读取堆顶O(1), 两堆合计存储O(n).",
+    "text": "已用官方编辑将R=[2,3]唯一子节点3移到根2左下, 满足完全二叉堆形状. 平衡后L根2左子1,R根3, 数量和堆顶准确. 中位数1、1.5、2及插入/查询/存储复杂度可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "54596a6530c6c0e9216cb3748817e009a471e892aa475bcc57fabb2c79664219",
+  "sourceFile": "exec-ca76d8ab-457d-4fd0-aaaf-07770f26292a.png"
+}

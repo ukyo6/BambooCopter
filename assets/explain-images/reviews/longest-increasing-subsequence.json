@@ -1,0 +1,19 @@
+{
+  "order": 87,
+  "title": "最长递增子序列",
+  "slug": "longest-increasing-subsequence",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"87  最长递增子序列\". Subtitle \"二分维护每个长度的最小结尾\". Input \"nums = [10,9,2,5,3,7,101,18]\". Output \"最长严格递增长度 = 4\".\nSection1 state \"tails[k]: 长度 k+1 的递增子序列的最小可能结尾\", \"严格递增: 二分找首个 ≥ x 的位置 p\", \"找到就替换, 全部 < x 则追加\". Clearly distinguish array index i, tails index p and sequence length p+1.\nSection2 main complete 8-row trace table, column headings \"i\", \"x=nums[i]\", \"动作\", \"p\", \"更新后的 tails\".\nExact rows:\n0 | 10 | 追加 | 0 | [10]\n1 | 9 | 替换 | 0 | [9]\n2 | 2 | 替换 | 0 | [2]\n3 | 5 | 追加 | 1 | [2,5]\n4 | 3 | 替换 | 1 | [2,3]\n5 | 7 | 追加 | 2 | [2,3,7]\n6 | 101 | 追加 | 3 | [2,3,7,101]\n7 | 18 | 替换 | 3 | [2,3,7,18]\nSection3 two simple separate local transitions with exact cell arrows: \"x=3: [2,5] → [2,3]\", annotation \"p=1, 用 3 替换 5, 长度仍为 2\"; \"x=18: [2,3,7,101] → [2,3,7,18]\", annotation \"p=3, 用 18 替换 101, 长度仍为 4\". The arrows connect before array to after array, no numeric dependency arcs crossing.\nResult \"tails 有 4 项, 答案为 4\". Show one actual subsequence \"[2,3,7,101]\" with original indexes \"[2,4,5,6]\", note \"保持原顺序, 可以跳过元素\". Caution \"tails 记录各长度的最小结尾, 本身不保证是原数组中的一条实际子序列\".\nFooter \"时间 O(n log n)    辅助空间 O(n)\", \"n 为数组长度. 每项在 tails 中二分一次, tails 最多 n 项.\"\nOnly requested content. No full code. All eight exact trace rows are required, no duplicates or missing row. No decorative repeated arrays.",
+  "edits": [],
+  "sourceFile": "exec-b1a01961-a417-4442-a1b7-efb955445ee7.png",
+  "review": {
+    "example": "nums=[10,9,2,5,3,7,101,18], 最长严格递增长度4. 实际子序列[2,3,7,101]对应原下标[2,4,5,6], 保持原顺序.",
+    "steps": "独立二分复算tails八步为[10]、[9]、[2]、[2,5]、[2,3]、[2,3,7]、[2,3,7,101]、[2,3,7,18], p依次0,0,0,1,1,2,3,3. 表全部吻合. 实际箭头x=3时[2,5]→[2,3], x=18时[2,3,7,101]→[2,3,7,18]准确.",
+    "complexity": "n为数组长度. 每项对tails二分找首个≥x的位置, 时间O(nlogn), tails最长n项辅助O(n). 图明确tails[k]为长度k+1的最小可能结尾, 本身不保证是原数组的一条实际子序列.",
+    "text": "项目实际PNG以original复核. 八行无漏项, 表中i与p及长度k+1明确区分. 严格递增的≥替换条件、追加条件、两次替换长度不变、实际子序列与复杂度均可读."
+  },
+  "width": 1536,
+  "height": 1024,
+  "sha256": "7edab955b53cd0aab0a456eb599266e1aee670af79b2c1c3520104617959b945"
+}

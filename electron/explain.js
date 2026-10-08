@@ -59,7 +59,8 @@ function normalizeExplain(data) {
   if (!caption) throw new Error('题解缺少说明文字');
   if (!time_complexity || !space_complexity) throw new Error('题解缺少时间或空间复杂度');
   if (kind === 'html' && !/<\w+/.test(html)) throw new Error('题解缺少 HTML');
-  if (kind === 'image' && !/<svg[\s>]/i.test(svg) && !/^data:image\/(png|svg\+xml|jpeg|webp)/i.test(media)) {
+  if (kind === 'image' && !/<svg[\s>]/i.test(svg) && !/^data:image\/(png|svg\+xml|jpeg|webp)/i.test(media)
+    && !/^\.\.\/assets\/explain-images\/[a-z0-9-]+\.png$/.test(media)) {
     throw new Error('题解缺少静态图');
   }
   if (kind === 'gif' && !/^data:image\/gif/i.test(media)) throw new Error('题解缺少 GIF');

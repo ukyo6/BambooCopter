@@ -1,0 +1,21 @@
+{
+  "order": 99,
+  "title": "下一个排列",
+  "slug": "next-permutation",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"99  下一个排列\". Subtitle \"右侧尽量小幅增大，再把后缀变成最小\". Useexample explicitlylabeledillustration\"nums = [1,3,2]\" withindexes0,1,2. Step1 rightscan: index1value3>=2, continueleft; pivotindex0value1<3. Markdescending suffix[3,2]. Step2 rightscanfindfirststrictlygreater thanpivot: index2value2>1, swapindexes0and2 → [2,3,1]. Step3 reverse suffixindex1..2 → [2,1,3]. Drawthree EXACTarrayrows[1,3,2]→[2,3,1]→[2,1,3] withcorrectswaparrowbetween0and2 andsuffixbracket1-2. Explain\"后缀降序，从右找第一个大于枢轴的数，即最小的更大数\". Edgeexample\"[3,2,1]：没有枢轴，整体反转→[1,2,3]\". Result\"紧邻的下一个排列 = [2,1,3]\". Footer\"时间 O(n)    辅助空间 O(1)\";\"找枢轴、找交换对象、反转后缀；全部原地，不排序或复制后缀\".",
+  "edits": [
+    "One text precision correction ONLY. In the top-right '思路' box, replace the ambiguous phrase '从右向左找到第一个下降的位置（枢轴）' with the exact condition: '从右向左，找首个 nums[i] < nums[i+1] 的位置 i（枢轴）'. Keep the following two lines about the descending suffix, finding the first larger element from the right, swapping and reversing the suffix; allow normal line wrapping within the same box. Do NOT change ANY diagrams, arrows, arrays, index labels, mainexample[1,3,2]→[2,3,1]→[2,1,3], edgeexample[3,2,1]→[1,2,3], result, footercomplexity, palette, dimensions or layout. Only clarify this condition so readers cannot confuse the scan direction with the required strict inequality."
+  ],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "4a6fc9f94126678047496f05c7cc0771f0c0a7581928c2aa64e44f4630d8fdd8",
+  "sourceFile": "exec-2fabf0aa-063c-4746-948b-b1f3ba180006.png",
+  "review": {
+    "example": "[1,3,2] -> [2,1,3]; [3,2,1] -> [1,2,3]",
+    "steps": "枢轴索引0, 交换对象2; [1,3,2]交换0/2为[2,3,1], 反转后缀1..2为[2,1,3]; 无枢轴整体反转, 实际箭头/后缀范围核对",
+    "complexity": "O(n); O(1). n 为数组长度. 找枢轴、找交换对象和反转后缀均至多扫描 n 个元素; 全部原地操作, 不排序或复制后缀.",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

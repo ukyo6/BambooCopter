@@ -1,0 +1,21 @@
+{
+  "order": 41,
+  "title": "二叉树的层序遍历",
+  "slug": "binary-tree-level-order-traversal",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"41  二叉树的层序遍历\". Subtitle: \"每轮先锁定层大小, 新孩子留到下一轮\".\nInput \"root = [3,9,20,null,null,15,7]\". Exact tree root3 left9 right20; 20 left15 right7. Use horizontal dotted lines showing three levels. 5 nodes and 4 actual edges.\nBeside tree, three visual queue rows with explicit LEFT queue front and RIGHT back:\nLevel1: start queue[3], \"levelSize = 1\". Pop3, output[3], enqueue9 then20. End queue[9,20].\nLevel2: start queue[9,20], \"levelSize = 2\". Pop9(no children), pop20(enqueue15,7). Output[9,20]. End queue[15,7]. Show intermediate \"弹出20后, 队列[15,7], 本层已经弹出2个\". The children are NOT counted as level2.\nLevel3: start queue[15,7], \"levelSize = 2\". Pop15 and7, output[15,7], end queue[].\nResult prominent \"返回 [[3],[9,20],[15,7]]\".\nRule \"每轮只出队 levelSize 个, 左孩子先入队, 右孩子后入队\". \"空树 → []\".\nFooter \"时间 O(n)    辅助空间 O(w)\". \"n 为节点数, w 为最大层宽; 不含 O(n) 结果空间\". No arrows between wrong parents.",
+  "edits": [
+    "Edit this algorithm infographic only in two specified places. Preserve the exact style, layout, all tree edges and values, all queue diagrams, final result and complexity. 1) On the LEFT beside tree, below '第3层', replace '(1 个节点)' with '(2 个节点)', since this level contains node15 and node7. 2) In lower right step3, replace text '② 弹出7 (无孩子), 加入结果 [7]' with '② 弹出7 (无孩子), 追加后得到 [15,7]'. Keep the first pop15 line and all final result text unchanged. Render corrected Chinese cleanly."
+  ],
+  "review": {
+    "example": "root=[3,9,20,null,null,15,7]→[[3],[9,20],[15,7]].",
+    "steps": "核对树五节点四边, 每层节点数1/2/2. 队列起始[3]/[9,20]/[15,7], 结束[9,20]/[15,7]/[]. 第2层弹20新增15/7不并入本层; 最终追加7后列表[15,7].",
+    "complexity": "节点各入队出队一次 O(n), 队列 O(w), w为最大层宽; O(n)结果不计辅助空间.",
+    "text": "定点编辑修正第3层1个节点为2个, 修正弹7后的累计结果为[15,7], 再次查看项目 PNG1536×1024确认."
+  },
+  "sourceFile": "exec-833cbffe-813b-47cf-b1bf-f1d27aae18f6.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "d98cf35f1e55c558a9b8edddd59d1674a0a861ad53b108e3bb4060bc7dfc2f7a"
+}

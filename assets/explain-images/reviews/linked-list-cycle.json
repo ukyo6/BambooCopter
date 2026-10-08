@@ -1,0 +1,19 @@
+{
+  "order": 25,
+  "title": "环形链表",
+  "slug": "linked-list-cycle",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"25  环形链表\". Subtitle \"慢走一步, 快走两步, 环内一定相遇\".\nInput head=[3,2,0,-4], pos=1. Main graph four node circles horizontally with values3,2,0,-4, separate indexes0,1,2,3. True next arrows0→1→2→3. One return edge starting at node index3(-4), routed BELOW nodes, arrowhead ending precisely at node index1(value2). No edge toheadindex0, no null tail for cycliclist. Label \"尾节点 next 指向索引1\". pos only describes list, not parameter.\nslow andfast both startindex0. State table after each iteration:\nround0 slowindex0 value3, fastindex0 value3 (initial, do not count as detecting cycle)\nround1 slowindex1 value2, fastindex2 value0\nround2 slowindex2 value0, fastindex1 value2\nround3 slowindex3 value-4, fastindex3 value-4, meet.\nSmall pointerstep examples fast fromindex2 follows2→3→1 inround2. Highlight meeting nodeindex3 amber/mint.\nResult \"移动后相遇, 返回 true\".\nRule \"先检查 fast 和 fast.next 非空, 再移动并比较\". \"fast 或 fast.next 为 null 则无环, 返回false\". Footer \"时间 O(n)    辅助空间 O(1)\" \"n为不同节点总数; 只用快慢指针, 不修改链表\". Avoid decorative circularring duplicatenodes.",
+  "edits": [],
+  "review": {
+    "example": "[3,2,0,-4], pos1. 尾索引3连接1, 有环返回true.",
+    "steps": "主图和四个快照的实际next都0->1->2->3->1. 初始化双方0但不判有环. 三轮slow/fast索引(1,2)(2,1)(3,3), fast第二轮2->3->1正确. 指针箭头与相遇落在索引3.",
+    "complexity": "时间O(n), 辅助空间O(1), n为不同节点总数, 非循环无限步数.",
+    "text": "original全图索引和值分开, pos仅描述链表, null分支条件和先移动再比较可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "664a49904debed8cb26822dc95f7efc0bc0e18b9c2dce9ffe28f0a8c3cc52779",
+  "sourceFile": "exec-b3c2e894-eca4-4511-8421-ee4a4b6cd2da.png"
+}

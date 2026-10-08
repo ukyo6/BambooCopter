@@ -1,0 +1,19 @@
+{
+  "order": 13,
+  "title": "最大子数组和",
+  "slug": "maximum-subarray",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"13  最大子数组和\". Subtitle \"负的前缀丢掉, 只保留有贡献的累积\".\nInput nums = [-2,1,-3,4,-1,2,1,-5,4].\nMain 9-cell array with index0..8. Highlight EXACT indexes3,4,5,6 values4,-1,2,1, bracket \"4-1+2+1=6\".\nFormula \"cur = max(x, cur+x)\" and \"best = max(best,cur)\". Define cur=必须以当前元素结尾的最大和, best=历史最大和.\nComplete readable state table exactly rows i0..8:\nx: -2,1,-3,4,-1,2,1,-5,4\ncur: -2,1,-2,4,3,5,6,1,5\nbest: -2,1,1,4,4,5,6,6,6.\nTwo callouts: i3 x4 priorcur=-2 \"重新开始: max(4,-2+4)=4\"; i6 x1 priorcur5 \"继续累加: max(1,5+1)=6\".\nResult \"最大和 6, 子数组 [4,-1,2,1]\".\nRule \"初始化 cur=best=nums[0], 全负数组也正确\". Edge \"[-3,-1,-2] → -1\".\nFooter \"时间 O(n)    辅助空间 O(1)\" \"n 为数组长度, 一次扫描, 两个累积变量\". No code block.",
+  "edits": [],
+  "review": {
+    "example": "输入[-2,1,-3,4,-1,2,1,-5,4], 最优区间下标3-6, 和6. 全负例[-3,-1,-2]输出-1.",
+    "steps": "9格及表下标0-8吻合. cur=[-2,1,-2,4,3,5,6,1,5], best=[-2,1,1,4,4,5,6,6,6]. i3重启与i6累加公式正确.",
+    "complexity": "时间O(n), 辅助空间O(1), n为输入数组长度.",
+    "text": "中文定义明确, 表格负号、括号及公式可读, 高亮精确覆盖4个最优区间元素."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "42cfc55592b0447cf77c6effa34c8a09013b4b53a6733a396d393a26e61385c2",
+  "sourceFile": "exec-e3d55056-5598-4908-b81a-3076b4cae463.png"
+}

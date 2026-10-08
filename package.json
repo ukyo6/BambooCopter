@@ -1,7 +1,7 @@
 {
   "name": "bamboo-copter",
   "productName": "Bamboo Copter",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "description": "LeetCode Hot 100 practice desk",
   "author": "hewei",
@@ -52,6 +52,7 @@
     "electron-builder": "^26.15.3"
   },
   "dependencies": {
+    "cross-spawn": "^7.0.6",
     "monaco-editor": "^0.52.2",
     "sql.js": "^1.13.0"
   },

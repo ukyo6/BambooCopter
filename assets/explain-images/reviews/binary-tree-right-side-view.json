@@ -1,0 +1,19 @@
+{
+  "order": 45,
+  "title": "二叉树的右视图",
+  "slug": "binary-tree-right-side-view",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"45  二叉树的右视图\". Subtitle: \"每层从左到右遍历, 只记录最后一个节点\".\nInput \"root = [1,2,3,null,5,null,4]\". Exact tree: root1 left2 right3;2 only RIGHT child5;3 only RIGHT child4. Four actual edges. Nodes5 and4 both displaced down-right from own parents. Right-hand viewpoint arrows at each layer should terminate on node1,node3,node4 respectively, no decorative person.\nStep1 queue[1], levelSize1, last1→record1, next queue[2,3].\nStep2 queue[2,3], levelSize2, pop2 then3, \"该层最后出队的是3\", record3, next queue[5,4]. Note5 is left subtree even though value5>4.\nStep3 queue[5,4], levelSize2, pop5 then4, \"该层最后出队的是4\", record4, next[].\nDraw exact table \"层 | 本层节点(左→右) | 记录\": 1|[1]|1;2|[2,3]|3;3|[5,4]|4.\nProminent result \"返回 [1,3,4]\". Rule \"每轮先记 levelSize, 第 levelSize 次出队时收集\". \"选空间位置最右, 不是最大值; 空树 → []\".\nFooter \"时间 O(n)    辅助空间 O(w)\". \"n 为节点数,w 为最大层宽; 不含 O(h) 结果,h 为树高\".\nNo claim only visiting right children: BFS visits ALL nodes.",
+  "edits": [],
+  "review": {
+    "example": "源题root=[1,2,3,null,5,null,4]→[1,3,4].",
+    "steps": "五节点四边核对,2.right=5与3.right=4都是实际向右下边. 层队列[1]→[2,3]→[5,4]→[],层大小1/2/2,每层最后1/3/4;右侧观察箭头指向对应可见节点.",
+    "complexity": "全部节点BFS时间 O(n), 队列 O(w), 最大层宽w; 输出 O(h)不计辅助空间.",
+    "text": "全图1536×1024,全部队列、层表和位置区别可读."
+  },
+  "sourceFile": "exec-0d84d51b-baaa-432b-a36c-d697b3295265.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "de5033b368376cf6f1bd87663d778524e4260a6eb78976c304aad1ea7480e0f1"
+}

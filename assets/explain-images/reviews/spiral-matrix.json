@@ -1,0 +1,21 @@
+{
+  "order": 19,
+  "title": "螺旋矩阵",
+  "slug": "spiral-matrix",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"19  螺旋矩阵\". Subtitle \"沿四条边取数, 每走完一边就收缩边界\". Input matrix=[[1,2,3,4],[5,6,7,8],[9,10,11,12]].\nDraw exact3rows×4columns original matrix. row0=1,2,3,4;row1=5,6,7,8;row2=9,10,11,12. Separate row indices0..2 andcolumn0..3.\nFour main stages list segments with precise direction:\n①上边 left→right: [1,2,3,4], top0→1.\n②右边 top→bottom: [8,12], right3→2.\n③下边 right→left: [11,10,9], bottom2→1.\n④左边 bottom→top: [5], left0→1.\nInner remaining region only row1 columns1..2: [6,7], next top sweep outputs6,7 and top becomes2>bottom1, stop.\nFinal EXACT 12-element array [1,2,3,4,8,12,11,10,9,5,6,7].\nInstead of crossing spiral arrow through cells, use four short direction arrows along margins aligned to exact edges and small traversal order number at each original cell: first row1,2,3,4;second row10,11,12,5;last row9,8,7,6. Label \"小数字表示访问次序\". Distinguish values from order. Explain bounds top,bottom,left,right with initial0,2,0,3 and afterouter1,1,1,2.\nRule \"遍历下边/左边前检查边界仍有效, 避免单行单列重复\". Footer \"时间 O(mn)    辅助空间 O(1)\" \"m行n列; 不计返回数组 O(mn), 只保存四个边界\".",
+  "edits": [
+    "Fix ONLY the small matrix in the lower middle section \"继续遍历 (下一轮上边)\". Redraw the complete 3-row by4-column matrix with all12 cells: row0 [1,2,3,4], row1 [5,6,7,8], row2 [9,10,11,12]. Make sure bottom-right12 visible and inside border. Highlight only row1 columns1 and2, values6 and7. Move the small rightward arrow away from first-row values2 and3: put a thin rightward arrow immediately BELOW the highlighted cells6 and7, from center of column1 to center of column2, within the gap between row1 androw2 if needed; it must unambiguously refer to6→7. Or place the arrow inside the highlighted row between6 and7 without covering their numbers. Keep all other matrices, labels, final 12-element result, boundary table, style and complexity identical."
+  ],
+  "review": {
+    "example": "3x4矩阵[[1,2,3,4],[5,6,7,8],[9,10,11,12]], 输出[1,2,3,4,8,12,11,10,9,5,6,7].",
+    "steps": "所有矩阵3x4逐格核对, 访问次序第一行1-4、第二行10/11/12/5、第三行9/8/7/6准确. 外层后top=bottom=1,left=1,right=2, 内层6→7后top2>bottom1. 已修内层箭头位置和完整12格.",
+    "complexity": "时间O(mn), 辅助空间O(1), 返回数组O(mn)另计, m行n列.",
+    "text": "original全图下标、值、小访问次序分开, 12个输出数完整, 条件与边界中文可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "d5fe1a8d0dab10f48ff5a5b928d9a690cc8efd3376952219d2d5ca40adcb95d5",
+  "sourceFile": "exec-42c1ac97-4020-4141-bb53-4d9ad8915c99.png"
+}

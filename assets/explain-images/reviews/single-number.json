@@ -1,0 +1,19 @@
+{
+  "order": 96,
+  "title": "只出现一次的数字",
+  "slug": "single-number",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"96  只出现一次的数字\". Subtitle \"成对的数用异或抵消，只留下一个\". Input\"nums = [4,1,2,1,2]\" withindexes0-4. Properties\"a XOR a = 0\";\"0 XOR a = a\";\"异或可交换、可结合\"; use ^ symbolclearlydefine\"^ 表示按位异或\". Mainaccuratetableforstepcurrentandaccumulatorstarting0: read4→4,read1→5,read2→7,read1→6,read2→4. Equations\"0 ^ 4 = 4\", \"4 ^ 1 = 5\", \"5 ^ 2 = 7\", \"7 ^ 1 = 6\", \"6 ^ 2 = 4\". Separate cancellation diagram highlights pair1atindexes1and3 andpair2indexes2and4, notsum/subtraction: \"4 ^ (1 ^ 1) ^ (2 ^ 2) = 4 ^ 0 ^ 0 = 4\". Optional3bitrows4=100,1=001,2=010 forclarity onlyifspace, no incorrectdecimalbitclaims. Result\"只出现一次的数 = 4\". Footer\"时间 O(n)    辅助空间 O(1)\";\"一次扫描，只维护一个异或累计值；固定宽度整数\".",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "ffd1a3c6e50bfc7290c9f54ab070c835c6cfec43746d6b8f8b7dbd17770b0b13",
+  "sourceFile": "exec-2b9708ca-00ee-431c-b3e4-14d0a8068d57.png",
+  "review": {
+    "example": "[4,1,2,1,2] -> 4",
+    "steps": "累计异或0→4→5→7→6→4逐项复算; 两个1抵消、两个2抵消, 4^(1^1)^(2^2)=4, 位宽口径与非加减含义准确",
+    "complexity": "O(n); O(1). n 为数组长度. 每个数字参与一次异或, 只保留一个累计值; 按题目的固定宽度整数口径计.",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "order": 81,
+  "title": "爬楼梯",
+  "slug": "climbing-stairs",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"81  爬楼梯\". Subtitle \"最后一步走1阶或2阶, 方法数相加\". Input \"n=3\". Main three paths tofloor3 labeled \"1+1+1\", \"1+2\", \"2+1\"; stairs0,1,2,3 exactlyfourlevels, arrows landing at namedstependpoints. State row i0,1,2,3 withcounts1,1,2,3. Explain \"f(0)=1, f(1)=1; f(i)=f(i-1)+f(i-2)\". Mainfocus arrows from f1=1 andf2=2 into f3=3, label final1stepfrom2and final2stepsfrom1. Result \"共3种方法\". Smallrollingstate table (prev2,prev1) initially(1,1); afteri2(1,2); afteri3(2,3). Footer \"时间 O(n)    辅助空间 O(1), 滚动变量\" \"n为台阶数; 图中历史状态仅用于讲解, 实现只保留前两项\".",
+  "edits": [
+    "仅修改第4区滚动变量表格的两个表头. 当前列名“prev2 (f(i-2))”与“prev1 (f(i-1))”错误, 因为表里的数值是完成更新后状态. 请删除两个表头中的括号及f公式, 表头分别只写“prev2”与“prev1”. 第一列表头改为“完成更新到”. 保持所有表中数值1/1、1/2、2/3与说明、其它图形、路径、DP表、复杂度完全不变. 不要加新的公式, 避免前后时刻混用."
+  ],
+  "review": {
+    "example": "n=3共有3条路径1+1+1、1+2、2+1.",
+    "steps": "f0=1,f1=1,f2=2,f3=3; 来自f2最后走1阶、f1最后走2阶的两分支相加. 滚动(prev2,prev1)从(1,1)到(1,2)再(2,3).",
+    "complexity": "n为台阶数, 状态线性计算O(n), 图中历史用于解释, 实现仅两个滚动状态辅助空间O(1).",
+    "text": "三条阶梯路线0→1→2→3、0→1→3、0→2→3落点准确. 已官方编辑移除滚动变量表错误时刻公式, 表格明确完成更新后1/2、2/3. f0基态与O(1)工作空间说明清楚."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "6735e2efefd9538b41298b862be04ddb64805cfec60d4842aa5b2e4b6e0a9a1f",
+  "sourceFile": "exec-c442e2ca-0348-4d62-b6c7-f00d4d456f8e.png"
+}

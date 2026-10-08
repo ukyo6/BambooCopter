@@ -1,0 +1,19 @@
+{
+  "order": 75,
+  "title": "前 K 个高频元素",
+  "slug": "top-k-frequent-elements",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"75  前 K 个高频元素\". Subtitle \"按频率入桶, 从高到低取够 k 个\". Input \"nums=[1,1,1,2,2,3], k=2\". Main①frequencytable exactrows \"元素1→次数3, 元素2→次数2, 元素3→次数1\". Main②drawfrequency bucketsindexed0,1,2,3,4,5,6, 7buckets total: bucket1 contains3,bucket2contains2,bucket3contains1, others为空. Accurate connectorsfrequency3ofelement1→bucket3,frequency2of2→bucket2,frequency1of3→bucket1. Main③scan frequency6→5→4 empty,3取1,2取2, stopcount2. Result \"返回[1,2], 顺序不限\". Label \"桶下标是频率, 桶内保存元素\". Footer \"时间 O(n), 平均    辅助空间 O(n)\" \"n为数组长度; 哈希计数平均O(1), n+1个频率桶\".",
+  "edits": [],
+  "review": {
+    "example": "[1,1,1,2,2,3],k=2的前两高频元素为1和2.",
+    "steps": "计数1→3、2→2、3→1. 桶下标为频率, bucket3内元素1,bucket2内元素2,bucket1内元素3. 从6降至3先取1, 再频率2取2, 满k停止.",
+    "complexity": "n为输入长度, 哈希统计平均O(n), n+1频率桶与扫描O(n), 辅助空间O(n).",
+    "text": "元素与次数表及7个桶(0-6)准确, 三根箭头分别落在频率1、2、3桶内的元素3、2、1. 扫描从6降到2取满后停止, 结果[1,2]与平均O(n)说明清楚."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "043cf176528b0cef069b0b22d22edf6f1f71ce864bea5d3098ba4d16e8df8096",
+  "sourceFile": "exec-c250f6fb-6c36-41af-9039-8d6a20192e81.png"
+}

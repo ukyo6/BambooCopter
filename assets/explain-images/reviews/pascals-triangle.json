@@ -1,0 +1,21 @@
+{
+  "order": 82,
+  "title": "杨辉三角",
+  "slug": "pascals-triangle",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"82  杨辉三角\". Subtitle \"两端是1, 内部来自上一行相邻两数\". Input \"numRows=5\". Main large exacttrianglefive rows [1]; [1,1]; [1,2,1]; [1,3,3,1]; [1,4,6,4,1]. Exactly15numericcells correctlycentered. Highlight fifthrowcenter6, drawexactarrows fourthrowmiddle3and3 directly to6, annotation \"3+3=6\". Another arrowsfourthrowfirst1andsecond3 directlytofifthrow4 leftinner, \"1+3=4\". No arrows from nonparentcells; preserve conventionaltrianglegeometry. Labelrow indexes0-4 optional \"第1-5行\". Rule \"row[j]=prev[j-1]+prev[j]; 每行首尾固定为1\". Result \"返回这5行\". Footer \"时间 O(r²)    返回结构 O(r²)    额外工作空间 O(1)\" \"r为行数, 共r(r+1)/2个数; 直接在返回结构内构造\".",
+  "edits": [
+    "仅修改右上构造规则框右侧的下标解释文字, 消除0-based下标与自然序数混用. 将“row[j]:当前行第j个数”改成“row[j]: 当前行下标j处的数”. 将“prev[j]:上一行第j个数”改成“prev[j]: 上一行下标j处的数”. 将“j从1到i-1”改成“i为当前行下标, 内部j=1..i-1”. 保持所有数字、三角形15格、箭头、计算、返回结果、复杂度与布局不变."
+  ],
+  "review": {
+    "example": "numRows=5输出[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1].",
+    "steps": "五行共15个数, 两端均1. 第五行4来自第四行1+3, 第五行6来自第四行3+3; 父子连线真实落在相邻上一行及对应下一行格.",
+    "complexity": "r为行数, 返回r(r+1)/2个数故时间和返回结构空间O(r²), 直接构造于返回结构内额外工作变量O(1).",
+    "text": "主三角5行15数及返回嵌套数组全部准确. 四行两个3的箭头实际汇入第五行6, 左1与3汇入4. 官方编辑将第j个改为下标j处, 0-based定义清楚. 时间、输出存储与额外工作空间区分可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "5b5a3cb30aa5b545244b41bb2848069967cecc5fc8de467d166dbbefec920c0a",
+  "sourceFile": "exec-1a8dd69d-235b-411a-89e4-b4aea910a3d8.png"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 67,
+  "title": "寻找旋转排序数组中的最小值",
+  "slug": "find-minimum-in-rotated-sorted-array",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"67  寻找旋转排序数组中的最小值\". Input \"nums=[4,5,6,7,0,1,2]\". Subtitle \"中点与右端比较, 保留最小值所在一半\". Main three rows of all seven cells with indexes0-6 and arrows ending exactly at compared cells. Step1 l=0,m=3,r=6, compare7>2, discard0-3, l=4. Step2 l=4,m=5,r=6, compare1<2, r=5, preserve mid5. Step3 l=4,m=4,r=5, compare0<1, r=4. Result l=r=4, 返回最小值0. Rule \"nums[mid] > nums[right]: left=mid+1; 否则 right=mid, 不能丢掉中点\". Footer \"时间 O(log n)    辅助空间 O(1)\" and \"n 为数组长度, 元素互不相同\".",
+  "edits": [],
+  "review": {
+    "example": "题面示例[4,5,6,7,0,1,2]的最小值为0, 位于下标4.",
+    "steps": "3行均为7格, 指针依次(0,3,6)、(4,5,6)、(4,4,5). 比较7>2得到left4; 1<2得到right5; 0<1得到right4, 保留中点, 边界重合返回0. 指针箭头分别准确落在相应数组格.",
+    "complexity": "n为数组长度, 互不相同. 二分时间O(log n), 迭代辅助空间O(1).",
+    "text": "中点、右端、保留和丢弃的中文方向准确, 0与下标4区别清晰, 三轮公式及footer可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "25e4321b613972fd1fcbe5895f711c0abb27c6bd4389292aa36aefeb57852030",
+  "sourceFile": "exec-94a0e4e2-2dea-4078-8bc9-917ca5d8afea.png"
+}

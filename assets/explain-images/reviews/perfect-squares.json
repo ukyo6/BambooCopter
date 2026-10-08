@@ -1,0 +1,22 @@
+{
+  "order": 84,
+  "title": "完全平方数",
+  "slug": "perfect-squares",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"84  完全平方数\". Subtitle \"试每个平方数, 选择最少的前驱\". Input \"n=12, 可用平方数1,4,9\". DProwexact13cells labelsi0-12, dpvalues[0,1,2,3,1,2,3,4,2,1,2,3,3]. State \"dp[i]为和为i的最少平方数个数; dp[0]=0\". Mainfocus dp12 candidates \"选1: dp[11]+1=3+1=4\", \"选4: dp[8]+1=2+1=3\", \"选9: dp[3]+1=3+1=4\". Three dependencyarrowsfromstate11,8,3 todp12, highlight8→12 mint, othersmuted. Trace \"12→8→4→0\" arrowslabel减4 each; result \"12=4+4+4, 最少3个\". Formula \"dp[i]=min(dp[i-j²]+1), j²≤i\". Footer \"时间 O(n√n)    辅助空间 O(n)\" \"n为目标整数, 每个状态枚举不超过√i个平方数\".",
+  "edits": [
+    "仅修正最下方“前驱状态指向12”的绿色“选4”弧线. 当前它从8出发却错误落到11, 必须删除当前整条绿色弧线并重画: 起点准确在数值8的格子上缘, 终点箭头尖准确进入最右边黄色数值12格子的上缘. 关系是8+4=12, 不是8→11. 灰色3→12选9、11→12选1两箭头与其余全部内容保持. 如果弧线拥挤, 可以把绿色弧线画得更高, 但一定落在12. 不修改任何数字、DP表、回溯路径或复杂度.",
+    "图片底部弧线仍有错误: 灰色选9线现在3→11, 应3→12. 为彻底避免重叠箭头歧义, 请只重做最底部“前驱状态指向12”一整条区域(在footer上方). 删除该区域全部13格与全部弧线. 改为三个横向并列、互不重叠的小关系图: 左图两个格“11”→“12”, 箭头上写“加1”; 中图两个格“8”→“12”, 绿色箭头上写“加4”; 右图两个格“3”→“12”, 箭头上写“加9”. 每图的箭头实际从左格到本图右格, 不连到其它图. 上方DP表0..12、候选计算表、回溯12→8→4→0、所有文字与footer保持不变. 这是同一DP的前驱关系, 不新增其他例子."
+  ],
+  "review": {
+    "example": "n=12最少3个完全平方数, 12=4+4+4.",
+    "steps": "独立复算dp0-12为0,1,2,3,1,2,3,4,2,1,2,3,3. dp12的前驱11、8、3分别候选4、3、4; 最优链12→8→4→0每次减4.",
+    "complexity": "目标整数n, 每个i枚举j²≤i, 时间O(n√n), dp0..n辅助O(n).",
+    "text": "官方两次编辑后, 重做底部前驱区为三个互不交叉关系图, 实际落点11→12加1、8→12加4、3→12加9均准确. 上方13个状态与独立DP一致, 回溯12→8→4→0三次减4, 结果3可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "08bdaab56920437cb64dea0f4247e89a62c8d843e2c53801687cf1e7ce2720a2",
+  "sourceFile": "exec-7358380d-eaba-497b-a88f-598db0045019.png"
+}

@@ -1,0 +1,21 @@
+{
+  "order": 100,
+  "title": "寻找重复数",
+  "slug": "find-the-duplicate-number",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"100  寻找重复数\". Subtitle \"把下标看作节点，把 nums[i] 看作 next\". Input\"nums = [1,3,4,2,2]\", indexrow0-4. EXACTfunctionalgraphwith5nodes labeled\"下标0\", \"下标1\", \"下标3\", \"下标2\", \"下标4\". Edges0→1,1→3,3→2,2→4,4→2. Clearcycle2↔4 andtail0→1→3→2. ThisgraphhasnodesINDEXES, donotchangearrayvaluesduringalgorithm. Labelnums[2]=4,nums[4]=2oncycleedges and\"重复值2使两个位置3、4指向节点2\"; incoming3→2,4→2.\nPhase1 initialize\"slow=0，fast=0\". Thenuse\"slow=nums[slow]；fast=nums[nums[fast]]\". Threeafter-move rows \"第1轮：slow=1，fast=3\", \"第2轮：slow=3，fast=4\", \"第3轮：slow=2，fast=4\", \"第4轮：slow=4，fast=4，相遇\". Phase2reset\"finder=0，slow=4\", equal-speedrows aftereachstep(1,2),(3,4),(2,2), foundentrance2. Explicitlyshow\"finder与slow每轮都走一步\". Result\"环入口 = 2，重复数 = 2\". Footer\"时间 O(n)    辅助空间 O(1)\";\"数组长度 n+1；不修改数组，不额外建图，图仅用于说明\". Keepstart0consistentforbothphases, donotresetto nums[0]whenfirstphaseused0.",
+  "edits": [
+    "ONE wording clarification ONLY in phase1. Replace the heading '阶段一：快慢指针寻找相遇点' with '阶段一：先移动，再判断快慢指针相遇'. This makes clear that initializing slow=fast=0 must NOT be mistaken for the later meeting: every round moves first and then checks equality. Preserve the initialization0/0, all four update rounds, the entire graph and its five edges, every formula and table, phase2 resetfinder0/slow4 and its3steps, result2, footer, colors, dimensions and layout unchanged. Only replace that phase1 heading, keep it on one line with readable typography if possible."
+  ],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "4a26695e6f36ad18697145a0826f960d1ff7510d811cff70d82f61afea368bb6",
+  "sourceFile": "exec-69dcb3ec-c9b1-4b5b-8bd9-7f2761150ba6.png",
+  "review": {
+    "example": "[1,3,4,2,2] -> 重复数2",
+    "steps": "图节点是下标, 0→1→3→2→4→2五真实有向边. 从0同步初始化, 四轮slow/fast=(1,3),(3,4),(2,4),(4,4); finder重置0后(1,2),(3,4),(2,2), 入口2且不修改数组",
+    "complexity": "O(n); O(1). 数组长度为 n + 1. 快慢指针相遇与定位环入口两个阶段总步数为 O(n); 仅维护常量个下标, 不修改输入数组.",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

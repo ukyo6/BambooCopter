@@ -1,0 +1,19 @@
+{
+  "order": 71,
+  "title": "字符串解码",
+  "slug": "decode-string",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"71  字符串解码\". Subtitle \"栈保存外层现场, 从内向外展开\". Input 's=\"3[a2[c]]\"'. Show stack frame table and expansion in three sections. ①读3[ 保存(prefix=\"\",repeat=3),current=\"\";读a得到current=\"a\". ②读2[ 再保存(prefix=\"a\",repeat=2), current清空;读c得到\"c\". Two frames stacked outer3 below inner2, top label inner2. ③遇内层]弹出2, \"a + 2×c = acc\"; 再遇外层]弹出3, '\"\" + 3×acc = accaccacc'. Result emphasize \"accaccacc\", exactly9letters drawn as 3 groups \"acc | acc | acc\". Rule \"数字按位累积; '['入栈并清空当前串; ']'出栈拼接\". Footer \"时间 O(nL) 上界    空间 O(n+L), 含输出\" \"n 为编码长度, L 为解码长度; 逐层字符串拼接可能反复复制字符\". Avoid claiming O(n+L)time for this nested concatenation.",
+  "edits": [],
+  "review": {
+    "example": "3[a2[c]]从内向外解码为accaccacc, 结果9字符.",
+    "steps": "外层保存(\"\",3), 内层保存(\"a\",2). 内层]得到a+2×c=acc, 外层]得到3×acc=accaccacc. 栈内层在顶部, 出栈顺序由内到外.",
+    "complexity": "n为编码长度,L为解码输出长度. 逐层构造字符串可能反复复制同一字符, 时间O(nL)上界, 空间O(n+L)含输出.",
+    "text": "外层prefix空串、内层prefix a、repeat3和2清晰, 出栈后acc标签与最终acc|acc|acc的9字符一致. 中文、方括号和字符串引号可读, O(nL)标为上界且空间包含输出."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "a6e772260018416880f7751ccabf56f1e02669d5ff6c5087093cda93f5b022fa",
+  "sourceFile": "exec-972b54dc-ecec-4a76-9081-1317e25d5b7c.png"
+}

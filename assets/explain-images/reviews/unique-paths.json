@@ -1,0 +1,19 @@
+{
+  "order": 91,
+  "title": "不同路径",
+  "slug": "unique-paths",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"91  不同路径\". Subtitle \"每个格子的路径数 = 上方 + 左方\". Input \"m = 3，n = 7\". Draw EXACTLY a3-row7-column grid with rowlabels0,1,2 andcolumnlabels0,1,2,3,4,5,6. Robotstart[0,0] andfinish[2,6], allowedmoveonlyright/down, no diagonals. Main DP grid: firstrow[1,1,1,1,1,1,1], secondrow[1,2,3,4,5,6,7], thirdrow[1,3,6,10,15,21,28]. Label it \"到达每格的路径数\" so these are not costs. Explain firstrow/firstcolonlyoneway. Main dependency arrows from[1,5]value6 and[2,4]value15 into[2,5]value21, precisely cell edges, label\"6 + 15 = 21\". Lastcell equation \"7 + 21 = 28\". Formula \"dp[i][j] = dp[i-1][j] + dp[i][j-1]\". Result\"不同路径数 = 28\". Footer\"时间 O(mn)    辅助空间 O(mn)\";\"二维 dp 表；只求计数可用滚动数组降为 O(n) 空间\". Avoidaddingextra gridcells or arrows suggestingbacktracking.",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "f12c0b7f9a4447c8e1a8b113c5e9d44bdd58392537d709099fd5ba0c479c76dc",
+  "sourceFile": "exec-7cb095a9-36c4-44ee-a18e-30751ab38fec.png",
+  "review": {
+    "example": "m=3,n=7 -> 28",
+    "steps": "完整3×7表[[1,1,1,1,1,1,1],[1,2,3,4,5,6,7],[1,3,6,10,15,21,28]], 21格逐项核对; 上6+左15=21与上7+左21=28依赖箭头准确; 边界均1",
+    "complexity": "O(mn); O(mn). m、n 为网格的行数、列数. 演示使用二维 dp 表, 每格计算一次; 若按行滚动且只求路径数, 可降为 O(n) 空间.",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

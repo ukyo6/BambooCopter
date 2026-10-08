@@ -1,0 +1,21 @@
+{
+  "order": 44,
+  "title": "二叉搜索树中第 K 小的元素",
+  "slug": "kth-smallest-element-in-a-bst",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"44  二叉搜索树中第 K 小的元素\". Subtitle: \"中序就是升序, 第 k 次访问立即返回\".\nInput \"root = [5,3,6,2,4,null,null,1], k = 3\".\nExact6-node BST root5 left3 right6; 3 left2 right4; 2 LEFT1, no other children. Exactly5 actual edges. Draw 1 BELOW-LEFT of2, not directly under3.\nSection1 \"先沿左链入栈\". Stack bottom→top [5,3,2,1], top1. Highlight descent5→3→2→1.\nSection2 three pop snapshots: pop1 visit count1, stack[5,3,2]; pop2 visit count2, stack[5,3]; pop3 visit count3 equalsk, stack[5], return3 immediately. Values4,5,6 remain unvisited. Stack meaning bottom→top must clear, label next nodes grey.\nSection3 conceptual full sorted order \"[1,2,3,4,5,6]\" with rank labels1,2,3,4,5,6 beneath, highlight third value3, annotate \"这里只展示排序关系, 实际在第3次访问时停止\".\nResult \"第 3 小 = 3\". Rule \"左子树 → 根 → 右子树\". No sorting algorithm or full traversal claimed.\nFooter \"时间 O(h + k)    辅助空间 O(h)\". \"h 为树高, k 为目标排名; 最坏时间 O(n), n 为节点数\". No output list allocation needed.",
+  "edits": [
+    "Correct ONLY three errors in this image, preserving all other layout, values, tree topology, numbers and complexity. 1) In step2 subpanel '弹出1, 访问第1次', the vertical stack is top2 then3 then5. Move the '← 栈顶' arrow UP so its tip lands on the TOP cell2, not cell3. 2) In step2 subpanel '弹出2, 访问第2次', stack top3 then5. Move the '← 栈顶' arrow UP so its tip lands on TOP cell3, not cell5. 3) In that second subpanel replace '将右子树4入栈' with '2 的右子树为空, 不入栈'. The node2 has no right subtree;4 is right child of3 and is never visited because return at3. Preserve stack content labels [5,3,2], [5,3], [5], immediate return3 and all rest."
+  ],
+  "review": {
+    "example": "root=[5,3,6,2,4,null,null,1],k=3→3; 完整中序关系[1,2,3,4,5,6].",
+    "steps": "六节点五边拓扑核对,2只有左孩子1,4属于3.right. 栈底→顶[5,3,2,1]→[5,3,2]→[5,3]→[5]. 定点修正后箭头指向真实顶1/2/3/5; 第三次弹3立刻停,4/5/6未访问.",
+    "complexity": "先沿左链 O(h), 再访问k个节点总 O(h+k), 最坏 O(n); 显式栈 O(h), 无完整结果列表.",
+    "text": "1536×1024全图复核,三处编辑后数字、入栈与访问计数、栈顶落点均准确."
+  },
+  "sourceFile": "exec-fd8f0b07-3131-43ce-80ca-a0b8662bcd26.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "a5a5e46b8a4483ffac000ca50c19359b2b9554afbca5389039a444fc74274713"
+}

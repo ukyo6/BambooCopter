@@ -1,0 +1,21 @@
+{
+  "order": 31,
+  "title": "K 个一组翻转链表",
+  "slug": "reverse-nodes-in-k-group",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"31  K 个一组翻转链表\". Subtitle \"先确认满 k 个, 再反转并接回\". Input head=[1,2,3,4,5], k=3.\nStage1 chaindummyD→1→2→3→4→5→null. Labels groupPrev=D, kth=3, groupNext=4, allarrowlandaccurate. Mark exactly first3nodes1,2,3ingroup. \"找到第3个节点, 保存后继4\".\nStage2 temporarilydetach3.next=null, showgroup1→2→3→null andrest4→5→null disconnected. \"保留groupNext指向4\". Iterative reversegroup three mini snapshots \"处理1: 1→null; 剩余2→3→null\", \"处理2: 2→1→null; 剩余3→null\", \"处理3: 3→2→1→null\". True arrows in eachchain, all valuesunchanged.\nStage3 reconnect \"D.next=3; 原组头1.next=4\", actualresult D→3→2→1→4→5→null. NewgroupPrev=node1. Mark4,5only2nodes \"不足k=3, 保持顺序\". Result [3,2,1,4,5], returndummy.nextnode3.\nRule \"数量不足不开始反转, 不能修改节点值\". Footer \"时间 O(n)    辅助空间 O(1)\" \"n为节点数; 迭代分组, 每个节点只处理常数次\". No fullcode/crossedghostlinks.",
+  "edits": [
+    "Remove only the two added index rows underneath the top original chain and underneath the bottom reconnected chain. Delete each word \"索引:\" and its numbers0,1,2,3,4,5, because these include dummy and are not problem indexes. Keep all node circles/values D,1,2,3,4,5; arrows, group boundaries, captions, pointer labels, reversal intermediate diagrams, final[3,2,1,4,5] andfooter unchanged. Do not add any new numbering row."
+  ],
+  "review": {
+    "example": "head=[1,2,3,4,5],k3, 输出[3,2,1,4,5].",
+    "steps": "groupPrev D、kth3、groupNext4指针准确. 断开后1->2->3->null与4->5->null独立. 三个反转前缀1、2->1、3->2->1准确. 最终D->3->2->1->4->5->null, 接回D.next3和1.next4正确. 已去除含dummy的误导索引.",
+    "complexity": "时间O(n), 辅助空间O(1), n为节点数, 迭代分组实现.",
+    "text": "original全图中文与组边界清晰, 不足k保留、值不变及返回节点3准确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "0b48ff72264ef643d6dcd9d3ef6f72b092d39ee1a6a11ae9520a92880fd5fbf5",
+  "sourceFile": "exec-181ef528-81dc-41ac-96fb-666ff436db2c.png"
+}

@@ -1,0 +1,21 @@
+{
+  "order": 61,
+  "title": "分割回文串",
+  "slug": "palindrome-partitioning",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp readable Chinese sans-serif, balanced whitespace. Landscape 3:2, deep charcoal #171b20 background, warm white text, muted grey secondary text, restrained mint and amber accents. No glossy 3D, mascot, decorative arrows, fake app, watermark, play button or full solution code. Indexes, substrings and path lists must be distinct.\nTitle: \"61  分割回文串\".\nSubtitle: \"从 start 枚举连续前缀, 回文才选, 到末尾记录方案\".\nInput top: \"s=\\\"aab\\\"\". Show three character cells \"a a b\", 0-based index labels \"0 1 2\".\nImmediate output top right exact \"[[\\\"a\\\",\\\"a\\\",\\\"b\\\"],[\\\"aa\\\",\\\"b\\\"]]\" and \"共2种方案\".\nSECTION 1 large search tree, arrows mean choosing the labeled contiguous substring, arrowheads enter the correct state.\nRoot \"path=[]\\nstart=0\".\nLeft child by edge \"选 a [0,0]\" is \"path=[\\\"a\\\"]\\nstart=1\".\nIts left child by edge \"选 a [1,1]\" is \"path=[\\\"a\\\",\\\"a\\\"]\\nstart=2\".\nNext child by edge \"选 b [2,2]\" is \"path=[\\\"a\\\",\\\"a\\\",\\\"b\\\"]\\nstart=3, 记录\".\nA rejected leaf ONLY from state path=[\"a\"],start=1 has edge \"候选 ab [1,2]\" and label \"a≠b, 剪枝\". Do not join it to successful branch.\nRoot right child by edge \"选 aa [0,1]\" is \"path=[\\\"aa\\\"]\\nstart=2\".\nNext child by edge \"选 b [2,2]\" is \"path=[\\\"aa\\\",\\\"b\\\"]\\nstart=3, 记录\".\nAnother rejected candidate ONLY from root has short label \"aab [0,2]: a≠b, 剪枝\". Clear accurate separate branches, no crossover decorative arrows.\nSECTION 2 below show direct palindrome check as short equations: \"\\\"aa\\\": 两端 a=a, 通过\"; \"\\\"ab\\\" 和 \\\"aab\\\": 两端 a≠b, 不选\". Text \"候选为 s[start..end], 选后令 start=end+1\".\nSECTION 3 below tree a horizontal backtrack strip with exactly four state boxes:\n\"[\\\"a\\\",\\\"a\\\",\\\"b\\\"]\" → arrow \"撤销 b\" → \"[\\\"a\\\",\\\"a\\\"]\" → arrow \"撤销 a\" → \"[\\\"a\\\"]\" → arrow \"ab失败后撤销 a\" → \"[]\".\nCaption \"每次只撤销最后一段; 回到根后可改选 aa\". No arrow from full first answer directly into second answer.\nResult note \"切分完整覆盖原串, 不跳过字符; start=3=n 才记录\".\nFooter \"时间 O(n·2^n)    辅助空间 O(n)\".\nFooter note \"n为字符串长度; 双指针检查回文, 无DP表; 时间含候选切片与复制答案; 路径与递归栈O(n), 不含最坏O(n·2^n)结果\".\nEvery range is 0-based inclusive character endpoints; start is next unprocessed character index. Never introduce DP prefix length notation. Keep exact numbers and results legible.",
+  "edits": [
+    "Edit this existing educational infographic with ONE precise text correction only. In upper right section 2, replace the line \"直接比较首尾字符判断回文:\" with \"双指针向中间比较, 全部相等才是回文:\". Fit it cleanly on at most two lines within that section. This rule must accurately describe general palindrome checking, not just checking the first and last characters. Preserve every other pixel/content where possible: original 3:2 landscape dark style, title, character indexes, all search tree nodes and arrows, aa/ab/aab examples, outputs, backtracking sequence, start/end ranges, result explanation and complexity footer. No new diagrams, numbers, examples or full solution code. Keep exact Chinese text readable."
+  ],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "1a26f667021e94a60dad8965e5ba681b1c566253bc056a6e6057c948a0b9928f",
+  "sourceFile": "exec-3086a932-0f27-48b3-85a9-86abe55002cb.png",
+  "review": {
+    "example": "s=\"aab\"→[[\"a\",\"a\",\"b\"],[\"aa\",\"b\"]],共2种.",
+    "steps": "root start0选a[0,0]→start1选a[1,1]→start2选b[2,2]→start3记录;root选aa[0,1]→start2选b→start3记录. ab[1,2]从[a]剪枝,aab[0,2]从根剪枝. 逐个回退[a,a,b]→[a,a]→[a]→[],箭头落点与标签正确.",
+    "complexity": "n为字符数;未建DP表,候选切片、双指针回文检查和复制结果的最坏时间O(n·2^n);活跃子串总长与递归栈O(n),不含最坏O(n·2^n)结果.",
+    "text": "定点编辑把一般回文规则改为双指针向中间比较,全部相等才是回文. 项目实际1536×1024原图复核,中文、引号、区间、start和复杂度可读."
+  }
+}

@@ -16,6 +16,9 @@ let recordBoard = { total: 0, pass: 0, fail: 0, untouched: 0, bySlug: {}, passed
 let saveTimer = 0;
 let stepTimer = 0;
 let busy = false;
+let agentRequest = 0;
+let agentPending = false;
+let currentAgentState = null;
 let explainNatural = { width: 640, height: 420 };
 let explainScale = 1;
 let currentExplainHtml = '';
@@ -380,9 +383,10 @@ function clampPip(value, min, max) {
 }
 
 function rememberVisualSize(width, height, minWidth = 0) {
+  const image = document.querySelector('#explainBody .explain-media');
   explainNatural = {
-    width: Math.max(minWidth, Math.max(180, Math.min(960, Math.round(width)))),
-    height: Math.max(100, Math.round(height), explainMeasured ? explainNatural.height : 0),
+    width: image ? Math.round(width) : Math.max(minWidth, Math.max(180, Math.min(960, Math.round(width)))),
+    height: image ? Math.round(height) : Math.max(100, Math.round(height), explainMeasured ? explainNatural.height : 0),
   };
   explainMeasured = true;
   const saved = loadPipState();
@@ -394,11 +398,16 @@ function rememberVisualSize(width, height, minWidth = 0) {
 }
 
 function minExplainScale() {
+  if (document.querySelector('#explainBody .explain-media')) {
+    const availableHeight = Math.max(100, window.innerHeight - explainChromeHeight() - 32);
+    return Math.min(0.5, 320 / explainNatural.width, (window.innerWidth - 50) / explainNatural.width, availableHeight / explainNatural.height);
+  }
   return 0.5;
 }
 
 function maxExplainScale() {
-  return Math.min(1.8, Math.max(0.5, (window.innerWidth - 48) / explainNatural.width));
+  if (document.querySelector('#explainBody .explain-media')) return 1.8;
+  return Math.min(1.8, Math.max(minExplainScale(), (window.innerWidth - 48) / explainNatural.width));
 }
 
 function changeExplainScale(scale) {
@@ -414,16 +423,23 @@ function explainChromeHeight() {
 
 function fitExplainWindow() {
   // 先按候选宽度排版说明, 再量外框, 避免窄窗口的换行使比例估算偏小.
-  explainScale = Math.min(1, maxExplainScale());
+  const fitMaxScale = document.querySelector('#explainBody .explain-media')
+    ? Math.min(maxExplainScale(), (window.innerWidth - 50) / explainNatural.width)
+    : maxExplainScale();
+  explainScale = Math.min(1, fitMaxScale);
   for (let attempt = 0; attempt < 2; attempt += 1) {
     applyPipScale();
     const availableHeight = window.innerHeight - explainChromeHeight() - 32;
-    explainScale = clampPip(Math.min(1, maxExplainScale(), availableHeight / explainNatural.height), minExplainScale(), maxExplainScale());
+    explainScale = clampPip(Math.min(1, fitMaxScale, availableHeight / explainNatural.height), minExplainScale(), maxExplainScale());
   }
   changeExplainScale(explainScale);
 }
 
 function defaultExplainScale() {
+  if (document.querySelector('#explainBody .explain-media')) {
+    const availableHeight = Math.max(100, window.innerHeight - explainChromeHeight() - 32);
+    return Math.min(1, Math.min(900, window.innerWidth - 50) / explainNatural.width, availableHeight / explainNatural.height);
+  }
   const targetWidth = Math.min(explainNatural.width, window.innerWidth - 48);
   return Math.min(1, targetWidth / explainNatural.width);
 }
@@ -432,28 +448,33 @@ function applyPipScale() {
   const pip = document.getElementById('explainPip');
   const view = document.getElementById('explainView');
   const body = document.getElementById('explainBody');
+  const image = body.querySelector('.explain-media');
   explainScale = clampPip(explainScale, minExplainScale(), maxExplainScale());
   const width = Math.round(explainNatural.width * explainScale);
   const height = Math.round(explainNatural.height * explainScale);
-  const shellWidth = Math.max(340, width);
+  const shellWidth = Math.max(340, image ? Math.min(width + 2, window.innerWidth - 48) : width);
   pip.style.width = `${shellWidth}px`;
   pip.classList.toggle('is-compact', shellWidth < 520);
   const maxHeight = Math.max(100, window.innerHeight - explainChromeHeight() - 32);
   view.style.width = '100%';
   view.style.height = `${Math.min(height, maxHeight)}px`;
   view.style.padding = '0';
-  view.style.overflowX = 'hidden';
+  view.style.overflowX = image ? 'auto' : 'hidden';
   view.style.overflowY = 'auto';
-  body.style.width = `${explainNatural.width}px`;
-  body.style.height = `${explainNatural.height}px`;
+  body.style.width = `${image ? width : explainNatural.width}px`;
+  body.style.height = `${image ? height : explainNatural.height}px`;
   body.style.margin = '0';
-  body.style.marginLeft = `${Math.max(0, (shellWidth - width) / 2)}px`;
+  body.style.marginLeft = `${Math.max(0, (shellWidth - (image ? 2 : 0) - width) / 2)}px`;
   body.style.zoom = '1';
-  body.style.transform = explainScale === 1 ? 'none' : `scale(${explainScale})`;
+  body.style.transform = image || explainScale === 1 ? 'none' : `scale(${explainScale})`;
   body.style.transformOrigin = 'top left';
   // Reserve layout space for scaled visuals so the scroller clips cleanly.
-  body.style.marginBottom = explainScale === 1 ? '0' : `${Math.round(explainNatural.height * (explainScale - 1))}px`;
-  body.style.marginRight = explainScale === 1 ? '0' : `${Math.round(explainNatural.width * (explainScale - 1))}px`;
+  body.style.marginBottom = image || explainScale === 1 ? '0' : `${Math.round(explainNatural.height * (explainScale - 1))}px`;
+  body.style.marginRight = image || explainScale === 1 ? '0' : `${Math.round(explainNatural.width * (explainScale - 1))}px`;
+  if (image) {
+    image.style.width = `${width}px`;
+    image.style.height = `${height}px`;
+  }
   const frame = body.querySelector('iframe');
   if (frame) {
     frame.style.width = '100%';
@@ -722,24 +743,24 @@ function bindControls() {
     postExplainPlayer({ type: 'lc-player', action: 'step' });
   };
   bindExplainRateButton();
+  document.getElementById('providerSelect').onchange = (event) => {
+    changeAgent({ provider: event.target.value });
+  };
   document.getElementById('modelSelect').onchange = async (event) => {
-    const result = await window.lc.selectAgent({ model: event.target.value });
-    if (result.ok) renderAgent(result.data);
+    await changeAgent({ model: event.target.value });
   };
   document.getElementById('effortSelect').onchange = async (event) => {
-    const result = await window.lc.selectAgent({ reasoning: event.target.value });
-    if (result.ok) renderAgent(result.data);
+    await changeAgent({ reasoning: event.target.value });
   };
   document.getElementById('fastToggle').onclick = async () => {
     const button = document.getElementById('fastToggle');
-    const result = await window.lc.selectAgent({ fast: button.getAttribute('aria-pressed') !== 'true' });
-    if (result.ok) renderAgent(result.data);
+    await changeAgent({ fast: button.getAttribute('aria-pressed') !== 'true' });
   };
   document.getElementById('composer').onsubmit = async (event) => {
     event.preventDefault();
     const input = document.getElementById('chatInput');
     const text = input.value.trim();
-    if (!text || !currentSlug || busy) return;
+    if (!text || !currentSlug || busy || agentPending) return;
     const slug = currentSlug;
     const code = editor.getValue();
     input.value = '';
@@ -778,7 +799,10 @@ function resizeComposer() {
 }
 
 async function loadAgent() {
+  const request = ++agentRequest;
+  syncAgentControls();
   const result = await window.lc.agentState();
+  if (request !== agentRequest) return;
   if (!result.ok) {
     setStatus(result.error);
     return;
@@ -786,35 +810,67 @@ async function loadAgent() {
   renderAgent(result.data);
 }
 
-function renderAgent(state) {
-  const model = document.getElementById('modelSelect');
-  if (!state.links.length) {
-    document.getElementById('agentPath').textContent = '没有找到 Codex, 把它加入 PATH 后重启';
-    model.innerHTML = '';
-    model.hidden = true;
-    document.getElementById('effortSelect').hidden = true;
-    document.getElementById('fastToggle').hidden = true;
-    return;
+async function changeAgent(settings) {
+  if (busy || agentPending) return;
+  const request = ++agentRequest;
+  const provider = settings.provider || currentAgentState?.provider || 'codex';
+  agentPending = true;
+  syncAgentControls();
+  try {
+    const result = await window.lc.selectAgent({ ...settings, provider });
+    if (request !== agentRequest) return;
+    if (!result.ok) throw new Error(result.error || '切换 AI 设置失败');
+    renderAgent(result.data);
+    setStatus('');
+  } catch (error) {
+    if (request !== agentRequest) return;
+    if (currentAgentState) renderAgent(currentAgentState);
+    setStatus(error.message || String(error));
+  } finally {
+    agentPending = false;
+    syncAgentControls();
   }
-  document.getElementById('agentPath').textContent = '';
+}
+
+function syncAgentControls() {
+  const disabled = busy || agentPending || !currentAgentState;
+  for (const id of ['providerSelect', 'modelSelect', 'effortSelect', 'fastToggle']) {
+    document.getElementById(id).disabled = disabled;
+  }
+  document.getElementById('reviewCode').disabled = busy || agentPending;
+  document.querySelector('#composer .send').disabled = busy || agentPending;
+}
+
+function renderAgent(state) {
+  currentAgentState = state;
+  const provider = document.getElementById('providerSelect');
+  for (const option of provider.options) {
+    option.disabled = !state.links.some((link) => link.id === option.value);
+  }
+  provider.value = state.provider || 'codex';
+  const selectedLink = state.links.find((link) => link.id === provider.value);
+  const providerLabel = provider.selectedOptions[0]?.textContent || '所选 CLI';
+  document.getElementById('chatTitle').setAttribute('aria-label', providerLabel);
+  const model = document.getElementById('modelSelect');
+  document.getElementById('agentPath').textContent = selectedLink ? '' : `没有找到 ${providerLabel}, 把它加入 PATH 后重启`;
   model.innerHTML = '';
-  model.hidden = state.models.length === 0;
+  model.hidden = !selectedLink || state.models.length === 0;
   for (const item of state.models) model.add(new Option(item.label, item.id));
   if (state.model) model.value = state.model;
   const effort = document.getElementById('effortSelect');
   const activeModel = state.models.find((item) => item.id === state.model);
   const efforts = activeModel?.efforts || [];
   effort.innerHTML = '';
-  effort.hidden = efforts.length === 0;
+  effort.hidden = provider.value !== 'codex' || efforts.length === 0;
   for (const id of efforts) effort.add(new Option(effortLabel[id] || id, id));
   if (state.reasoning) effort.value = state.reasoning;
   const fast = document.getElementById('fastToggle');
-  fast.hidden = false;
+  fast.hidden = !selectedLink || !state.fastSupported;
   fast.setAttribute('aria-pressed', state.fast ? 'true' : 'false');
   fitSelect(model);
   fitSelect(effort);
   const notice = document.getElementById('agentNotice');
-  if (state.modelError) {
+  if (state.modelError && selectedLink) {
     notice.hidden = false;
     document.getElementById('agentNoticeText').textContent = state.modelError;
     setStatus('');
@@ -822,6 +878,7 @@ function renderAgent(state) {
     notice.hidden = true;
     document.getElementById('agentNoticeText').textContent = '';
   }
+  syncAgentControls();
 }
 
 function fitSelect(select) {
@@ -1220,7 +1277,7 @@ function playVerdictToast(verdict, { detail = false, onDetail } = {}) {
 }
 
 async function submitReview() {
-  if (!currentSlug || busy) return;
+  if (!currentSlug || busy || agentPending) return;
   const slug = currentSlug;
   const code = editor.getValue();
   const button = document.getElementById('reviewCode');
@@ -1346,7 +1403,7 @@ function renderExplain(body) {
     return;
   }
   renderExplainCaption(data.caption);
-  if ((data.kind === 'html' && data.html) || (data.kind === 'image' && data.svg)) {
+  if ((data.kind === 'html' && data.html) || (data.kind === 'image' && data.svg) || isImageMedia(data.media)) {
     explainNatural = { width: 640, height: 320 };
     const saved = loadPipState();
     explainScale = saved && saved.v === 4 && Number.isFinite(saved.scale) ? saved.scale : defaultExplainScale();
@@ -1363,10 +1420,33 @@ function renderExplain(body) {
   } else if (isImageMedia(data.media)) {
     const img = document.createElement('img');
     img.className = 'explain-media';
-    img.alt = '题解';
-    img.src = data.media;
-    img.onload = () => rememberVisualSize(img.naturalWidth, img.naturalHeight);
+    img.alt = `${document.getElementById('explainTitle').textContent}题解`;
+    img.onload = () => {
+      if (!root.contains(img)) return;
+      rememberVisualSize(img.naturalWidth, img.naturalHeight);
+      // 图片按阅读宽度初始化, 避免沿用旧动画的像素缩放比例.
+      // 说明区随窗口宽度换行, 再测一次可用高度以显示完整图片.
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        explainScale = defaultExplainScale();
+        applyPipScale();
+      }
+      const saved = loadPipState();
+      if (!saved || saved.v !== 4 || !Number.isFinite(saved.left) || !Number.isFinite(saved.top)) placePipDefault();
+    };
+    img.onerror = () => {
+      if (!root.contains(img)) return;
+      root.textContent = '题解图片暂时无法显示.';
+      const error = document.getElementById('explainError');
+      const retry = document.createElement('button');
+      retry.type = 'button';
+      retry.textContent = '重新加载';
+      retry.onclick = () => renderExplain(body);
+      error.replaceChildren('题解图片加载失败, 请重新加载后再试.', retry);
+      error.hidden = false;
+      rememberVisualSize(420, 120);
+    };
     root.appendChild(img);
+    img.src = data.media;
   } else {
     rememberVisualSize(420, 120);
   }
@@ -1505,7 +1585,8 @@ function svgDocument(svg) {
 }
 
 function isImageMedia(value) {
-  return /^data:image\/(gif|png|jpeg|webp|svg\+xml)/i.test(value || '');
+  return /^data:image\/(gif|png|jpeg|webp|svg\+xml)/i.test(value || '')
+    || /^\.\.\/assets\/explain-images\/[a-z0-9-]+\.png$/.test(value || '');
 }
 
 function formatMessageTime(value) {
@@ -1573,6 +1654,7 @@ function fillMessageBody(body, bodyText, { collapsible = false } = {}) {
   head.className = 'verdict-msg-head';
   const label = document.createElement('span');
   label.className = 'verdict-msg-label';
+  label.classList.toggle('fail', parsed.headline === '判断: 不能通过');
   label.textContent = parsed.headline;
   const toggle = document.createElement('button');
   toggle.type = 'button';
@@ -1862,6 +1944,7 @@ function setBusy(value) {
   for (const id of ['reviewCode', 'clearCode', 'formatCode']) {
     document.getElementById(id).disabled = value;
   }
+  syncAgentControls();
 }
 
 function setStatus(text) {

@@ -45,6 +45,8 @@ jobs:
         run: node scripts/check-explains.js
       - name: 检查提交评审
         run: node scripts/check-reviews.js
+      - name: 检查 CLI 协议
+        run: node scripts/check-agents.js
       - name: 打包
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"

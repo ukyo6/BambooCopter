@@ -1,0 +1,19 @@
+{
+  "order": 49,
+  "title": "二叉树的最近公共祖先",
+  "slug": "lowest-common-ancestor-of-a-binary-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"49  二叉树的最近公共祖先\". Subtitle: \"后序返回命中的节点, 在汇合处或目标本身确定祖先\".\nInput \"root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4\".\nExact NINE-node tree root3 LEFT5 RIGHT1;5 LEFT6 RIGHT2;1 LEFT0 RIGHT8;2 LEFT7 RIGHT4. Eight actual downward solid edges. Highlight p5 mint,q4 amber. Do not put4 directly under5.\nUse complete postorder approach, NOT early-return pruning; children are visited before current target check. Explain \"本图先处理左右子树, 再检查当前节点\".\nShow return values next to tree: leaves6,7,0,8 returnnull;4 returns4;2 returns4;5 returns5;1 returnsnull;3 returns5. Distinguish return labels from node values.\nSmall table four important rows:\n\"4 | null | null | 当前是q | 4\"\n\"2 | null | 4 | 仅右侧命中 | 4\"\n\"5 | null | 4 | 当前是p | 5\"\n\"3 | 5 | null | 仅左侧命中 | 5\".\nHeaders \"当前节点 | 左返回 | 右返回 | 判定 | 返回\".\nColored upward result arrows along4→2 labeled4,2→5 labeled4,5→3 labeled5, arrowheads on receiving parent. Actual tree edges remain grey downward, distinguish arrows clearly.\nRule \"当前是p或q → 返回自身; 否则左右均非空 → 当前节点; 仅一侧非空 → 传递该侧; 都空 → null\". \"空节点返回null\".\nProminent result \"最近公共祖先 = 5\". \"一个节点可以是它自己的祖先; 5 是4的祖先\".\nFooter \"时间 O(n)    辅助空间 O(h)\". \"n为节点数,h为树高; 完整后序,递归栈最坏O(n)\".",
+  "edits": [],
+  "review": {
+    "example": "源例[3,5,1,6,2,0,8,null,null,7,4],p5,q4→5.",
+    "steps": "九节点八边核对,4为2.right而非5孩子. 后序6/7/0/8返回null,4→4、2→4、5→5、1→null、3→5. 4→2/2→5/5→3的向上返回箭头落于正确父节点,表格左右返回正确.",
+    "complexity": "完整后序每节点 O(1)共 O(n),递归栈 O(h),最坏 O(n).",
+    "text": "完整1536×1024,节点值和返回值分开、p/q标记、null与箭头标值清楚."
+  },
+  "sourceFile": "exec-17167a68-af34-47fb-b049-a97d4f4918c4.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "2fdf36a2adcadf360139350b6dc3fc8ac5e3dea6dc26e5d33a8987be596e81b3"
+}

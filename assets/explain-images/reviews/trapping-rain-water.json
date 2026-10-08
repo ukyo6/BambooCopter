@@ -1,0 +1,18 @@
+{
+  "order": 7,
+  "title": "接雨水",
+  "slug": "trapping-rain-water",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"07  接雨水\". Subtitle: \"每个位置的水量，由左右最高墙中较低的一边决定\".\nInput: \"height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]\".\nMain big accurate 12-column unit grid bar diagram. Exact heights at indexes0-11 are0,1,0,2,1,0,1,3,2,1,2,1. Show exactly SIX water unit squares: one at index2 above height0 up to1; one atindex4 above1 upto2; TWO atindex5 above0 upto2; one atindex6 above1 upto2; one atindex9 above1 upto2. No other water squares. Label indexesclearly, waterunits readable. Caption \"各位置水量：[0, 0, 1, 0, 1, 2, 1, 0, 0, 1, 0, 0]\".\nFormula \"water[i] = min(leftMax, rightMax) - height[i]\" where maxima includei. Examples \"i = 5：min(2,3) - 0 = 2\" and \"i = 9：min(3,2) - 1 = 1\" with pointer arrows to correctcolumns.\nSmall implementation visual: pointersleftandright moving inward, text \"双指针维护 leftMax / rightMax，先结算较低的一侧\" and \"示意公式不需要真的保存两组最大值数组\". Separate explanation containerdifferent: \"每根柱子宽度为 1，累计所有凹槽中的水\".\nResult \"1 + 1 + 2 + 1 + 1 = 6\" prominently.\nFooter \"双指针：时间 O(n)    辅助空间 O(1)\". \"每个位置只处理一次\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "5fd61f9e1b8c3fe5afde09083a32153c66749a6608ccb3b8f7ffcb2ecf81c5fd",
+  "review": {
+    "example": "[0,1,0,2,1,0,1,3,2,1,2,1] -> 总水量6",
+    "steps": "实际PNG水格在下标2/4/5两格/6/9; 六格并逐格颜色抽样核对, index6下半灰柱、上半蓝水; 最大值公式及双指针选择当前短侧正确",
+    "complexity": "O(n); O(1). n 为柱子数量. 双指针每次处理较矮一侧, 维护左右最高值和累计水量; 每个位置最多处理一次.",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 93,
+  "title": "最长回文子串",
+  "slug": "longest-palindromic-substring",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"93  最长回文子串\". Subtitle \"从中心向两边扩展，比较对应字符\". Two examples labeledodd/even. Oddinput s=\"babad\", cellsb,a,b,a,d indexes0-4. Centeri=1charactera; firstwindow[1,1] a, expandtocells0and2bothb → [0,2] \"bab\", thenleft=-1outofboundsstop. Show outwardarrowsfromcenter1toward0and2, pairb samecolor. Note\"以 i=2 为中心，也可得到 aba；长度相同，两者都正确\". Eveninput s=\"cbbd\", cellsc,b,b,d indexes0-3. Centerbetween1and2, equalb/b → [1,2] \"bb\"; nextpairindex0c,index3d unequalstop. Directionmustoutwards frommiddleboth sides. Rule\"奇数中心：(i,i)；偶数中心：(i,i+1)\". \"维护最长下标区间，最后返回该子串\". Results\"babad → bab（或 aba）\" and\"cbbd → bb\". Footer\"时间 O(n²)    辅助空间 O(1)\";\"2n-1 个中心，每个最多扩展 O(n)；不含最多 O(n) 的返回子串\". NofullDPtablebecausealgorithmiscenterexpansion.",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "e19deed5443fa63cf32d4caf0c8d1654e57b75b4b3f9a9cda4b7aec48cf13fb7",
+  "sourceFile": "exec-4588d832-5e2b-4f9d-8043-63c16958ebe3.png",
+  "review": {
+    "example": "babad -> bab或aba; cbbd -> bb",
+    "steps": "奇数中心(1,1)扩成[0,2]bab后越界; 偶数中心(1,2)bb向外比较c/d不等停止; 字符索引、对称配对和向外箭头正确",
+    "complexity": "O(n²); O(1). n 为字符串长度. 检查 2n - 1 个中心, 每个中心最坏扩展 O(n); 仅保留当前指针和最长区间. O(1) 为额外工作空间, 不包含最多 O(n) 的返回子串.",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

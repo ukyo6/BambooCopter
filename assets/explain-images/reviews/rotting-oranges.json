@@ -1,0 +1,19 @@
+{
+  "order": 52,
+  "title": "腐烂的橘子",
+  "slug": "rotting-oranges",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"52  腐烂的橘子\". Subtitle: \"所有腐烂源同时入队, BFS一层就是一分钟\".\nInput EXACT \"grid = [[2,1,1],[1,1,0],[0,1,1]]\". Draw original3×3 matrix, exactly9cells row/col indexes0,1,2;2rotten,1fresh,0empty. Initial fresh6.\nBeside it draw separate3×3 \"首次腐烂时间(分钟)\" matrix with exact cells row0 [0,1,2];row1 [1,2,空];row2 [空,3,4]. Emptycells original(1,2),(2,0) must staygrey and text\"空\", never numbered infectiontime. Big result \"返回 4 分钟\".\nShow four-direction only infection arrows on this time matrix: (0,0)→(0,1), (0,0)→(1,0), (0,1)→(0,2), (0,1)→(1,1), (1,1)→(2,1), (2,1)→(2,2). Only these6arrows, tips end correct adjacentcells; don't cross emptycells, no diagonal.\nExact BFS frontier table headers \"分钟 | 新腐烂坐标 | 剩余新鲜\":0|[(0,0)]|6;1|[(0,1),(1,0)]|4;2|[(0,2),(1,1)]|2;3|[(2,1)]|1;4|[(2,2)]|0.\nRule \"本层全部出队后, 下一层才扩散; 入队时立刻标记腐烂, 避免重复入队\". \"全部源都在第0分钟; 无新鲜→0; 扩散后仍有新鲜→-1\".\nFooter \"时间 O(mn)    辅助空间 O(mn)\". \"m为行数,n为列数; 每个橘子最多入队一次, 队列最坏O(mn)\". Accurate digits and arrows, avoid photooranges.",
+  "edits": [],
+  "review": {
+    "example": "源例[[2,1,1],[1,1,0],[0,1,1]]→4,初始新鲜6.",
+    "steps": "两矩阵各9格,原始2/1/1,1/1/0,0/1/1;时间0/1/2,1/2/空,空/3/4. 六感染箭头均真实四向相邻,未穿空格. 分钟0-4frontier分别00;01/10;02/11;21;22,剩余6/4/2/1/0复算.",
+    "complexity": "扫描+BFS O(mn),队列最坏 O(mn),橘子最多入队一次,入队即时标记.",
+    "text": "完整1536×1024,空格与0分钟区别明确、行列坐标及分钟表可读."
+  },
+  "sourceFile": "exec-25963b72-441f-4506-aac1-2785785e9c87.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "eb2eaaebc415dd58b91fc6fa42d6607ad6d2b68b97fa5cca3bb4b862dbe27fec"
+}

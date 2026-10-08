@@ -1,0 +1,19 @@
+{
+  "order": 57,
+  "title": "电话号码的字母组合",
+  "slug": "letter-combinations-of-a-phone-number",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"57  电话号码的字母组合\". Subtitle: \"按数字的位置选字母, 两列选择形成全部组合\".\nInput 'digits = \"23\"'. Mapping \"2 → a,b,c\" and \"3 → d,e,f\". Two labeled columns \"第1个数字2\" and \"第2个数字3\"; zero-based digit positions0/1 only if used.\nMain concrete branch diagram: empty path\"\" chooses a/b/c from2. a has THREEchildren ad,ae,af by appendingd/e/f. b haschildren bd,be,bf. c haschildren cd,ce,cf. Correct9leaf labels, each leaf exactly2letters; arrowtips connect correct prefix parent. Render three clean groups rather than dense abstract tree.\nShow exact3×3 answer table rowsa/b/c and columnsd/e/f, entries ad/ae/af;bd/be/bf;cd/ce/cf. No transpose errors.\nDetail backtracking sequence: \"a\"→\"添加d\"→\"ad,记录\"→\"撤销d\"→\"a\"→\"添加e\"→\"ae,记录\". \"当前位置字符全部尝试后, 返回上一位\".\nResult \"3×3 = 9 个组合\". Exact output '[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]'. Note \"空输入返回[]\".\nFooter \"时间 O(n·4^n)    辅助空间 O(n)\". \"n为数字个数; 每位最多4字母,可变字符路径+递归栈O(n),不含输出\". Example23 has3×3 but worst includes7/9fourletters; not falsely eachdigitfour.",
+  "edits": [],
+  "review": {
+    "example": "digits=\"23\"→ad/ae/af/bd/be/bf/cd/ce/cf共9;空输入→[].",
+    "steps": "位置0数字2映射a/b/c,位置1数字3映射d/e/f. 三前缀各连三叶共9,全3×3表按行列正确. a添加d→ad记录→撤销d回a→添加e→ae记录,路径状态准确.",
+    "complexity": "n位每位最多4字母,复制答案 O(n),最坏时间 O(n·4^n),可变字符path与递归栈 O(n),输出不计. 本例只有3×3.",
+    "text": "1536×1024全图,自然第1/2位与下标0/1区分,9组合和字符箭头清楚."
+  },
+  "sourceFile": "exec-9f43427b-7465-45da-8972-e5efe030b6f4.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "8b91025c2612e427bfb20d822d37bdc3c0fb1bcdcb5300675bd19a39402e612b"
+}

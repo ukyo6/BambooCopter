@@ -583,6 +583,7 @@ body:not(.motion-ready) .explain-pip {
 .explain-playback-status::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: #8aacc5; }
 .explain-playback-status.is-paused::before { background: #66717a; }
 .explain-error { padding: 8px 16px; background: #292422; color: #d6b5a1; font-size: 11px; }
+.explain-error button { margin-left: 8px; padding: 3px 7px; border: 1px solid #675448; border-radius: 4px; background: transparent; color: inherit; font: inherit; cursor: pointer; }
 .explain-pip button, .explain-pip a, .explain-pip select, .explain-pip textarea, .explain-pip input { -webkit-app-region: no-drag; }
 .explain-pip-view { position: relative; flex: 0 1 auto; min-height: 0; overflow: auto; background: #1c1c1c; }
 .explain-pip-handle {
@@ -763,6 +764,23 @@ body.darwin .chat-titlebar {
   letter-spacing: -0.01em;
 }
 .chat-title svg { display: block; flex: none; }
+.agent-provider-select {
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 4px 2px;
+  min-width: 0;
+  max-width: 100%;
+  cursor: pointer;
+}
+.agent-provider-select:hover { background: var(--hover); }
+.agent-provider-select:focus-visible { outline: 1px solid var(--muted); outline-offset: 2px; }
+.agent-provider-select:disabled,
+.composer-tools select:disabled,
+.fast-toggle:disabled,
+.send:disabled { opacity: 0.5; cursor: default; }
 .chat-title span {
   overflow: hidden;
   text-overflow: ellipsis;

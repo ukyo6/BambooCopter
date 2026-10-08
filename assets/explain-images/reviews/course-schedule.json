@@ -1,0 +1,19 @@
+{
+  "order": 53,
+  "title": "课程表",
+  "slug": "course-schedule",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"53  课程表\". Subtitle: \"先修课指向后续课, 不断移除入度为0的课程\".\nExplain mapping \"[a,b] 表示先学b, 有向边 b → a\". Two concrete source examples.\nMain upper successful example \"numCourses=2, prerequisites=[[1,0]]\". Draw ONLY two nodes0 and1, actual arrow0→1. Initial indegree array indexedcourse0/1 values[0,1], queue[0], learned0.\nThree state table exact \"状态 | 入度[0,1] | 队列 | 已学数\": \"初始 | [0,1] | [0] | 0\";\"学完0, 删除0→1 | [0,0] | [1] | 1\";\"学完1 | [0,0] | [] | 2\". Result \"2 == numCourses → true\". Removing edge must shown dashed/faded, no remaining active arrow after deletion.\nLower cycle example \"numCourses=2, prerequisites=[[1,0],[0,1]]\". Draw two nodes0 and1, TWO separate actual directed curved arrows0→1 and1→0, arrowheads correct. \"入度 [1,1], 初始队列[], 已学数0\". \"没有入度0课程可学, 0<2 → false\".\nRule \"入度减为0时才入队; 最终已学数==课程数才成功\". \"若未全部移除, 剩余依赖含环\". No DFS coloring or sorting whole prerequisite rows.\nFooter \"时间 O(V+E)    辅助空间 O(V+E)\". \"V为课程数,E为先修关系数; 邻接表+入度数组+队列\".",
+  "edits": [],
+  "review": {
+    "example": "numCourses2,[[1,0]]→true;[[1,0],[0,1]]→false.",
+    "steps": "图箭头[1,0]0→1,[0,1]1→0方向正确. 无环表初始度[0,1]队[0]已学0,处理0后度[0,0]队[1]已学1,处理1后队[]已学2;删除边变虚线再消失. 环图两独立反向箭头,度[1,1]队[],已学0.",
+    "complexity": "每课程每边处理一次 O(V+E),邻接表与入度队列辅助 O(V+E),V课程数E关系数.",
+    "text": "1536×1024全图,先修方向、队列表、两个布尔结果与环箭头清楚."
+  },
+  "sourceFile": "exec-8c7bf3bd-605b-4f20-9379-d6e363ba37c8.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "eda97ce67c31d0493615889d0b02b5a4f57c636cdae32bdb07fbcfd46243f0a4"
+}

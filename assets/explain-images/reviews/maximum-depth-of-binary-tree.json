@@ -1,0 +1,19 @@
+{
+  "order": 37,
+  "title": "二叉树的最大深度",
+  "slug": "maximum-depth-of-binary-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"37  二叉树的最大深度\". Subtitle: \"子树先返回深度, 父节点取较大值再加 1\".\nInput: \"root = [3,9,20,null,null,15,7]\".\nDraw EXACT 5-node tree: 3 is root, left child9 right child20; 20 left child15 right child7; 9,15,7 leaves. Only four actual edges. Distinguish node value inside circle from subtree depth displayed under circle.\nSection1: \"空节点深度 = 0\". Leaves9,15,7 each return \"1 + max(0,0) = 1\". Show tiny null labels only as illustration to leaf9, not new numbered nodes.\nSection2: upward arrows from15 and7 (each depth1) meet at20. Formula \"depth(20) = 1 + max(1,1) = 2\".\nSection3: upward arrows from9 depth1 and20 depth2 meet at3. Formula \"depth(3) = 1 + max(1,2) = 3\". Highlight one exact longest path3→20→15. Label \"3 个节点, 2 条边\", depth counts NODES.\nProminent result \"最大深度 = 3\". Rule \"depth(node) = 1 + max(depth(left), depth(right))\"; \"空树 → 0\".\nFooter: \"时间 O(n)    辅助空间 O(h)\". \"n 为节点数, h 为树高; 递归栈最坏 O(n)\". Accurate topology and all return arrows.",
+  "edits": [],
+  "review": {
+    "example": "root=[3,9,20,null,null,15,7], 最大深度为 3; 空树为 0.",
+    "steps": "三幅树均只有 3→9、3→20、20→15、20→7 四条真实边. 叶深度均 1, depth(20)=1+max(1,1)=2, depth(3)=1+max(1,2)=3. 最长高亮路径只有两条边、三个节点.",
+    "complexity": "时间 O(n), 每节点处理一次; 辅助空间为递归栈 O(h), 最坏退化树 O(n).",
+    "text": "中文标题、叶子空节点、深度数字和公式清楚, 1536×1024, 节点值与深度标签区分."
+  },
+  "sourceFile": "exec-1a324edc-1698-46c8-9266-18fbc2797c85.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "5da4832ad4783546f5ac9f1183983e0d6ede738485f1c22669f5c3fde6b91a43"
+}

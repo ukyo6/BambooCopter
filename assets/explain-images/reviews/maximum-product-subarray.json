@@ -1,0 +1,19 @@
+{
+  "order": 88,
+  "title": "乘积最大子数组",
+  "slug": "maximum-product-subarray",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"88  乘积最大子数组\". Subtitle \"负数会交换旧最大与旧最小的乘积顺序\". Input \"nums = [2,3,-2,4]\". Highlight continuous first two values 2 and 3, label indexes 0,1,2,3. Output immediately \"最大乘积 6, 来自连续子数组 [2,3]\".\nSection1 state definition \"maxEnd: 以当前项结尾的最大乘积\", \"minEnd: 以当前项结尾的最小乘积\", \"answer: 扫描至今的全局最大值\". Initialization exact \"i=0: maxEnd=minEnd=answer=2\".\nSection2 central state table four rows, headings \"i\", \"x=nums[i]\", \"三候选: x, 旧maxEnd×x, 旧minEnd×x\", \"新maxEnd\", \"新minEnd\", \"answer\".\nExact rows:\n0 | 2 | 初始化 | 2 | 2 | 2\n1 | 3 | [3,6,6] | 6 | 3 | 6\n2 | -2 | [-2,-12,-6] | -2 | -12 | 6\n3 | 4 | [4,-8,-48] | 4 | -48 | 6\nNo other computed rows.\nSection3 focus i=2, x=-2. Before \"旧maxEnd=6, 旧minEnd=3\". Two separate simple relations \"6 × (-2) = -12\" and \"3 × (-2) = -6\", note \"乘负数后, 两个旧状态的大小次序对调\". Compare exact three candidates \"-2, -12, -6\": select maximum \"-2\" and minimum \"-12\", global answer remains6. Show simultaneous selection from the same candidate set with no crossing arrows. Warning \"先保存旧 maxEnd 和旧 minEnd, 再同时计算新状态; 不能用已更新的 maxEnd 计算 minEnd\".\nSmall formulas \"候选 C = {x, 旧maxEnd×x, 旧minEnd×x}\", \"新maxEnd=max(C), 新minEnd=min(C)\", \"answer=max(answer, 新maxEnd)\".\nResult \"最终以4结尾的最大乘积是4, 全局最大仍是6\", \"连续子数组 [2,3], 2×3=6\". This must not confuse maxEnd4 with global6.\nFooter \"时间 O(n)    辅助空间 O(1)\", \"n 为数组长度. 每项只保留最大、最小乘积及全局答案.\"\nAll text accurate and readable. No full solution code; no added numerical examples.",
+  "edits": [],
+  "sourceFile": "exec-66e831a5-b849-4871-b989-eb70c81fc1ab.png",
+  "review": {
+    "example": "nums=[2,3,-2,4], 最大乘积6来自连续子数组[2,3]. 最后maxEnd=4, 全局answer仍为6.",
+    "steps": "独立复算首项max=min=answer=2; 后三项候选分别[3,6,6]、[-2,-12,-6]、[4,-8,-48]. 新max依次6,-2,4, 新min依次3,-12,-48, answer均6. 图中i2从旧max6、旧min3同轮得-12、-6, 与单项-2共同选择新max=-2、新min=-12. 实际两个候选集箭头准确分别落在max/min选择框.",
+    "complexity": "n为数组长度, 每项恒定次数计算三个候选并维护maxEnd、minEnd、answer, 时间O(n), 辅助空间O(1). 图上明确先保存两个旧状态再同时更新, 没有读取已更新maxEnd来算minEnd.",
+    "text": "项目实际PNG以original复核. 数组下标与数值、连续范围0..1、四行状态、负数乘法、同步更新警示及O(n)/O(1)均清晰. 初始化单独标注, 全局答案与当前位置结尾最大乘积明确区分."
+  },
+  "width": 1536,
+  "height": 1024,
+  "sha256": "01d540ff4984379a099360360a4df10b4d035d1d9d1de075faab423debe1bd97"
+}

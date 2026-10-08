@@ -1,0 +1,19 @@
+{
+  "order": 42,
+  "title": "将有序数组转换为二叉搜索树",
+  "slug": "convert-sorted-array-to-binary-search-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"42  将有序数组转换为二叉搜索树\". Subtitle: \"每段取中点, 左右区间递归建树\".\nInput \"nums = [-10,-3,0,5,9]\". Five exact array cells separate index row0,1,2,3,4.\nSection1 use inclusive interval [l,r], \"mid = floor((l+r)/2)\". Highlight index2 value0 as root. Show left subarray indexes[0,1] values[-10,-3], right[3,4] values[5,9]. Accurate bracket arrows split at0 value.\nSection2 small interval table exact:\n\"[0,4] | 2 | 0 | 整树根\"\n\"[0,1] | 0 | -10 | 0 的左孩子\"\n\"[1,1] | 1 | -3 | -10 的右孩子\"\n\"[3,4] | 3 | 5 | 0 的右孩子\"\n\"[4,4] | 4 | 9 | 5 的右孩子\".\nHeaders \"区间\" \"mid 下标\" \"节点值\" \"接入位置\". \"空区间 l>r → null\".\nSection3 draw exact final five-node tree: root0, LEFTchild -10 and RIGHTchild5; -10 has only RIGHTchild -3; 5 has only RIGHTchild9. Arrows to -3 and9 MUST slope down-right from their own parents, label right, no left children at these nodes. Exact4 real edges. \"返回 [0,-10,5,null,-3,null,9]\". \"左右子树高度差不超过1; 中序仍是[-10,-3,0,5,9]\". Different balanced trees are accepted.\nFooter \"时间 O(n)    辅助空间 O(log n)\". \"n 为数组长度; 按下标递归, 不复制子数组; 不含 O(n) 新树空间\".",
+  "edits": [],
+  "review": {
+    "example": "[-10,-3,0,5,9]→[0,-10,5,null,-3,null,9], 属于允许的平衡 BST.",
+    "steps": "五个数组值及下标0-4核对; 闭区间表mid依次2/0/1/3/4. 真实边0.left=-10、0.right=5、-10.right=-3、5.right=9, 两个单孩子边均斜向右下. 中序与输入一致, 子树高度差≤1.",
+    "complexity": "下标递归不切片, n个元素建节点时间 O(n); 栈高 O(log n), O(n)新树不计辅助空间.",
+    "text": "表格、区间括号、floor公式、右孩子标签与输出清楚, PNG1536×1024."
+  },
+  "sourceFile": "exec-ff225701-90a7-451c-9862-03d110345b88.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "23ab912302892af9aad827947c57f1a9d2100cacace9dd26464c57bd66894466"
+}

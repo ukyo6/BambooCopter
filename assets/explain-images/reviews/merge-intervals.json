@@ -1,0 +1,21 @@
+{
+  "order": 14,
+  "title": "合并区间",
+  "slug": "merge-intervals",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"14  合并区间\". Subtitle \"先按起点排序, 再合并重叠区间\". Input intervals=[[1,3],[2,6],[8,10],[15,18]].\nMain horizontal number line 0..18 accurately scaled, 4 separated bars at exact endpoints [1,3],[2,6],[8,10],[15,18]. Closed endpoints. Top two overlap from2 to3.\nStep1 \"按 start 升序排序\", input already sorted. Step2 scan state table:\ncurrent [1,3], next [2,6], 2≤3, merge [1,max(3,6)]=[1,6].\ncurrent [1,6], next [8,10], 8>6, save[1,6], start[8,10].\ncurrent [8,10], next [15,18], 15>10, save[8,10], start[15,18].\nFinish save[15,18]. Result three bars [1,6],[8,10],[15,18] on same 0..18 scale.\nRule \"next.start ≤ current.end 就重叠; 终点取 max\". Tiny endpoint example [1,4]+[4,5]→[1,5].\nFooter \"时间 O(n log n)    辅助空间 O(log n)\" \"n 为区间数; 原地比较排序使用 O(log n) 栈, 不计返回结果 O(n)\". No invented output.",
+  "edits": [
+    "Fix only the top \"输入区间\" number-line diagram. It must show EXACTLY four distinct continuous closed interval bars, at four visually distinct y levels if necessary. Green [1,3] continuous from tick1 to tick3. Amber [2,6] must be ONE continuous horizontal segment starting directly above tick2 and ending directly above tick6; it currently incorrectly splits into small[2,3] and long[3,6]. Delete the stray short[2,3] and redraw correct continuous [2,6] below the green [1,3] so their overlap is obvious. Keep [8,10] and[15,18] endpoints directly above their correct ticks. Keep all other labels, tables, lower result diagram, palette, layout and complexity unchanged. No extra interval bar."
+  ],
+  "review": {
+    "example": "输入[[1,3],[2,6],[8,10],[15,18]], 输出[[1,6],[8,10],[15,18]]. 边界[1,4]与[4,5]合并为[1,5].",
+    "steps": "修图后4个连续输入区间, [2,6]真实端点落在2和6. 状态表2<=3、8>6、15>10正确. 下方3条结果端点与顺序正确.",
+    "complexity": "时间O(n log n). 图中原地比较排序栈空间O(log n), 辅助空间O(log n), 不计返回结果O(n).",
+    "text": "中文清晰, 区间括号及max公式正确, 刻度0-18完整."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "02f90a2b175a11aa6fe62538a20a762fa7a0f14f221590fb13061dbc7966a6bd",
+  "sourceFile": "exec-2037b84f-28a7-4001-a170-2fe2b72fe0ae.png"
+}

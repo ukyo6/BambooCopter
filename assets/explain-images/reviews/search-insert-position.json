@@ -1,0 +1,19 @@
+{
+  "order": 63,
+  "title": "搜索插入位置",
+  "slug": "search-insert-position",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp readable Chinese sans-serif, balanced whitespace. Landscape 3:2, deep charcoal #171b20 background, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm occupies most canvas. No glossy 3D, decorative arrow, mascot, fake app, play button, watermark or full solution code. Clearly distinguish indexes from values and exclusive endpoints.\nTitle \"63  搜索插入位置\".\nSubtitle \"答案 = 第一个 ≥ target 的下标\".\nInput \"nums=[1,3,5,6], target=2\". Immediate result top right \"返回1\".\nSECTION 1 \"左闭右开区间 [l,r)\".\nOne four-cell input array, exact values \"1 3 5 6\", aligned 0-based indexes \"0 1 2 3\". At the right edge outside the array show a simple tick labeled \"r=4, 不访问 nums[4]\". Below explain \"初始 l=0,r=4; mid=⌊(l+r)/2⌋\".\nRule two lines: \"nums[mid] < target → l=mid+1\"; \"nums[mid] ≥ target → r=mid\". Text \"mid可成为答案, 因此相等时仍向左找\".\nSECTION 2 prominent exact trace table titled \"三次比较, 收缩到 [1,1)\".\nColumn headings \"轮次 | 当前[l,r) | mid | nums[mid] | 判断与更新 | 下一[l,r)\".\nExact 3 rows:\n\"1 | [0,4) | 2 | 5 | 5≥2, r=2 | [0,2)\"\n\"2 | [0,2) | 1 | 3 | 3≥2, r=1 | [0,1)\"\n\"3 | [0,1) | 0 | 1 | 1<2, l=1 | [1,1)\"\nEach row visually emphasizes the actual mid number and corresponding value; numbers must align with headers.\nA short arrow from final [1,1) to label \"l=r=1, 结束\".\nSECTION 3 \"插入位置为什么是1\".\nRepeat the four input cells values1,3,5,6 with indexes0,1,2,3. Draw ONE vertical pointer arrow labeled \"插入下标1\" pointing EXACTLY to the boundary gap BETWEEN value1 (index0) and value3 (index1). Do not point to value5 or3 center. Place amber target badge \"2\" above the same gap, not inside the existing array. Beneath show \"插入后的有序顺序: [1,2,3,5,6]\" and \"算法只返回下标1, 无需插入或复制数组\".\nSECTION 4 compact result comparison, same original nums:\n\"target=5 → 下标2 (已存在)\"\n\"target=7 → 下标4 (数组末尾之后)\"\n\"target=2 → 下标1 (1与3之间)\".\nFooter \"时间 O(log n)    辅助空间 O(1)\".\nFooter note \"n为数组长度; 每轮候选区间减半, 仅维护 l、r、mid; 当l=r时返回l, 可取0..n\".\nAll trace data, boundary notation and pointer arrow endpoints must be exact. Keep text comfortably readable; do not add decorative arrows or invented examples.",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "e0bfe0ec6cb492a47ddb4b0bb9413d577bdf6bba892470470eb40cf1149dd9d1",
+  "sourceFile": "exec-7cc2db1c-2838-423a-8a2a-8d390a399595.png",
+  "review": {
+    "example": "nums=[1,3,5,6],target2→1;同数组target5→2,target7→4.",
+    "steps": "左闭右开[0,4),mid2值5→r2;[0,2),mid1值3→r1;[0,1),mid0值1→l1;[1,1)返回1. 表格数值与边界逐项核对. r4位于末尾之外,不访问nums4;插入箭头准确指向值1/3间隙,概念结果[1,2,3,5,6]正确.",
+    "complexity": "n为数组长度,每轮候选区间减半,两端及mid迭代维护,时间O(log n),辅助O(1);图的插入顺序仅解释返回下标,算法无需复制或插入数组.",
+    "text": "项目实际1536×1024原图核查,下标与值分行,≥/</floor/[l,r)符号、三次比较和输出可读."
+  }
+}

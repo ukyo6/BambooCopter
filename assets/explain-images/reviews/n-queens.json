@@ -1,0 +1,19 @@
+{
+  "order": 62,
+  "title": "N 皇后",
+  "slug": "n-queens",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp readable Chinese sans-serif. Landscape 3:2. Deep charcoal #171b20 background, warm white text, muted grey secondary text, restrained mint and amber accents. Compact balanced whitespace, main algorithm diagram prominent. No glossy 3D, mascot, decorative arrow, fake UI, watermark, play button or full solution code.\nTitle \"62  N 皇后\". Subtitle \"逐行选一列, 同列或同对角线冲突就跳过\". Input \"n=4\". Immediate result \"Q=2种方案\". Here Q in footer means solution count; on boards letter Q marks queen, avoid mixing.\nRule strip: \"列 c | 主对角线 r-c | 副对角线 r+c\", \"三个占用集合判断冲突; 不同位置但同键值也冲突\".\nSECTION 1 upper left \"失败分支: 前两行选列 [0,2]\".\nOne exact 4×4 board, column headings c=0,1,2,3 and row headings r=0,1,2,3. r0c0 mint Q; r1c2 mint Q; row2 all four cells amber ×; every other cell \".\". No other queens or crossed cells. \nAlongside board concise exact conflicts at row2:\n\"c=0: 同列\"\n\"c=1: 副对角线\"\n\"c=2: 同列\"\n\"c=3: 主对角线\"\nLabel \"第2行没有合法位置, 返回第1行\". Show sets \"cols={0,2}, diag1={0,-1}, diag2={0,3}\".\nSECTION 2 upper right \"回溯 = 撤销最近一次选择\".\nThree horizontal simple states joined ONLY by two short straight action arrows:\n\"按行列号 [0,2]\" → arrow label \"撤销 (1,2)\" → \"按行列号 [0]\" → arrow label \"尝试 (1,3)\" → \"按行列号 [0,3]\".\nText \"撤销时释放 c、r-c、r+c 三个键; 恢复上层后继续枚举\". Text \"本条分支仍可能失败, 搜索还要尝试其他首行位置\". Do not claim [0,3] is a solution.\nSECTION 3 bottom wide \"放满4行才记录, 两个最终解\".\nDisplay two exact separate 4×4 result boards with row and column axes 0,1,2,3. All queens mint Q, empty cells \".\".\nLEFT solution label \"按行列号 [1,3,0,2]\".\nExact rows \". Q . .\", \". . . Q\", \"Q . . .\", \". . Q .\".\nRIGHT solution label \"按行列号 [2,0,3,1]\".\nExact rows \". . Q .\", \"Q . . .\", \". . . Q\", \". Q . .\".\nUnder each show exact board row strings, readable: LEFT '[\".Q..\",\"...Q\",\"Q...\",\"..Q.\"]'; RIGHT '[\"..Q.\",\"Q...\",\"...Q\",\".Q..\"]'.\nNo attack lines on result boards, no extra arrows joining the two solutions. Label \"每行恰有1个Q, 所有列和两类对角线键互异\".\nFooter \"时间 O(n·n! + Q·n²)    辅助空间 O(n)\".\nFooter note \"n为棋盘边长,Q为方案数; 每行扫描n列, 集合平均O(1)判冲突; 完整棋盘输出另需O(Q·n²); 列号路径、占用集合、递归栈O(n), 不含输出\".\nUse ordinary factorial ! and readable superscript squared. Every queen location, set key, conflict reason, arrow endpoint and result string must match.",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "ae7b9faf2d5a9d55162ef4c06bbd85e3de21ecc65501cf3c5d38bfcdc870bc90",
+  "sourceFile": "exec-7ba40539-4088-4c07-88a6-c1c2ec4ffee9.png",
+  "review": {
+    "example": "n=4→2个方案,按行列号[1,3,0,2]及[2,0,3,1],棋盘字符串与题面一致.",
+    "steps": "失败支Q(0,0)、Q(1,2)后r2四列均冲突,c0同列,c1副对角线,c2同列,c3主对角线. cols{0,2},diag1{0,-1},diag2{0,3}准确. [0,2]→撤销(1,2)→[0]→尝试(1,3)→[0,3],没有把中间支称作解. 两个棋盘各4个Q、坐标和字符串逐项核对.",
+    "complexity": "n棋盘边长,Q方案数,扫描每行n列+集合平均O(1)判冲突的搜索上界O(n·n!),完整棋盘构造O(Q·n²),总O(n·n!+Q·n²). 列号路径、三个占用集合和递归栈O(n),不含O(Q·n²)输出.",
+    "text": "项目实际1536×1024原图核查,棋盘轴均0..3,Q/点/×与集合负数可读,两个回溯箭头准确落点,复杂度公式和输出口径一致."
+  }
+}

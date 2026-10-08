@@ -163,16 +163,24 @@ function createWindow() {
   win.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
 }
 
-function activeLink(links) {
-  return links.find((link) => link.id === 'codex') || null;
+function activeLink(links, provider) {
+  return links.find((link) => link.id === provider) || null;
+}
+
+function agentSettingKey(provider, name) {
+  return provider === 'codex' ? name : `${provider}.${name}`;
 }
 
 async function agentState() {
   const links = detectLinks();
-  const link = activeLink(links);
-  if (link && api.getSetting('provider') !== link.id) api.setSetting('provider', link.id);
+  let provider = api.getSetting('provider');
+  if (!['codex', 'deepseek'].includes(provider)) {
+    provider = links.find((link) => link.id === 'codex')?.id || links[0]?.id || 'codex';
+    api.setSetting('provider', provider);
+  }
+  const link = activeLink(links, provider);
   let models = [];
-  let modelError = '';
+  let modelError = link ? '' : `没有找到 ${provider === 'deepseek' ? 'DeepSeek' : 'Codex'} CLI`;
   if (link) {
     const cacheKey = `${link.id}:${link.path}`;
     if (modelCache.key === cacheKey && Date.now() - modelCache.at < 10 * 60 * 1000) {
@@ -188,34 +196,37 @@ async function agentState() {
       }
     }
   }
-  let model = api.getSetting('model');
+  const modelKey = agentSettingKey(provider, 'model');
+  let model = api.getSetting(modelKey);
   if (models.length > 0 && !models.some((item) => item.id === model)) {
     model = models[0].id;
-    api.setSetting('model', model);
+    api.setSetting(modelKey, model);
   }
   const current = models.find((item) => item.id === model);
   const efforts = current?.efforts || [];
-  let reasoning = api.getSetting('reasoning');
+  const reasoningKey = agentSettingKey(provider, 'reasoning');
+  let reasoning = api.getSetting(reasoningKey);
   if (efforts.length > 0 && !efforts.includes(reasoning)) {
     reasoning = efforts.includes(current.defaultEffort) ? current.defaultEffort : efforts[0];
-    api.setSetting('reasoning', reasoning);
+    api.setSetting(reasoningKey, reasoning);
   }
   if (efforts.length === 0) reasoning = '';
   return {
     links,
-    provider: link ? link.id : '',
+    provider,
     model: model || '',
     models,
     modelError,
     reasoning: reasoning || '',
-    fast: api.getSetting('fast') === '1',
+    fast: provider === 'codex' && api.getSetting('fast') === '1',
+    fastSupported: provider === 'codex',
   };
 }
 
 async function requireAgent() {
   const state = await agentState();
   const link = state.links.find((item) => item.id === state.provider);
-  if (!link) throw new Error('没有找到 Codex');
+  if (!link) throw new Error(state.modelError || '没有找到所选 CLI');
   if (!state.model) throw new Error(state.modelError || '没有可用模型');
   return { link, model: state.model, reasoning: state.reasoning, fast: state.fast };
 }
@@ -310,10 +321,14 @@ app.whenReady().then(async () => {
   api = database;
   installCatalog();
   handle('agent:state', () => agentState());
-  handle('agent:select', async ({ model, reasoning, fast }) => {
-    if (model) api.setSetting('model', model);
-    if (reasoning) api.setSetting('reasoning', reasoning);
-    if (typeof fast === 'boolean') api.setSetting('fast', fast ? '1' : '0');
+  handle('agent:select', async ({ provider, model, reasoning, fast }) => {
+    const selected = provider || api.getSetting('provider') || 'codex';
+    if (!['codex', 'deepseek'].includes(selected)) throw new Error('不支持的 CLI');
+    if (provider && !activeLink(detectLinks(), selected)) throw new Error(`没有找到 ${selected === 'deepseek' ? 'DeepSeek' : 'Codex'} CLI`);
+    if (provider) api.setSetting('provider', selected);
+    if (model) api.setSetting(agentSettingKey(selected, 'model'), model);
+    if (reasoning) api.setSetting(agentSettingKey(selected, 'reasoning'), reasoning);
+    if (typeof fast === 'boolean' && selected === 'codex') api.setSetting('fast', fast ? '1' : '0');
     return agentState();
   });
   handle('problems:list', () => listProblemRows());

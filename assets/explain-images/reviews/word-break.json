@@ -1,0 +1,19 @@
+{
+  "order": 86,
+  "title": "单词拆分",
+  "slug": "word-break",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"86  单词拆分\". Subtitle \"单词存在, 起点也必须可达\". Input \"s = catsandog\", \"wordDict = [cat, cats, sand, and, dog]\". Output clearly \"false\".\nSection 1: Define \"dp[i]: 前 i 个字符能否拆分\", \"dp[0] = true\", \"边界 i 对应前缀 s[0..i)\". Array of nine character cells c,a,t,s,a,n,d,o,g, label indexes 0,1,2,3,4,5,6,7,8. Show final DP table with exactly ten columns boundary i=0,1,2,3,4,5,6,7,8,9 and dp values T,F,F,T,T,F,F,T,F,F. Legend \"T=true, F=false\". Highlight boundary0,3,4,7 mint and boundary9 amber.\nSection 2: TWO SEPARATE left-to-right dependency paths, no crossing arrows. Path A \"0\" → \"3\" → \"7\", first arrow label \"cat = s[0..3)\", second \"sand = s[3..7)\". Path B \"0\" → \"4\" → \"7\", arrow labels \"cats = s[0..4)\" and \"and = s[4..7)\". Caption \"都只能到边界 7, 剩余 og 无法拼成\".\nSection 3: A simple separate blocked relation \"6\" → \"9\", label above arrow \"dog = s[6..9)\", boundary6 box explicitly \"dp[6]=false\", boundary9 \"dp[9]=false\". Arrow visibly marked blocked, not successful. Text \"dog 在字典中, 但前缀 catsan 不可拆分\", \"仅匹配单词不够, 它的起点必须可达\".\nFormula exact \"dp[i] = OR(dp[j] AND s[j..i)在字典中), 0≤j<i\". Result \"末尾边界 9 不可达, 返回 false\".\nFooter exact \"时间 O(n³ + S)    辅助空间 O(n + S)\" and \"n 为字符串长度, S 为字典字符总数. 全切分 DP 枚举 O(n²) 个区间; 构造子串并哈希按长度计. dp、字典及当前子串占 O(n+S).\"\nDo not show full solution code. Keep Chinese labels short and readable. All interval notation half-open, indexes start at0, DP i counts characters. Never mix dp7 with character index7. Only display specified examples.",
+  "edits": [],
+  "sourceFile": "exec-a5bf71ea-3d33-4d9b-8dcd-bbc7b791a004.png",
+  "review": {
+    "example": "s=catsandog, wordDict=[cat,cats,sand,and,dog], 输出false. 字符下标0..8与前缀边界0..9分开标注.",
+    "steps": "独立DP可达边界为0、3、4、7, 最终T,F,F,T,T,F,F,T,F,F. 图中0→3(cat)→7(sand)及0→4(cats)→7(and)均准确. dog=s[6..9), 前缀catsan不可拆分, dp6=false阻断6→9, dp9=false. 所有箭头实际落点与半开区间一致.",
+    "complexity": "n为字符串长度, S为字典字符总数. 全切分枚举O(n²)候选, 每个子串构造及哈希按长度计, 最坏时间O(n³+S); dp、字典与当前子串辅助O(n+S). 未将字符串查字典误当无条件常数成本.",
+    "text": "项目实际PNG以original尺寸复核. 9个字符、10个DP边界、两条绿色可行路径和6→9阻断标识均清晰. 公式OR范围0≤j<i、半开区间、false结果和复杂度可读."
+  },
+  "width": 1536,
+  "height": 1024,
+  "sha256": "fbcb8b2ba5080ceb1083e2c2cb94949558f50ab1d2ca535c2ee2e3af5c6be040"
+}

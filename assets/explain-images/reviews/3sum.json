@@ -1,0 +1,18 @@
+{
+  "order": 6,
+  "title": "三数之和",
+  "slug": "3sum",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"06  三数之和\". Subtitle: \"排序 + 固定一个数 + 双指针\".\nInput: \"nums = [-1, 0, 1, 2, -1, -4]\". Sorted row: \"[-4, -1, -1, 0, 1, 2]\" with indexes0-5.\nStep1: \"固定 i = 1，nums[i] = -1\". Highlight index1amber. left=2, right=5 highlight mint cells values-1and2. Exact formula \"-1 + (-1) + 2 = 0\"; record \"[-1, -1, 2]\".\nStep2: \"命中后，两端内移并跳过重复值\". Same sorted row, fixedi=1, left=3value0 and right=4value1. Exactformula \"-1 + 0 + 1 = 0\"; record \"[-1, 0, 1]\".\nStep3: three concise direction rules \"sum < 0 → left++\", \"sum > 0 → right--\", \"sum = 0 → 记录，并移动两端\". Show nextfixedi=2 also-1, label \"与上一个固定值相同，跳过\". Never skip all equal values before they can form [-1,-1,2].\nResult: \"[[-1,-1,2], [-1,0,1]]\". Rule \"三个位置不同，答案去重\".\nFooter: \"时间 O(n²)    双指针辅助空间 O(1)\". \"排序辅助空间取决于实现；按 O(n) 上界计，不含结果；r 个三元组另占 O(r)\". Do not claim Arrays.sort primitive always uses O(log n).",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "c808051b899df852b3e000f91215ba313e99758e1f69d1ce0c671e99413e66a4",
+  "review": {
+    "example": "[-1,0,1,2,-1,-4] -> [[-1,-1,2],[-1,0,1]]",
+    "steps": "排序[-4,-1,-1,0,1,2]; i1,L2,R5命中第一组, L3,R4命中第二组; sum<0 left++,sum>0 right--; 固定i2重复值跳过; 按数值去重",
+    "complexity": "O(n²); O(n). n 为数组长度. 排序后固定一个数并用双指针扫描; 双指针本身额外 O(1). 空间按常见排序实现的 O(n) 辅助空间上界计, 使用 O(log n) 栈的原地排序可降低该开销. 不含结果; r 个三元组另占 O(r).",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

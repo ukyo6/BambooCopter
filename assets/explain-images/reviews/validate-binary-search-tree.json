@@ -1,0 +1,19 @@
+{
+  "order": 43,
+  "title": "验证二叉搜索树",
+  "slug": "validate-binary-search-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"43  验证二叉搜索树\". Subtitle: \"每个节点都要满足祖先传下来的严格上下界\".\nUse concrete counterexample input \"root = [5,1,7,null,null,4,8]\". This is a chosen illustrative example matching the problem rules. Main exact5-node tree root5 LEFT1 RIGHT7; 7 LEFT4 RIGHT8. Four true edges. Highlight node4 amber/red.\nVisual step1 root5 gets \"(-∞,+∞)\". Valid5. Step2 child1 gets \"(-∞,5)\", valid1; child7 gets \"(5,+∞)\", valid7. Step3 children of7: node4 gets \"(5,7)\", FAIL because \"4 ≤ 5\"; node8 gets \"(7,+∞)\", valid8. Place each strict interval next to correct node and arrows along actual parent-child edges. It is fine to illustrate node8 bound even though actual short circuit can stop at4.\nSmall exact comparison \"4 < 7 虽满足父节点, 但 4 > 5 不成立\". \"右子树所有节点都必须大于祖先5\".\nResult prominent \"返回 false\". Small valid example tree[2,1,3] with exact root2 left1 right3, label \"1 < 2 < 3 → true\".\nRule \"(low,high) 为开区间; 左子树 (low,v); 右子树 (v,high)\". \"相等也不合法\". \"边界用 ±∞ 或 64 位数, 避免32位溢出\".\nFooter \"时间 O(n)    辅助空间 O(h)\". \"n 为节点数, h 为树高; 递归栈最坏 O(n)\". Trees must have actual accurate edges, all intervals open.",
+  "edits": [],
+  "review": {
+    "example": "说明用反例[5,1,7,null,null,4,8]→false, 源题示例[2,1,3]→true.",
+    "steps": "主树5左1右7,7左4右8,各四真实边. 区间根(-∞,+∞)、1(-∞,5)、7(5,+∞)、4(5,7)、8(7,+∞); 箭头和区间均落在正确节点. 4≤5违反祖先下界, 相等同样失败.",
+    "complexity": "范围递归最坏全树一次 O(n), 调用栈 O(h), 退化最坏 O(n).",
+    "text": "全尺寸1536×1024核对全部严格括号、∞、比较符号、有效/无效与边界类型说明, 可读."
+  },
+  "sourceFile": "exec-65835a97-1f1d-4221-8c43-ba91b4cebc79.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "34857cea0dfea3793f1a08d9d0f02526d9d1e60c36b87b7ba481dda9e162577e"
+}

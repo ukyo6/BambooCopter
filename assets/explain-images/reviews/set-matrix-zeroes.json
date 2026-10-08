@@ -1,0 +1,19 @@
+{
+  "order": 18,
+  "title": "矩阵置零",
+  "slug": "set-matrix-zeroes",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"18  矩阵置零\". Subtitle \"第一行、第一列做标记, 先保存它们原本是否有零\".\nInput matrix=[[1,1,1],[1,0,1],[1,1,1]]. Draw four exact3×3 matrices in reading order with row/column indices0,1,2.\nStage1 original rows111 /101 /111. \"首行有零=false, 首列有零=false\".\nStage2 scan internal zero at(1,1), write markers(1,0)=0 and(0,1)=0. Exact marked matrix rows101 /001 /111. Amber highlight original zero(1,1), mint marker cells(0,1),(1,0). Clearly distinguish original zero from marker.\nStage3 \"按标记清零内部\". Preserve border markers, exact intermediate rows101 /000 /101. Cell(1,2)zero fromrow marker, (2,1)zero fromcolumn marker. (2,2)stays1. Show clean straight row/column guides that land only at corresponding cells.\nStage4 \"最后按两个原始布尔值处理首行首列\". Both false, no wholesale clear. Final rows101 /000 /101. Result [[1,0,1],[0,0,0],[1,0,1]].\nRule \"不要边发现零边整行整列清零, 新零会污染判断\". Footer \"时间 O(mn)    辅助空间 O(1)\" \"m 为行数, n 为列数; 只额外保存两个布尔值\". No extra cells, no inferred boundary-zero example.",
+  "edits": [],
+  "review": {
+    "example": "输入[[1,1,1],[1,0,1],[1,1,1]], 输出[[1,0,1],[0,0,0],[1,0,1]].",
+    "steps": "四个矩阵都是3x3, 每格与行列索引逐一核对. 标记后101/001/111, 内部清零后101/000/101. 首行首列原始false, 不整行清零. 箭头分别指向(1,2)和(2,1), (2,2)保留1.",
+    "complexity": "时间O(mn), 辅助空间O(1), m行n列, 仅常数个标志与循环下标.",
+    "text": "original全图中文与两个false清晰, 原始零及标记颜色图例准确, 输出矩阵可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "2130c0bec4ca3c88a23ff2b0fb0ce6e66dc61ac604e8195440f175972c556a45",
+  "sourceFile": "exec-13d1bb48-6cd1-45d8-b651-0799b16e9f98.png"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 40,
+  "title": "二叉树的直径",
+  "slug": "diameter-of-binary-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"40  二叉树的直径\". Subtitle: \"向上返回单边深度, 用左右深度之和更新直径\".\nInput \"root = [1,2,3,4,5]\".\nLarge exact five-node tree root1 left2 right3; 2 left4 right5; no other children. Highlight path4→2→1→3, exactly THREE actual edges and FOUR nodes. Prominent result \"直径 = 3 条边\".\nSection1 leaves4,5,3 each \"深度 = 1\", null depth0. Section2 node2: \"左深度 1, 右深度 1\"; \"候选直径 = 1 + 1 = 2\"; \"向上返回深度 = 1 + max(1,1) = 2\". Section3 root1: \"左深度 2, 右深度 1\"; \"候选直径 = 2 + 1 = 3\"; \"向上返回深度 = 1 + max(2,1) = 3\". Use small table rows: node4 L0 R0 candidate0 return1; node5 0 0 0 1; node2 1 1 2 2; node3 0 0 0 1; node1 2 1 3 3. Header distinguish \"节点值\" \"左深度\" \"右深度\" \"候选边数\" \"返回深度\". Table must exact.\nRule \"直径 = 所有节点的 (左深度 + 右深度) 的最大值\". \"深度按节点数, 直径按边数; 最长路径不一定经过根\".\nFooter \"时间 O(n)    辅助空间 O(h)\". \"n 为节点数, h 为树高; 后序递归栈最坏 O(n)\". Avoid confusing 3 node value with output3.",
+  "edits": [],
+  "review": {
+    "example": "root=[1,2,3,4,5], 直径3, 路径4→2→1→3.",
+    "steps": "真实边1→2、1→3、2→4、2→5, 高亮恰三条. 表格后序4/5/2/3/1的 (L,R,候选,返回) 为(0,0,0,1)/(0,0,0,1)/(1,1,2,2)/(0,0,0,1)/(2,1,3,3), 全部复算.",
+    "complexity": "后序每节点一次时间 O(n), 递归栈 O(h), 最坏 O(n). 深度按节点、直径按边.",
+    "text": "五行表、树节点、公式和边数口径清楚, PNG1536×1024. 第二次内置请求成功, 首次网络失败未保留假结果."
+  },
+  "sourceFile": "exec-18c65924-a07c-48e1-9190-7e8b80c92d76.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "db46758a4d0fece78290cefb18b7f3f0eecdd078d8ca7764aead7deb3db8f86d"
+}

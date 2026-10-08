@@ -1,0 +1,21 @@
+{
+  "order": 28,
+  "title": "两数相加",
+  "slug": "add-two-numbers",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"28  两数相加\". Subtitle \"链表头是个位, 逐位相加并传递进位\".\nInput l1=[2,4,3],l2=[5,6,4]. True chains2→4→3→null and5→6→4→null, align correspondingpositions. Labelsunderpositions \"个位\",\"十位\",\"百位\". Explainfirstrepresents342,second465.\nThree-row computationtable: place个位,x2,y5,carryin0,sum7,output7,carryout0; 十位,x4,y6,carryin0,sum10,output0,carryout1; 百位,x3,y4,carryin1,sum8,output8,carryout0. Simple formulas \"sum=x+y+carry\", \"当前位=sum%10\", \"新进位=sum/10取整\". Thin carryarrow onlyfromtenscarryout1tohundredscarryin1. NOTcarryfromones.\nResult newchain7→0→8→null, nodesnewmint, \"逆序链表[7,0,8]代表807\". \"342+465=807\".\nRule \"较短链用0补位; 链表走完后若仍有进位, 再追加节点1\". Footer \"时间 O(max(m,n))    辅助空间 O(1)\" \"m,n为两链长度; 不计新结果链表 O(max(m,n))\". No fullcode.",
+  "edits": [
+    "Fix only the carry explanation below the arithmetic table. The curved amber line incorrectly begins at hundred-place new-carry0. REMOVE the entire curved line/arrow. Replace with a clear short plain-text note centered below table: \"十位的新进位 1 → 百位的输入进位 1\". This arrow is an inline text symbol between labels, not a line pointing to cells. Optionally highlight ONLY the table cells \"十位/新进位\"=1 and \"百位/进位输入\"=1 in matching amber borders. Keep all table numbers, formulas, original/result linked lists, position labels, layout and complexity unchanged."
+  ],
+  "review": {
+    "example": "[2,4,3]表示342,[5,6,4]表示465, 和807对应[7,0,8].",
+    "steps": "三行逐位表输入进位0/0/1, 总和7/10/8, 当前位7/0/8, 新进位0/1/0全部复算一致. 已移除错误进位线, 两个高亮1准确标记十位输出与百位输入. 三条next链方向和位数标签正确.",
+    "complexity": "时间O(max(m,n)), 辅助空间O(1), 输出链表O(max(m,n))另计, m/n为输入节点数.",
+    "text": "original全图中文与乘余除法公式清晰, 进位语义及逆序整数关系准确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "292cbc80ecd8f6b836d03259925259fd2c6dbd8f94b5d6e7e7cb9c7e7f570e15",
+  "sourceFile": "exec-6d2f8fed-28a5-47c2-ab57-9779ea43b2b3.png"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 68,
+  "title": "寻找两个正序数组的中位数",
+  "slug": "median-of-two-sorted-arrays",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"68  寻找两个正序数组的中位数\". Subtitle \"二分切分, 让左右两半顺序正确\". Input \"A=[1,2], B=[3,4]\". Show two partition diagrams with each array exactly two value cells. \"左半共2个元素; i+j=2\". Step1 i=1,j=1: A left[1]|right[2], B left[3]|right[4], boundary Aleft1,Aright2,Bleft3,Bright4. Exact comparison \"3 > 2, B左边太大, A切分右移\". Step2 i=2,j=0: A left[1,2]|right为空, B left为空|right[3,4]. Label missing-left boundary -∞ and missing-right boundary +∞. \"max(2,-∞)=2 ≤ min(+∞,3)=3\". Result \"(2+3)/2 = 2.5\". Small odd rule \"总长度为奇数: 返回左半最大值\". Footer \"时间 O(log(min(m,n)+1))    辅助空间 O(1)\" and \"m,n 为数组长度, 只在较短数组二分, 无须合并\". No falsely portray merging as algorithm.",
+  "edits": [],
+  "review": {
+    "example": "A=[1,2],B=[3,4]的中位数为2.5, 与题面示例2相符.",
+    "steps": "切分i=1,j=1时B左3大于A右2, 移动A切分至i=2,j=0. 左侧[1,2],右侧[3,4], 空边界使用±∞, max左2≤min右3, (2+3)/2=2.5.",
+    "complexity": "m,n为数组长度. 较短数组切分二分O(log(min(m,n)+1)), 常量边界辅助空间O(1).",
+    "text": "切分线位置、空半区与±∞对应准确, 2.5结果和奇偶规则可读, 表示空位置的框未被当作数组元素."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "474c56782c29cc4725fd3e645ca9567b9c6eea4dbab6fa5853138a5b48bab6c0",
+  "sourceFile": "exec-98bbc9c1-95d4-46c0-9f7e-5326f04ee895.png"
+}

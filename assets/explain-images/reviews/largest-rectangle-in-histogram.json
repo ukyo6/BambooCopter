@@ -1,0 +1,22 @@
+{
+  "order": 73,
+  "title": "柱状图中最大的矩形",
+  "slug": "largest-rectangle-in-histogram",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"73  柱状图中最大的矩形\". Subtitle \"遇到更矮柱子, 结算已弹柱子的宽度\". Input \"heights=[2,1,5,6,2,3]\". Main exact6 adjacent width1 bars heights2,1,5,6,2,3 with indexes0-5, ticks height1-6. Emphasize rectangle covering barsindex2and3, height5,width2, area10, top at5(not6). Main stack snapshot i=4,height2, beforepop stackbottom→top[1,2,3]. Pop3(height6), remainingtop2, width=4-2-1=1, area6. Pop2(height5), remainingtop1, width=4-1-1=2, area10. Show boundary index1 height1 and rightboundaryindex4 height2 with arrows \"左右第一个更矮\". Final \"最大面积=10\". Rule \"宽度 = 当前下标 - 弹出后的栈顶 - 1; 栈空时左界=-1\". Small \"末尾用高度0的虚拟哨兵结算剩余柱子\". Footer \"时间 O(n)    辅助空间 O(n)\" \"n为柱子数, 每个下标至多入栈出栈一次\".",
+  "edits": [
+    "对这张题解图片做两处精确纠错, 其余内容不变. 1. 最右侧第4区“确定左右边界”里的左侧绿色向下箭头现在错误指向下标0、高度2的柱子. 请将这条箭头整体右移一个柱子位置, 箭头尖准确落在下标1、高度1的柱子顶部, 对应文字“左边第一个更矮 下标1,高度1”. 右边界箭头保持落在下标4高度2. 2. 最左侧第1区底部说明当前错误写“高度为5(由两侧更矮的柱子1和2决定)”. 更矮的边界决定宽度, 不决定高度. 请替换整段为“矩形覆盖下标2和3, 高度取弹出柱子的5, 宽度4-1-1=2, 面积5×2=10”. 必须实际改变这两处. 柱高、数组、其它公式、布局、复杂度全部保持.",
+    "继续精确修复最右侧第4区: 当前“左边第一个更矮 下标1,高度1”下方有一条竖直绿色箭头, 仍错误地指向下标0的高度2柱. 请彻底删除这一条左侧绿色箭头(整条线和尖端都删掉), 不用挪动它, 让左边界靠文字“下标1,高度1”说明即可. 同时用薄的绿色外框勾勒图中下标1的最矮柱子(高度1), 位置是下标0高度2柱的右邻. 保持指向下标4的右侧绿色箭头, 以及其它所有图文不变. 必须看得见左侧箭头被删."
+  ],
+  "review": {
+    "example": "heights=[2,1,5,6,2,3]最大矩形面积为10, 覆盖下标2、3, 高5宽2.",
+    "steps": "扫描i=4高度2, 栈[1,2,3]. 弹3时剩余top2, 宽4-2-1=1,面积6; 弹2时top1,宽4-1-1=2,面积10. 图中6柱高度与下标一致, 最大矩形顶边位于高度5.",
+    "complexity": "n为柱数, 每个下标至多入栈出栈一次, 时间O(n), 最坏栈辅助空间O(n). 虚拟0哨兵不更改输入.",
+    "text": "两次定点编辑后, 已纠正高度由弹出柱5决定, 删除误指下标0的左边界箭头并外框标出真实下标1. 右边界箭头落下标4, 橙色矩形覆盖2、3且高度5, 所有面积、宽度公式可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "75288cf0df9b8b778040f036549177f36d2ca45261661b47d89aad84c732eedd",
+  "sourceFile": "exec-dbcace75-addf-44c5-888f-1ced6a7bb0ee.png"
+}

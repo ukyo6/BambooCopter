@@ -1,0 +1,19 @@
+{
+  "order": 65,
+  "title": "在排序数组中查找元素的第一个和最后一个位置",
+  "slug": "find-first-and-last-position-of-element-in-sorted-array",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp readable Chinese sans-serif, balanced whitespace. Landscape 3:2. Deep charcoal #171b20 background, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagrams and trace tables prominent. No glossy 3D, mascot, decorative arrows, fake app, watermark, play button or full solution code. Values, indexes and exclusive endpoints clearly distinct.\nTitle, allow two lines: \"65  在排序数组中查找元素的第一个和最后一个位置\".\nSubtitle \"两次二分, 找到 ≥ target 与 > target 的边界\".\nInput \"nums=[5,7,7,8,8,10], target=8\". Immediate result \"返回 [3,4]\".\nSECTION 1 wide \"两个边界夹住所有8\".\nOne six-cell array values5,7,7,8,8,10, aligned indexes0,1,2,3,4,5. Mint highlight EXACTLY the two value8 cells at indexes3,4. Draw a mint vertical marker/pointer ABOVE index3 (value8) labelled \"L=3, 第一个≥8\". Draw an amber vertical marker/pointer ABOVE index5 (value10) labelled \"U=5, 第一个>8\". Endpoints point to correct cells. A mint underline bracket includes ONLY indexes3 and4, label \"目标半开区间 [3,5)\". Clearly value10 is outside target interval.\nText \"每次从 [l,r)=[0,n) 重新开始; mid=⌊(l+r)/2⌋\".\nSECTION 2 lower left \"第一次: 找第一个≥8\".\nRule \"nums[mid]≥8 → r=mid; 否则 l=mid+1\".\nTable headings \"当前[l,r) | mid | 值 | 更新 | 下一[l,r)\".\nExact rows:\n\"[0,6) | 3 | 8 | r=3 | [0,3)\"\n\"[0,3) | 1 | 7 | l=2 | [2,3)\"\n\"[2,3) | 2 | 7 | l=3 | [3,3)\".\nTerminal \"l=r=3 → L=3\".\nSECTION 3 lower right \"第二次: 找第一个>8\".\nRule \"nums[mid]>8 → r=mid; 否则 l=mid+1\".\nSame columns and exact rows:\n\"[0,6) | 3 | 8 | l=4 | [4,6)\"\n\"[4,6) | 5 | 10 | r=5 | [4,5)\"\n\"[4,5) | 4 | 8 | l=5 | [5,5)\".\nTerminal \"l=r=5 → U=5\".\nSECTION 4 compact \"合并答案并检查不存在的情况\".\nFormula \"存在: [L,U-1]=[3,5-1]=[3,4]\".\nGuard text \"先检查 L=n; 否则再检查 nums[L]≠target. 任一成立返回[-1,-1]\".\nSmall exact examples \"同数组 target=6 → L=1, nums[1]=7≠6 → [-1,-1]\" and \"nums=[],target=0 → L=n=0 → [-1,-1]\". Do not access nums[0] on empty array. No extra array diagram needed.\nFooter \"时间 O(log(n+1))    辅助空间 O(1)\".\nFooter note \"n为数组长度; 两次二分仍为对数时间, 空数组为O(1); 仅维护边界和中点, 不扫描全部重复值\".\nAll exact inequalities (≥ versus >), interval endpoints, mid values, brackets and answer indices must match. No scanning arrows through all8s. No invented numbers or decorative arrows.",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "7c1080d7737614a4a241149b40d29fc18e963527c02baefe78b984cd61fe2e16",
+  "sourceFile": "exec-9c5c7366-b23e-4977-8bb5-34f9882e600a.png",
+  "review": {
+    "example": "nums=[5,7,7,8,8,10],target8→[3,4];target6→[-1,-1];nums=[],target0→[-1,-1].",
+    "steps": "第一个≥8:[0,6)mid3值8→r3;[0,3)mid1值7→l2;[2,3)mid2值7→l3;L3. 第一个>8:[0,6)mid3值8→l4;[4,6)mid5值10→r5;[4,5)mid4值8→l5;U5. 顶部箭头L指向index3,U指向index5,高亮只含index3/4. [L,U-1]=[3,4]正确. 不存在目标先检查L=n,否则检查numsL避免越界;target6的L1值7准确.",
+    "complexity": "n为数组长度,两次迭代二分为O(log(n+1))对数时间,空数组常数处理;仅维护左右边界和中点O(1),不线性扫描重复段.",
+    "text": "项目实际1536×1024原图核查,长题名可读,≥与>规则区分清楚,两表每个区间/mid/值/更新对齐,下标与值分行,空数组说明没有访问nums0."
+  }
+}

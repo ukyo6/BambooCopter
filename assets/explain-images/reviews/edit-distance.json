@@ -1,0 +1,19 @@
+{
+  "order": 95,
+  "title": "编辑距离",
+  "slug": "edit-distance",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"95  编辑距离\". Subtitle \"删除、插入、替换，选代价最小的来源\". Input\"word1 = horse，word2 = ros\". Main table EXACT6rows×4columns, separateheaders: rowsε,h,o,r,s,e; colsε,r,o,s. Values[[0,1,2,3],[1,1,2,3],[2,2,1,2],[3,2,2,2],[4,3,3,2],[5,4,4,3]]. Definition\"dp[i][j]：word1前i个字符变为word2前j个字符的最少操作\". Boundaries\"dp[i][0]=i，dp[0][j]=j\". Equalexample o/o dp[2][2]=dp[1][1]=1. Unequal finalcell source upperdp[4][3]=2delete, leftdp[5][2]=4insert, diagonaldp[4][2]=3replace; finalequation\"1 + min(2,4,3) = 3\". Directdependencyarrowsconnectcorrectneighbors. Rules\"字符相同：继承左上\";\"字符不同：1 + min(上方删除，左方插入，左上替换)\". Correctillustrated transformation \"horse → rorse → rose → ros\", labels\"替换 h 为 r\" then\"删除第3个字符 r\" then\"删除 e\". Eachcounts1 total3. Footer\"时间 O((m+1)(n+1))    辅助空间 O((m+1)(n+1))\";\"包含空前缀边界；只求距离可滚动到 O(min(m,n)+1)\".",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "ef7e5bfa5fa05e916c9f92370775b81f738d6fd0d168333645e5de4a204e817c",
+  "sourceFile": "exec-f1ddf83e-53a4-49be-952a-c4dddff64095.png",
+  "review": {
+    "example": "horse -> ros 的最少操作3",
+    "steps": "含空前缀6×4矩阵与删除/插入/替换依赖复算; 最后1+min(2,4,3)=3; horse→rorse→rose→ros每步一次合法操作, 相等o/o继承1",
+    "complexity": "O((m + 1)(n + 1)); O((m + 1)(n + 1)). m、n 为两个单词长度. 演示保留包括空前缀边界的二维 dp 表, 每格最多比较三个来源; 非空时通常写作 O(mn). 只求距离时可滚动到 O(min(m, n) + 1) 空间.",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

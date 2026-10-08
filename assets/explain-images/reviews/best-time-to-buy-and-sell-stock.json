@@ -1,0 +1,19 @@
+{
+  "order": 77,
+  "title": "买卖股票的最佳时机",
+  "slug": "best-time-to-buy-and-sell-stock",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"77  买卖股票的最佳时机\". Subtitle \"今天卖出, 只与此前最低买价比较\". Input \"prices=[7,1,5,3,6,4]\". Main6cellprice row days1-6 separate labels. Highlightday2price1 andday5price6, accuratearrowbuyday2→sellday5. Table columns \"天, 价格, 此前最低价, 今天卖出利润, 历史最大\". Exactrows day1:7, —, —,0; day2:1,7,-6,0; day3:5,1,4,4; day4:3,1,2,4; day5:6,1,5,5; day6:4,1,3,5. Afterday1 min=7,afterday2min=1. Result \"最大利润=6-1=5\". Rule \"只能先买后卖, 每次先计算利润, 再更新最低价\". Small exampleprices[7,6,4,3,1]→0. Footer \"时间 O(n)    辅助空间 O(1)\" \"n为天数, 仅维护最低价与最大利润\".",
+  "edits": [],
+  "review": {
+    "example": "prices=[7,1,5,3,6,4],第2天1买入、第5天6卖出, 最大利润5.",
+    "steps": "每天先用此前最低价计算卖出利润. 天2-6利润依次-6、4、2、5、3, 历史最佳0、4、4、5、5. 买入箭头起于第2天, 卖出落第5天, 先买后卖.",
+    "complexity": "n为天数, 单次扫描O(n), 仅保存此前最低价与最大利润O(1).",
+    "text": "6个价格格与自然日1-6准确, 买入第2天和卖出第5天箭头落点正确. 表中此前最低价在卖出计算前取值, -6负利润与历史0区别可读, 所有行与独立计算一致."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "3523f0737516c8133a09a709686c1749fc76fbf57b35e7acda42f00698b20eff",
+  "sourceFile": "exec-dee53a8d-42ca-436e-aa21-77e9447c704e.png"
+}

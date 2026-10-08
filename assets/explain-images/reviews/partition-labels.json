@@ -1,0 +1,19 @@
+{
+  "order": 80,
+  "title": "划分字母区间",
+  "slug": "partition-labels",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"80  划分字母区间\". Subtitle \"扫描追上最远末次位置, 立即切分\". Input 's=\"ababcbacadefegdehijhklij\"'. Show exactlythree string strips \"ababcbaca\" (indexes0-8,length9), \"defegde\"(9-15,length7), \"hijhklij\"(16-23,length8). Display firstsegment exactly9 characterchips a b a b c b a c a withindexes0-8. lastpositions a→8,b→5,c→7. scanfirst a end8; b endmax(8,5)=8; c endmax(8,7)=8; reachi8,end8切分 length8-0+1=9. Subsequentsegmentbounds9-15 and16-23 annotated \"边界15→长度7\", \"边界23→长度8\". Result \"[9,7,8]\". Rule \"end=max(end,last[s[i]]); i==end 时切分, 下一段从i+1开始\". Footer \"时间 O(n)    辅助空间 O(1)\" \"n为字符串长度; 仅26个小写字母, 末次位置表固定大小\".",
+  "edits": [],
+  "review": {
+    "example": "ababcbacadefegdehijhklij切分为ababcbaca、defegde、hijhklij, 长度[9,7,8].",
+    "steps": "第一段9字符与下标0-8对应, a末次8,b5,c7, end维持8, i8切分. 后两段区间9-15、16-23, 长度按right-left+1为7、8.",
+    "complexity": "n为字符串长度, 两遍扫描O(n), 字母表固定26个小写字母, 末次位置表辅助空间O(1), 段数最多26.",
+    "text": "全文24字符在三段中逐字符核对为9+7+8. 第一段9格、下标0-8及末次位置值准确, end状态均8. 三段括号边界与长度、切分箭头及26字母空间口径可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "3ad2a7ff34fa16a991aca4d5c372413f99bb9fda079615d31c64b799ad285f6c",
+  "sourceFile": "exec-202d1de2-ade1-443b-bf4f-2ebc1261f7d8.png"
+}

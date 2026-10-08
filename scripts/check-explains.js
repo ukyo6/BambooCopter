@@ -1,4 +1,5 @@
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
@@ -31,6 +32,7 @@ function checkAssets() {
 
   let originalScripts = 0;
   let presentedScripts = 0;
+  let localImages = 0;
   for (const file of files) {
     const body = fs.readFileSync(path.join(directory, file), 'utf8');
     const data = JSON.parse(body);
@@ -53,6 +55,30 @@ function checkAssets() {
       assert.equal(presented[key], data[key], `${file}: presentation changed ${key}`);
     }
     assert.equal(presentExplain(JSON.stringify(presented)), JSON.stringify(presented), `${file}: injection must be idempotent`);
+    if (data.kind === 'image' && data.media.startsWith('../assets/explain-images/')) {
+      const imageFile = path.join(root, 'renderer', data.media);
+      assert(fs.existsSync(imageFile), `${file}: local explanation image is missing`);
+      const image = fs.readFileSync(imageFile);
+      assert(image.length >= 24 && image.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), `${file}: expected a PNG image`);
+      assert.equal(image.toString('ascii', 12, 16), 'IHDR', `${file}: PNG is missing its image header`);
+      assert(image.readUInt32BE(16) > 0 && image.readUInt32BE(20) > 0, `${file}: PNG dimensions must be positive`);
+      assert.equal(normalized.media, data.media, `${file}: normalization changed the image path`);
+      const slug = path.basename(file, '.json');
+      assert.equal(data.media, `../assets/explain-images/${slug}.png`, `${file}: image belongs to another problem`);
+      const reviewFile = path.join(root, 'assets', 'explain-images', 'reviews', file);
+      assert(fs.existsSync(reviewFile), `${file}: image review is missing`);
+      const review = JSON.parse(fs.readFileSync(reviewFile, 'utf8'));
+      assert.equal(review.slug, slug, `${file}: review belongs to another problem`);
+      assert.equal(review.status, 'passed', `${file}: image review has not passed`);
+      assert.equal(review.sha256, crypto.createHash('sha256').update(image).digest('hex'), `${file}: image changed after review`);
+      assert.equal(review.width, image.readUInt32BE(16), `${file}: reviewed width differs`);
+      assert.equal(review.height, image.readUInt32BE(20), `${file}: reviewed height differs`);
+      assert(typeof review.prompt === 'string' && review.prompt.trim(), `${file}: generation prompt is missing`);
+      for (const key of ['example', 'steps', 'complexity', 'text']) {
+        assert(typeof review.review?.[key] === 'string' && review.review[key].trim(), `${file}: ${key} review is missing`);
+      }
+      localImages += 1;
+    }
     if (data.kind === 'html') {
       assert(/^<!doctype html>/i.test(data.html.trim()), `${file}: expected a complete HTML document`);
       const count = compileScripts(data.html, file);
@@ -64,7 +90,12 @@ function checkAssets() {
     }
   }
   assert.throws(() => normalizeExplain({ kind: 'text', caption: '缺少复杂度' }), /时间或空间复杂度/);
-  console.log(`Assets passed: ${files.length} explanations, ${originalScripts} original scripts, ${presentedScripts} presented scripts.`);
+  const imageExplain = { kind: 'image', caption: '本地图片题解', time_complexity: 'O(n)', space_complexity: 'O(n)', complexity_note: 'n 为输入长度', html: '', svg: '', media: '../assets/explain-images/two-sum.png' };
+  assert.equal(JSON.parse(normalizeExplain(imageExplain)).media, imageExplain.media);
+  for (const media of ['../assets/explain-images/../icon.png', '../assets/explain-images/two-sum.png?x=1', '../assets/explain-images/%2e%2e/icon.png', '../assets/icon.png', '/tmp/two-sum.png', 'file:///tmp/two-sum.png', 'https://example.com/two-sum.png']) {
+    assert.throws(() => normalizeExplain({ ...imageExplain, media }), /缺少静态图/, `Invalid image path accepted: ${media}`);
+  }
+  console.log(`Assets passed: ${files.length} explanations, ${localImages} local PNG images, ${originalScripts} original scripts, ${presentedScripts} presented scripts.`);
 }
 
 // 假时钟只提供浏览器的外部时间和任务队列, 被测代码仍执行真实播放器实现.

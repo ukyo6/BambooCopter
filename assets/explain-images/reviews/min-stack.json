@@ -1,0 +1,19 @@
+{
+  "order": 70,
+  "title": "最小栈",
+  "slug": "min-stack",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"70  最小栈\". Subtitle \"每一层同步保存当前最小值\". Input \"push(-2) → push(0) → push(-3)\". Main show synchronized data stack and minimum stack, each exactly3levels, bottom to top data -2,0,-3; min -2,-2,-3. Draw thin horizontal pairing connectors per layer: data-2 ↔ min-2 bottom, data0 ↔ min-2 middle, data-3 ↔ min-3 top. Label 栈顶 and getMin=-3. Second snapshot after pop: data bottom-2,top0; min bottom-2,top-2. Removed top row -3/-3 grey dashed outside active stacks. Result \"top()=0, getMin()=-2\". Exact rule \"push时同步压入 min(新值,当前最小值); pop时两个栈一起弹出\". Footer \"push/pop/top/getMin 每次 O(1)    辅助空间 O(n)\" \"n 为当前栈内元素个数\".",
+  "edits": [],
+  "review": {
+    "example": "push(-2),push(0),push(-3)后getMin=-3; pop后top=0,getMin=-2.",
+    "steps": "数据栈自底向上-2、0、-3, 最小栈-2、-2、-3. 三层横向配对一一对应; pop同时移除两个-3, 剩余两层最小栈顶-2.",
+    "complexity": "每次push/pop/top/getMin均O(1); n为栈内元素数, 同步两栈存储O(n).",
+    "text": "负号、数据栈0与最小栈-2区别清楚, 被弹出-3以虚线表示且不再处于栈中. 栈顶箭头与三层横向配对连接位置准确, 常数操作复杂度可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "adb99056184a7ea0f33f62c666a6d88066a225f2a91b4373e10fa603d6f7c503",
+  "sourceFile": "exec-e8c171f1-66ab-4102-8ee9-82d9e55a0cd3.png"
+}

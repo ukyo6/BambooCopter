@@ -1,0 +1,21 @@
+{
+  "order": 97,
+  "title": "多数元素",
+  "slug": "majority-element",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"97  多数元素\". Subtitle \"不同元素互相抵消，多数元素会留下\". Input\"nums = [2,2,1,1,1,2,2]\". ExactBoyerMooretableaftereachread withcolumnsvalue,candidate,count: (2,2,1),(2,2,2),(1,2,1),(1,2,0),(1,1,1),(2,1,0),(2,2,1). Important count0candidatepreviousvaluecanremainbutnolongeractive; label\"票数为0，下一项成为新候选\" atrows4and6. Three rules\"count=0：换候选\";\"值相同：count++\";\"值不同：count--\". Paircancellationvisualoptionalshowdifferentvalue2and1 paironly, notsamecancel. Correctstatement\"2出现4次，4 > floor(7/2)=3\". Result\"最终候选 = 2\". Warningfact\"题目保证多数元素存在；没有这个保证时需再扫描验证候选次数\". Footer\"时间 O(n)    辅助空间 O(1)\";\"只保存候选与票数\".",
+  "edits": [
+    "One clarity correction only. In section3 '扫描结束，得到候选', the small array [2,2,1,1,1,2,2] correctly highlights four2s at positions0,1,5,6. But the green BRACE drawn underneath only the first four array cells wrongly suggests these form the counted range. REMOVE that green brace entirely. Replace the nearby caption '2 出现4次' with '绿色的2共有4个', centered below the WHOLE seven-cell array, with NO brace and NO arrow. Preserve the seven values and their correct green coloring at0,1,5,6, the entire seven-row candidate/count table, all algorithm rules, result2, floor(7/2)=3, majority guarantee, colors, dimensions and layout. Do not change any numeric data; just remove the misleading bracket and clarify this one caption."
+  ],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "756bf133678c104c37b75fcb62b9682f05aeb7b3ba6212dd4d37dd55c39fce7f",
+  "sourceFile": "exec-2d87d857-7793-4a70-a724-0b59f4435465.png",
+  "review": {
+    "example": "[2,2,1,1,1,2,2] -> 多数元素2",
+    "steps": "七步(candidate,count)=(2,1),(2,2),(2,1),(2,0),(1,1),(1,0),(2,1), 重置候选发生下一项, 2出现4次>floor(7/2)=3",
+    "complexity": "O(n); O(1). n 为数组长度. Boyer-Moore 投票法只维护候选值和票数. 题目保证多数元素存在, 无须额外验证; 增加一次验证扫描也仍为 O(n).",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "order": 85,
+  "title": "零钱兑换",
+  "slug": "coin-change",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\n复核重建内容规范, 非原始生成提示词: 标题85 零钱兑换. coins=[1,2,5], amount=11. dp[x]表示凑出金额x所需最少硬币数, dp[0]=0, 其他初始∞. dp[x]=min(dp[x-coin]+1), 仅枚举coin≤x. 金额0..11的最终dp为[0,1,1,2,2,1,2,2,3,3,2,3]. x=11候选: 用1为dp10+1=2+1=3, 用2为dp9+1=3+1=4, 用5为dp6+1=2+1=3. 并列选择1, 回溯11→10→5→0, 减1、减5、减5. 最少3枚, 11=1+5+5. 不可达例coins=[2],amount=3返回-1; amount=0返回0. 时间O(AC), 辅助空间O(A), A为目标金额, C为硬币种类, dp与回溯记录.",
+  "promptProvenance": "reconstructed from reviewed existing image; original generation prompt unavailable",
+  "edits": [],
+  "sourceFile": "coin-change.png",
+  "review": {
+    "example": "coins=[1,2,5], amount=11, 最少3枚, 11=1+5+5. coins=[2], amount=3返回-1; amount=0返回0.",
+    "steps": "独立复算dp0..11为0,1,1,2,2,1,2,2,3,3,2,3. dp11的三候选3、4、3准确. 实际回溯箭头11→10→5→0依次减1、5、5, 并列最优选择1符合图中文字.",
+    "complexity": "A为目标金额, C为硬币种类. 各金额枚举硬币, 时间O(AC), dp与选择记录辅助O(A); 图中回溯是示例展示, 题目仅返回数量.",
+    "text": "项目实际PNG以original尺寸复核. 中文、公式、金额与dp数值清晰; dp0=0、初始∞、不可达返回-1和零金额返回0均准确. 未找到原始生成prompt, 已明确标为根据现有图重建的规范."
+  },
+  "width": 1536,
+  "height": 1024,
+  "sha256": "a995b1d4ee0809f4ed19179f9d79b6d47bd072edb24d16a8bab0bb9370e1a2ea"
+}

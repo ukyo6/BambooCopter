@@ -1,0 +1,18 @@
+{
+  "order": 2,
+  "title": "字母异位词分组",
+  "slug": "group-anagrams",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"02  字母异位词分组\". Subtitle: \"排序后的字符串，就是分组的钥匙\".\nInput: 'strs = [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"]'.\nVisual step 1: six word chips, each connected by \"字符排序\" arrows to exact keys: eat→aet, tea→aet, tan→ant, ate→aet, nat→ant, bat→abt. Never spell the key ate: it is aet.\nVisual step 2: a clean hash mapping diagram grouping matching keys, with three distinct muted accents, \"aet → [eat, tea, ate]\", \"ant → [tan, nat]\", \"abt → [bat]\". Preserve ORIGINAL words inside groups.\nVisual step 3 result: \"同一个键，放进同一个桶\". \"返回所有分组，顺序不限\". Small rule: \"排序只用于生成键，结果保留原字符串\". Edge note: '空字符串的键也是 \"\"'.\nFooter: \"时间 O(n · k log(k+1))，平均    辅助空间 O(n · k)\". \"n 为字符串数量；k = max(1, 最大字符串长度)\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "c25a174bade0b512972259e323a2e570a1ed9314afce2c84a8cb0f2aec0d64b1",
+  "review": {
+    "example": "eat/tea/ate→aet, tan/nat→ant, bat→abt",
+    "steps": "六条排序箭头与三个桶逐项核对, 保留原字符串; 空字符串键为空",
+    "complexity": "O(n·k log(k+1)), 平均; O(n·k). n 为字符串数量, k 为最大字符串长度与 1 的较大值, 用于覆盖空字符串. 每个字符串排序后作为哈希键, 哈希操作按平均情况计; 保存排序键与分组占 O(n·k).",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

@@ -1,0 +1,18 @@
+{
+  "order": 8,
+  "title": "无重复字符的最长子串",
+  "slug": "longest-substring-without-repeating-characters",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"08  无重复字符的最长子串\". Subtitle: \"右边扩展，遇到重复就收缩左边\".\nInput: 's = \"abcabcbb\"'. Eightcharacter cells a,b,c,a,b,c,b,b with indexes0-7.\nThree exact snapshots: \"right = 2\" shows highlightedcontinuouswindow [0,2] =abc and \"left = 0，长度 3\". Next \"right = 3，读到 a\" connects a atindex0 to newaindex3, set \"left = max(0, 0+1) = 1\", highlightwindow [1,3] =bca, \"长度仍为 3\". Next \"right = 6，读到 b\" connects priorb atindex4 to newbindex6, setleft=5, highlightwindow [5,6] =cb, label \"left = 5，长度 2\".\nRule \"left = max(left, last[c] + 1)\". Explain \"左边界只能前进，不能退回\"; \"记录字符最后一次出现的下标\". All windows mustbeCONTIGUOUS.\nResult \"最长长度 = 3，例如 abc、bca、cab\".\nFooter \"时间 O(n)，平均    辅助空间 O(min(n, Σ))\". \"Σ 为字符集大小；固定字符集时空间 O(1)\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "c5dba467f101d695a2a6ce34badb468ed0cb5c8a599642da32c72d4c153bfc6e",
+  "review": {
+    "example": "abcabcbb -> 最长子串长度3",
+    "steps": "窗口[0,2]/[1,3]/[5,6]连续, right6时left=max(3,4+1)=5; 两条重复位置箭头和所有下标正确",
+    "complexity": "O(n), 平均; O(min(n, Σ)). n 为字符串长度, Σ 为字符集大小. 哈希表保存字符上次位置, 操作按平均 O(1) 计; 左边界只向右移动. 固定大小字符集时空间为 O(1).",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

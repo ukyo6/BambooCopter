@@ -1,0 +1,19 @@
+{
+  "order": 26,
+  "title": "环形链表 II",
+  "slug": "linked-list-cycle-ii",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"26  环形链表 II\". Subtitle \"先找相遇点, 再让头指针和相遇指针同步走\".\nInput head=[3,2,0,-4], pos=1. Exact graph four nodesindex0value3→index1value2→index2value0→index3value-4, then ONE returnedgefromindex3 endingindex1. Label入口index1 distinct from相遇点index3.\nStage1 \"快慢指针定位相遇点\": table afterrounds0:(slow0,fast0);1:(1,2);2:(2,1);3:(3,3). Initialcoincidence notdetection. Show bothpointer arrows atindex3 after3rounds.\nStage2 \"p回头, q留在相遇点, 都每次走1步\". Separate snapshot same4node graph withp atindex0,q atindex3. Then one step p0→1, q3→1 (viareturnedge). Show precise arrows/identity labels: bothmeetindex1, value2. Result \"返回索引1的节点, 值2\".\nWhy example: \"头到入口 a=1步; 入口到相遇点 b=2步; 环长 L=3; 相遇点到入口 L-b=1步\". Formula \"a+b=3, 等于1圈; a=L-b=1\". General rule short \"快慢步差是整圈, 两个1步指针最终在入口相遇\". Do not claim a=L-b universally; identify it as本例 explicitly.\nFooter \"时间 O(n)    辅助空间 O(1)\" \"n为不同节点数; 无环返回null, 不修改链表\". No valueonlyreturn, distinguishnodeobject.",
+  "edits": [],
+  "review": {
+    "example": "[3,2,0,-4], pos1. 返回索引1的节点(值2), 首次相遇索引3(值-4).",
+    "steps": "所有next图0->1->2->3->1且回边真实落1. 四行快慢表0/0,1/2,2/1,3/3正确. 第二阶段p0,q3各一步到1, 所有指针落点准确. 本例a1,b2,L3,L-b1; 图明确限定a=L-b为本例.",
+    "complexity": "时间O(n), 辅助空间O(1), n为不同节点数, 两阶段线性.",
+    "text": "original全图入口/相遇点区分明确, 返回节点对象与值不同, 中文/公式清晰."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "47650d9980d08b5f01665eae3e63f99c922c213bcac6f942b0a77229ebb140d9",
+  "sourceFile": "exec-bdd76e72-9ded-4dfe-8c83-02a0b7c26baf.png"
+}

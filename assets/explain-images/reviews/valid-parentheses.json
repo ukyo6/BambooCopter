@@ -1,0 +1,19 @@
+{
+  "order": 69,
+  "title": "有效的括号",
+  "slug": "valid-parentheses",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"69  有效的括号\". Subtitle \"后打开的括号必须先闭合\". Main two horizontal scan traces compare s=\"([])\" and s=\"([)]\". Stack displayed as sequence bottom→top, explicitly label 栈顶在右. Valid trace exactly: 读(→栈[(]; 读[→栈[(,[]; 读]→与[匹配,栈[(]; 读)→与(匹配,栈空→true. Use quoted glyph chips for stack to avoid visual ambiguity, draw [ as character not wrapper. Invalid trace: 读(→栈字符 '('; 读[→栈字符 '(' '['; 读)→栈顶是'['且需要'('→false, stop immediately. Highlight mismatched ')' and '[' with amber. Rule \"左括号入栈; 右括号只能匹配栈顶; 扫描结束必须栈空\". Footer \"时间 O(n)    辅助空间 O(n)\" \"n 为字符串长度, 每个字符至多入栈出栈一次\".",
+  "edits": [],
+  "review": {
+    "example": "([])返回true, ([)]在读到第三个字符)时返回false, 与题面示例4、5一致.",
+    "steps": "有效例栈底到顶状态为(、([、(、空; 无效例先(、([, 读)需要(却见栈顶[, 立即停止. 右括号配对实际连接到栈顶字符.",
+    "complexity": "n为字符串长度, 各字符至多入栈出栈一次, 时间O(n), 最坏辅助栈O(n).",
+    "text": "两例各4个字符及下标0-3准确, 引号内括号字形清楚. 有效例4步清空, 无效例第三步停下, 所有规则与复杂度可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "ed5961f6c190da0f02f296b327b5b9b38f22cdfeb24b23b424c310c23c67e3b1",
+  "sourceFile": "exec-f915c4db-0873-4267-bd96-4acddcc93d5d.png"
+}

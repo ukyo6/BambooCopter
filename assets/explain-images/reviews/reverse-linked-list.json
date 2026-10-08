@@ -1,0 +1,21 @@
+{
+  "order": 23,
+  "title": "反转链表",
+  "slug": "reverse-linked-list",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"23  反转链表\". Subtitle \"先保存后继, 再把 next 指向已反转部分\". Input head=[1,2,3,4,5].\nThree diagram sections with true directed next arrows:\n1 initial \"prev=null, curr=1\", list1→2→3→4→5→null.\n2 First iteration exact action sequence \"next=curr.next (节点2)\" then \"curr.next=prev (null)\" then \"prev=curr, curr=next\". Afteriteration draw TWO disconnected directed chains: processed1→null with prev pointer pointing1; unprocessed2→3→4→5→null with curr pointing2. next stored2. No1→2arrow remains.\n3 Afterseconditeration processed2→1→null and unprocessed3→4→5→null, prevpoints2, currpoints3. Explain \"已反转前缀逐步增长\".\nFinal complete5→4→3→2→1→null, prevpoints5,newhead5,curr=null. Result \"返回 prev, 即节点5\". Nodes move reorder, valueunchanged.\nRule \"先保存next, 否则会丢失未处理链\". Footer \"时间 O(n)    辅助空间 O(1)\" \"n为节点数; 图示迭代实现, 仅prev、curr、next三个引用\". Only short3assignment lines, no fullcode. No recursion claim.",
+  "edits": [
+    "Fix ONLY the initial-state panel at far left. Its current arrows are wrong. Initial prev MUST be null and MUST NOT point to node1. Initial curr MUST point to node1 and MUST NOT point to node2. Remove both existing pointer arrows under initial list. Under node1 place amber upward arrow labelled \"curr (节点1)\", arrowhead touching node1. Place separate green text \"prev = null\" in open space BELOW the list, without any arrow to a numbered node; optionally a small null badge with prev arrow ending atthatbadge. Keep original next chain1→2→3→4→5→null and all other three panels, pointer locations, explanation and footer unchanged."
+  ],
+  "review": {
+    "example": "输入1->2->3->4->5->null, 输出5->4->3->2->1->null, 返回节点5.",
+    "steps": "修图后初始curr箭头准确指1, prev独立null. 第一轮1->null与2->3->4->5->null断开; 第二轮2->1->null与3->4->5->null断开. 每轮prev/curr及next保存值正确, 最终prev指5,curr指null.",
+    "complexity": "迭代时间O(n), 辅助空间O(1), n为节点数; 不混用递归栈口径.",
+    "text": "original全图中文清晰, 三条操作次序准确, 初始与最终null含义可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "3f6885b83c8a2f8939402e9a4f8f338deeb77ca125c0178be5dabce016db38d3",
+  "sourceFile": "exec-20b9f909-b15d-4a04-98e6-96ced633e3d3.png"
+}

@@ -141,7 +141,7 @@ test('ambiguous full-body legacy matches are preserved as ordinary dialogue', as
   assert.equal(db.all('SELECT COUNT(*) AS total FROM messages')[0].total, 6);
 });
 
-async function startIpc(file, complete) {
+async function startIpc(file, complete, options = {}) {
   const handlers = new Map();
   let ready;
   const electron = {
@@ -162,8 +162,8 @@ async function startIpc(file, complete) {
   const mainFile = path.join(__dirname, '..', 'electron', 'main.js');
   const localRequire = createRequire(mainFile);
   const agent = {
-    detectLinks: () => [{ id: 'codex', path: '/test/codex', label: 'Codex' }],
-    listModels: async () => [{ id: 'model', efforts: [], defaultEffort: '' }],
+    detectLinks: options.detectLinks || (() => [{ id: 'codex', path: '/test/codex', label: 'Codex' }]),
+    listModels: options.listModels || (async () => [{ id: 'model', efforts: [], defaultEffort: '' }]),
     complete,
     parseJsonText: localRequire('./agent').parseJsonText,
     reviewSchema: localRequire('./agent').reviewSchema,
@@ -214,6 +214,50 @@ test('real chat IPC excludes marked review messages from UI and LLM context', as
   assert.ok(prompt.includes('4 |     int bad = missing;'), 'chat prompt needs original line numbers');
   assert.equal(db.all('SELECT COUNT(*) AS total FROM messages WHERE kind = ?', ['review'])[0].total, 1);
   assert.equal(db.all('SELECT COUNT(*) AS total FROM messages WHERE kind = ?', ['chat'])[0].total, 6);
+});
+
+test('switching the CLI routes both reviews and chat while preserving Codex settings', async () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'bamboo-provider-')), 'practice.db');
+  const calls = [];
+  const links = [{ id: 'codex', label: 'Codex CLI', path: '/test/codex' }, { id: 'deepseek', label: 'DeepSeek CLI', path: '/test/dsh' }];
+  const { handlers, db } = await startIpc(file, async (link, options) => {
+    calls.push({ provider: link.id, model: options.model });
+    return options.schema ? JSON.stringify({ verdict: 'fail', summary: '错误', issues: [] }) : '普通回复';
+  }, { detectLinks: () => links, listModels: async link => link.id === 'codex'
+    ? [{ id: 'codex-model', efforts: ['low', 'high'], defaultEffort: 'high' }]
+    : [{ id: 'deepseek-flash', efforts: [] }, { id: 'deepseek-v4-pro', efforts: [] }] });
+  await handlers.get('agent:select')({}, { provider: 'codex', model: 'codex-model', reasoning: 'low', fast: true });
+  const selected = await handlers.get('agent:select')({}, { provider: 'deepseek', model: 'deepseek-v4-pro' });
+  assert.equal(selected.ok, true, selected.error);
+  assert.equal(selected.data.provider, 'deepseek');
+  assert.equal(selected.data.fast, false);
+  assert.equal(selected.data.fastSupported, false);
+  assert.equal(selected.data.reasoning, '');
+  const reviewed = await handlers.get('review:submit')({}, { slug: 'two-sum', code });
+  assert.equal(reviewed.ok, true, reviewed.error);
+  const chatted = await handlers.get('chat:send')({}, { slug: 'two-sum', code, text: '提示' });
+  assert.equal(chatted.data.provider, 'deepseek');
+  assert.deepEqual(calls, [{ provider: 'deepseek', model: 'deepseek-v4-pro' }, { provider: 'deepseek', model: 'deepseek-v4-pro' }]);
+  assert.equal(db.all('SELECT provider FROM submissions')[0].provider, 'deepseek');
+  const restored = await handlers.get('agent:select')({}, { provider: 'codex' });
+  assert.equal(restored.data.model, 'codex-model');
+  assert.equal(restored.data.reasoning, 'low');
+  assert.equal(restored.data.fast, true);
+});
+
+test('an unavailable selected CLI never silently falls back to another engine', async () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'bamboo-provider-missing-')), 'practice.db');
+  const links = [{ id: 'codex', label: 'Codex', path: '/test/codex' }, { id: 'deepseek', label: 'DeepSeek', path: '/test/dsh' }];
+  let calls = 0;
+  const { handlers } = await startIpc(file, async () => { calls += 1; return '{}'; }, { detectLinks: () => links });
+  await handlers.get('agent:select')({}, { provider: 'deepseek' });
+  links.pop();
+  const state = await handlers.get('agent:state')({}, {});
+  assert.equal(state.data.provider, 'deepseek');
+  const result = await handlers.get('review:submit')({}, { slug: 'two-sum', code });
+  assert.equal(result.ok, false);
+  assert.match(result.error, /DeepSeek/);
+  assert.equal(calls, 0);
 });
 
 (async () => {

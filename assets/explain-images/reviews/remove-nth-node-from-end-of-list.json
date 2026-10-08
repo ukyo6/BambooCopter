@@ -1,0 +1,21 @@
+{
+  "order": 29,
+  "title": "删除链表的倒数第 N 个结点",
+  "slug": "remove-nth-node-from-end-of-list",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"29  删除链表的倒数第 N 个结点\". Subtitle \"保持 n 步间距, 慢指针停在待删节点前\".\nInput head=[1,2,3,4,5], n=2. dummy isD, truechainD→1→2→3→4→5→null.\nStage1 slow=fast=D, fast先走2步, fast=node2,slow=D. Draw snapshot pointerarrows ONLYslowtoD andfasttonode2, gap \"2条next边\".\nStage2 synchronize while fast.next != null. Exacttable slow/faststates D/2,1/3,2/4,3/5. Stoppingfast5 tail, slow3. Draw endpoint chain and pointerslow3fast5. Mark targetnode4 \"倒数第2个\".\nStage3 execute \"slow.next=slow.next.next\", specifically \"3.next=5\". Show resultingactualchainD→1→2→3→5→null; removed4 drawnbelow disconnected/dim, no live3→4arrow. Label\"只改一次next\".\nResult \"[1,2,3,5]\", \"返回 dummy.next, 即节点1\". Pointerreturn arrowmust1notD.\nRule \"dummy也统一处理删除头节点\". Footer \"时间 O(L)    辅助空间 O(1)\" \"L为链表节点数; n是倒数位置, 避免与长度混淆\". No fastnull stoppingversion.",
+  "edits": [
+    "Remove ONLY the two dashed arrows leading from nodes3 and5 down toward the removed node4 in panel3 \"执行删除操作\". Removed node4 must be an isolated dim circle beneath the correct resulting chain, with no incoming or outgoing dashed lines/arrows. Keep its label \"被删除的节点4 (已断开连接)\". Keep the live solid next chain D→1→2→3→5→null and mint3→5 action arc unchanged, all pointers, table, bottom result, footer and styling unchanged."
+  ],
+  "review": {
+    "example": "[1,2,3,4,5],n2, 输出[1,2,3,5].",
+    "steps": "初始fast2/slowD落点正确. 同步表D/2,1/3,2/4,3/5复算一致, fast.next=null停止. 修改后实际链D->1->2->3->5->null, 已删除误导虚线, 4独立灰色. 返回箭头真实指1.",
+    "complexity": "时间O(L), 辅助空间O(1), 明确L为节点总数、n为倒数位置.",
+    "text": "original全图中文、fast.next条件与一次next修改清晰, 与所选指针版本一致."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "7a4f6a92e0b86ada62f70885c25e1e0498b96acd8b672e3375eb5cf226cd1c2b",
+  "sourceFile": "exec-26d0a268-5361-4163-8c6a-193fdfd09e2c.png"
+}

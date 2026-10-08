@@ -1,0 +1,21 @@
+{
+  "order": 92,
+  "title": "最小路径和",
+  "slug": "minimum-path-sum",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"92  最小路径和\". Subtitle \"选择更便宜的来源，再加当前格的代价\". Input \"grid = [[1,3,1],[1,5,1],[4,2,1]]\". Two EXACT3x3 grids with explicit row/colindexes0-2. Inputgrid [[1,3,1],[1,5,1],[4,2,1]] labeled\"原网格：每格的代价\". DPgrid [[1,4,5],[2,7,6],[6,8,7]] labeled\"到达每格的最小总和\". Highlight bestpath ONLY [0,0]→[0,1]→[0,2]→[1,2]→[2,2] in inputgrid; arrows horizontalright/down, neverdiagonal. Cost\"1 + 3 + 1 + 1 + 1 = 7\". Transitionexamples \"dp[1][1] = min(4,2) + 5 = 7\" and \"dp[2][2] = min(6,8) + 1 = 7\", accurately attachedtoparents. Formula \"dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]\". Onlyfirstcellinitialitsowncost, firstrow/colaccumulate. Result\"最小路径和 = 7\". Footer\"时间 O(mn)    辅助空间 O(mn)\";\"保存二维表用于说明与回溯；只求最小和可滚动到 O(n)，原地覆盖输入可到 O(1)\".",
+  "edits": [
+    "Edit this Chinese algorithm explanation image with ONE precise numerical correction. In the SECOND section, titled '2 初始化第一行和第一列', find the GREEN cell in row 1 column 0 of that section's 3x3 grid (approximately image coordinates x=515,y=570). Its numeral is currently 1 and is WRONG: change it to 2. After correction this initialized grid first column must read 1,2,6 from top to bottom, while its first row remains 1,4,5. This is dp[1][0]=dp[0][0]+grid[1][0]=1+1=2. Preserve everything else exactly: the original input grid in section 1 MUST retain its row1col0 value 1; the complete DP tables in sections3 and4 remain [[1,4,5],[2,7,6],[6,8,7]], all text, arrows, footer, colors, dimensions and layout remain unchanged. Do NOT change all numeral 1s. Only replace the single cell numeral in the second initialization panel."
+  ],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "e72d37b73a13edbd91ad43317b8cb964119a37e70e59297f1d59a1fb9a7cc21e",
+  "sourceFile": "exec-5062b3dd-31bb-4dc9-8870-111938fa9b9b.png",
+  "review": {
+    "example": "grid=[[1,3,1],[1,5,1],[4,2,1]] -> 7",
+    "steps": "输入与DP两个3×3表逐格核对; DP[[1,4,5],[2,7,6],[6,8,7]], 路径(0,0)→(0,1)→(0,2)→(1,2)→(2,2), 代价1+3+1+1+1=7; 两来源比较4/2和6/8正确",
+    "complexity": "O(mn); O(mn). m、n 为网格的行数、列数. 演示保留二维 dp 表以回溯路径; 填表 O(mn), 回溯 O(m + n). 若只求最小和可滚动到 O(n), 或原地覆盖输入到 O(1).",
+    "text": "已查看项目实际PNG的完整原生尺寸, 中文/下标/公式/结果/复杂度清楚, 无遮挡或不准确装饰箭头"
+  }
+}

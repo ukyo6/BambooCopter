@@ -1,0 +1,19 @@
+{
+  "order": 90,
+  "title": "最长有效括号",
+  "slug": "longest-valid-parentheses",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"90  最长有效括号\". Subtitle \"下标栈: 未匹配左括号 + 左边界\". Input exact 's = \")()())\"'. Output \"最长有效括号长度 = 4\", substring '\"()()\"'.\nSection1 six character cells with exact characters ),(,),(,),) and separate index row0,1,2,3,4,5. Highlight exactly characters at indexes1,2,3,4 mint as valid substring \"()()\", outer indexes0 and5 muted or amber. Label \"有效连续区间 [1..4], 长度4\".\nState \"栈中存下标, 栈底是当前区间左边界\". Initialization \"stack=[-1], answer=0\", \"-1 是字符串起点之前的哨兵\".\nRules \"遇到 '(' : 压入下标 i\", \"遇到 ')' : 先弹栈\", \"若栈空: 压入 i, 重置左边界\", \"若栈非空: 长度=i-栈顶, 更新answer\". These are formulas and steps only, no full solution code.\nSection2 main complete trace table with column headings \"i\", \"s[i]\", \"处理后的栈 (底→顶)\", \"本步长度/操作\", \"answer\".\nRows exact:\n初始化 | — | [-1] | 哨兵 | 0\n0 | ) | [0] | 弹出-1后栈空, 重置边界0 | 0\n1 | ( | [0,1] | 压入1 | 0\n2 | ) | [0] | 2-0=2 | 2\n3 | ( | [0,3] | 压入3 | 2\n4 | ) | [0] | 4-0=4 | 4\n5 | ) | [5] | 弹出0后栈空, 重置边界5 | 4\nAll 7 rows exactly. Stack lists left element bottom and right element top. No insertion of character values into stack.\nSection3 focus i=4. \"弹出匹配的左括号下标3, 栈顶仍为边界0\", equation \"长度 = 4 - 0 = 4\". Show separate simple before/after relation \"[0,3] → [0]\", arrow label \"弹出3\". Connect result to highlighted substring indexes1..4, length4. Another short note \"最后 i=5 是多余右括号, 重置边界为5, 保留全局答案4\".\nFinal \"返回4; 空串返回0\". No overlapping arcs or incorrect pairing arcs. No full code. All parens characters readable as simple ASCII glyphs, do not change input.\nFooter \"时间 O(n)    辅助空间 O(n)\", \"n 为字符串长度. 每个下标至多入栈、出栈一次; 全为左括号时栈达到线性大小.\"",
+  "edits": [],
+  "sourceFile": "exec-99790776-4863-4e1c-bb2e-0881f4382f1a.png",
+  "review": {
+    "example": "s=')()())', 六字符下标0..5, 最长有效连续括号子串位于1..4为'()()', 长度4. 空串返回0.",
+    "steps": "独立栈扫描: 初始化[-1]; i0右括号弹哨兵后重置[0]; i1[0,1]; i2弹1后[0], 长度2-0=2; i3[0,3]; i4弹3后[0], 长度4-0=4; i5弹0后栈空重置[5], answer仍4. 7行表全匹配. 右侧实际栈图底0顶3弹出3后仅0, 箭头与连续区间1..4一致.",
+    "complexity": "n为字符串长度, 每个下标最多入栈出栈一次, 时间O(n). 全是左括号时栈含哨兵与n个下标, 辅助O(n). 单一输出长度不需要额外线性输出空间.",
+    "text": "项目实际PNG以original复核. 输入括号顺序、0..5字符格、1..4高亮连续区间、-1哨兵与边界0/5、表中底→顶顺序、弹3栈图、长度公式与复杂度都准确可读."
+  },
+  "width": 1536,
+  "height": 1024,
+  "sha256": "89f2c7da2b148ed976f4b29c332afe352aad3d57e7a30dfa7a9b9f5b671866fc"
+}

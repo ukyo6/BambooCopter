@@ -1,0 +1,21 @@
+{
+  "order": 89,
+  "title": "分割等和子集",
+  "slug": "partition-equal-subset-sum",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle \"89  分割等和子集\". Subtitle \"0/1 背包倒序更新, 每个元素只用一次\". Input \"nums = [1,5,11,5]\", \"总和 = 22, 目标 T = 11\". Output \"true\".\nSection1 \"总和为奇数则返回 false; 偶数时只需凑出一半\". State \"dp[s]: 已处理的元素能否凑出和 s\", \"dp[0]=true, 其余初始 false\". Rule \"处理 x 时: dp[s] = dp[s] OR dp[s-x], s 从 T 递减到 x\".\nSection2 main five-row reachable-state table, exact column headings \"已处理的元素\", \"可达的和 (仅列 true)\".\nRows:\n初始化 | {0}\nnums[0]=1 | {0,1}\nnums[1]=5 (第一个5) | {0,1,5,6}\nnums[2]=11 | {0,1,5,6,11}\nnums[3]=5 (第二个5) | {0,1,5,6,10,11}\nHighlight target11 where first reachable and final11. Explicit \"两次出现的 5 是两个不同元素\".\nSection3 focus \"为什么必须从右往左\". Show capacity labels 5,6,7,8,9,10,11 in left-to-right cells, with ONE arrow above from11 on right to5 on left, label \"首个 5 这一轮: 11 → 10 → ... → 5\". Under it show two chronological statements without crossing arrows: \"先检查 s=10: dp[10] OR dp[5] = false\", \"后更新 s=5: dp[5] OR dp[0] = true\". Label \"检查10时, dp[5]尚未更新, 不会把同一个5用两次\". Then short \"第二个5到来时, 可用此前的dp[5]令dp[10]=true\". No false visual success at dp10 during first5.\nSection4 result \"dp[11]=true, 可以分割\". Two subsets \"[1,5,5] → 11\" and \"[11] → 11\". Explain \"一个子集和为11, 剩余元素的和也为11\".\nFooter \"时间 O(nT)    辅助空间 O(T)\", \"n 为数组长度, T 为总和的一半. 仅保留一维可达数组, 复杂度按数值 T 计.\"\nEvery table set exact. Indexes nums[] start at0. T target distinct from boolean true. No full code, no unnecessary other examples.",
+  "edits": [
+    "仅修正中间表格的两处集合符号. nums[2]=11那一行, 黄色11方框右侧缺少右花括号, 请追加清晰的 } 使整行成为 {0,1,5,6,11}. nums[3]=5那一行, 绿色11方框右侧也请追加清晰的 } 使整行成为 {0,1,5,6,10,11}. 只追加这两个闭合花括号, 保留黄色和绿色11方框, 可稍向左缩紧该行数字保证有位置. 其余文字、数字、DP集合、倒序箭头从11向左指5、分组、复杂度、颜色和1536x1024横向构图全部保持不变. 不改变算法或增加元素."
+  ],
+  "sourceFile": "exec-af667018-b5ec-4574-8f90-c9d894661f2e.png",
+  "review": {
+    "example": "nums=[1,5,11,5], 总和22, T=11, 返回true. 两子集[1,5,5]与[11]的和均11, 两个5来自不同下标1、3.",
+    "steps": "独立倒序DP复算可达集依次{0}、{0,1}、{0,1,5,6}、{0,1,5,6,11}、{0,1,5,6,10,11}, 与图表一致. 图中扫描箭头实际从右端11向左端5. 首个5先检查dp10时dp5=false, 后更新dp5=true, 不重复使用该元素; 第二个5可使dp10=true.",
+    "complexity": "n为数组长度, T为总和一半. 每项倒序扫描T..x, 时间O(nT), 一维可达数组辅助O(T), 按数值T计而非输入位数. 总和奇数直接false. 图中子集仅展示, 算法返回布尔值.",
+    "text": "项目实际PNG以original复核后发现两处高亮集合缺闭合花括号, 官方定向编辑补齐. 编辑后重新复制项目并original复核: 所有集合完整, 数字与倒序箭头不变; 状态语义、两个不同5、结果、时间和辅助空间清晰."
+  },
+  "width": 1536,
+  "height": 1024,
+  "sha256": "bc1b9524cb28ee127f507fb7fc877fb61b96d635fae74e1e53a6532caaed1279"
+}

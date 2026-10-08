@@ -1,0 +1,21 @@
+{
+  "order": 15,
+  "title": "轮转数组",
+  "slug": "rotate-array",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"15  轮转数组\". Subtitle \"三次原地反转, 把尾部搬到前面\". Input nums=[1,2,3,4,5,6,7], k=3. First k=k%n=3, n=7.\nFour visual rows, each EXACTLY7 array cells and index0..6:\nInput [1,2,3,4,5,6,7], mark tail values5,6,7.\nStep1 \"反转整个数组 [0,6]\" → [7,6,5,4,3,2,1]. Arcs connect swap pairs positions0↔6,1↔5,2↔4; center3 unchanged.\nStep2 \"反转前 k 项 [0,2]\" → [5,6,7,4,3,2,1]. Highlight first3, one swap0↔2, middle1 unchanged.\nStep3 \"反转剩余项 [3,6]\" → [5,6,7,1,2,3,4]. Highlight last4, swaps3↔6 and4↔5.\nResult \"右移3位: [5,6,7,1,2,3,4]\". Rule \"k 先取模; k=0 时保持原数组\". Small pointer rule \"每次反转: left、right向中间交换\". Footer \"时间 O(n)    辅助空间 O(1)\" \"n 为数组长度; 仅使用交换变量和两个指针\". Don't draw arcs between unrelated rows that imply value changed.",
+  "edits": [
+    "Fix only the misleading curved swap arrows and their labels below the array rows. REMOVE ALL curved arrows below steps1,2,3, including wrong labels \"0↔6\", \"2↔5\", \"3↔5\". Replace them with concise plain-text swap-pair labels, no arrows pointing at any cells: under step1 exactly \"交换下标: (0,6), (1,5), (2,4)\"; under step2 exactly \"交换下标: (0,2)\"; under step3 exactly \"交换下标: (3,6), (4,5)\". Keep all array cells, indexes, values, highlight groups, formulas, right-side correct explanation, title, footer and layout unchanged. Do not add any curved arrows."
+  ],
+  "review": {
+    "example": "[1,2,3,4,5,6,7], k=3, 输出[5,6,7,1,2,3,4]. 三次反转结果逐行复算正确.",
+    "steps": "每行7格与下标0-6一致. 修图移除错误弧线, 交换对正确为(0,6)(1,5)(2,4), 然后(0,2), 最后(3,6)(4,5). 高亮前3与后4精确.",
+    "complexity": "时间O(n), 辅助空间O(1), n为数组长度, 原地交换.",
+    "text": "中文清楚, k取模公式与范围括号正确, 交换下标对清晰可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "25d9f495f1d83b61cdadd870f89752d1d919f897cb4a572411c04ef5172e1541",
+  "sourceFile": "exec-7fde7046-44e3-493f-b9af-083a94417ef5.png"
+}

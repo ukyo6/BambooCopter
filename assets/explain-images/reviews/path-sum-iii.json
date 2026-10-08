@@ -1,0 +1,19 @@
+{
+  "order": 48,
+  "title": "路径总和 III",
+  "slug": "path-sum-iii",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"48  路径总和 III\". Subtitle: \"当前前缀和 S, 查祖先前缀 S - target 的出现次数\".\nInput \"root = [10,5,-3,3,2,null,11,3,-2,null,1], target = 8\".\nDraw EXACT nine-node tree: root10 LEFT5 RIGHT-3;5 LEFT3(upper3) RIGHT2;-3 only RIGHT11;upper3 LEFT3(lower leaf3) RIGHT-2;2 only RIGHT1. Only8 true edges, no phantom nodes. Distinguish two nodes3 by position not value change.\nHighlight three downward paths on existing edges: upper5→upper3,5→2→1,-3→11. Path labels exact \"5+3=8\", \"5+2+1=8\", \"-3+11=8\". Do not include root10 in these sums.\nSection1 example first hit ending at upper3: root-to-current sums10→15→18. Before current node, map \"前缀和→频次: {0:1,10:1,15:1}\". Initial0 frequency1. \"S=18; S-8=10; freq[10]=1\". Highlight prefix10 ending at root10, so counted path starts at next node5.\nSection2 tiny hit table rows endpoint \"上层3 | 18 | 10 | +1\";\"1 | 18 | 10 | +1\";\"11 | 18 | 10 | +1\". Headers \"终点\" \"S\" \"S-8\" \"新增条数\". Show paths alongside.\nSection3 \"查找 → 加入当前S → 搜索孩子 → 撤销当前S\". \"退出上层3时删去该分支的18, 兄弟分支不能复用它\". Explicit \"只统计祖先路径, 不是全树历史前缀\". Delete zero-frequency keys on backtrack.\nResult \"返回 3\".\nFooter \"时间 O(n), 平均    辅助空间 O(h)\". \"n为节点数,h为树高; 当前路径频次表+递归栈O(h),最坏O(n); 频次归零删除\". Use readable tree and table, avoid code.",
+  "edits": [],
+  "review": {
+    "example": "源例[10,5,-3,3,2,null,11,3,-2,null,1],target8→3;路径5→上层3、5→2→1、-3→11.",
+    "steps": "九节点八真实边核对,两节点3位置区分. 当前根链10/15/18复算;到上层3前频次{0:1,10:1,15:1},18-8=10命中1. 三终点S均18,各新增1,总3. 回溯撤销18、归零删除说明正确.",
+    "complexity": "平均哈希每节点 O(1),时间 O(n);仅活跃路径频次和栈 O(h),归零键删除,最坏 O(n).",
+    "text": "1536×1024全图核对所有负号、三条和式、频次键与箭头,均清楚."
+  },
+  "sourceFile": "exec-6b3e74e5-1afa-4f0e-a7e3-35822a0146bc.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "38d64cb655163ed1d858428b133b6b38aabd987705b82efaf12a42d4d650eec4"
+}

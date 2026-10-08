@@ -1,0 +1,19 @@
+{
+  "order": 46,
+  "title": "二叉树展开为链表",
+  "slug": "flatten-binary-tree-to-linked-list",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"46  二叉树展开为链表\". Subtitle: \"把原右子树接到左子树最右节点, 再把左子树搬到右侧\".\nInput \"root = [1,2,5,3,4,null,6]\". Output prominent \"right 链: 1 → 2 → 3 → 4 → 5 → 6\".\nThree exact diagrams:\n1 \"原树\": root1 LEFT2 RIGHT5;2 LEFT3 RIGHT4;5 only RIGHT6. Six nodes five real edges. Label left/right.\n2 \"处理 cur = 1, pre = 4\": exact rewired topology 1 RIGHT2;2 LEFT3 RIGHT4;4 RIGHT5;5 RIGHT6;1.left=null. Draw actual connections precisely. The right chain is1→2→4→5→6, but3 still remains2.left. Annotation exact three operations \"4.right = 5\", \"1.right = 2\", \"1.left = null\". Emphasize real new edge4→5.\n3 \"处理 cur = 2, pre = 3\": final horizontal chain six nodes1→2→3→4→5→6; EVERY arrow labelled right and every left pointer null. No branch or duplicate node. Annotation exact \"3.right = 4\", \"2.right = 3\", \"2.left = null\". Emphasize new edge3→4.\nRule \"pre 从 cur.left 开始, 沿 right 找到最右节点\". \"后续沿 cur.right 继续; 展开顺序是先序, 复用原节点\".\nFooter \"时间 O(n)    辅助空间 O(1)\". \"n 为节点数; 边扫描总量线性, 无递归栈或新节点\".\nNo ornamental arrows beyond accurate before/after flow; separate operation arrows from actual pointer edges.",
+  "edits": [],
+  "review": {
+    "example": "[1,2,5,3,4,null,6]原地展开为right链1→2→3→4→5→6.",
+    "steps": "原树1左2右5,2左3右4,5右6. 中间实际边1.right2、2.left3、2.right4、4.right5、5.right6全部核对. 末态六节点五right边,每节点left=null. 两组三操作与真正箭头落点一致.",
+    "complexity": "迭代改线复用节点,边扫描总量 O(n),辅助 O(1),无递归栈或新节点.",
+    "text": "完整1536×1024核对cur/pre标签、六个节点、指针赋值与null标注."
+  },
+  "sourceFile": "exec-3bf4caf8-4c19-4bd1-ba54-bf8b10001a68.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "517f41e29bf6a0a5f0a15c7991fd6d4293575a4f2b64c6c6509b42b9b35aa2d3"
+}

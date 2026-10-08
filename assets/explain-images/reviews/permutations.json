@@ -1,0 +1,19 @@
+{
+  "order": 55,
+  "title": "全排列",
+  "slug": "permutations",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"55  全排列\". Subtitle: \"每层选一个未使用的数, 记录后撤销选择\".\nInput \"nums = [1,2,3]\". Three array cells values1/2/3 with indexes0/1/2.\nSection1 three precise branching groups, each starts from chosen first number:\nfirst[1] branches to[1,2]→[1,2,3], and[1,3]→[1,3,2].\nfirst[2] branches to[2,1]→[2,1,3], and[2,3]→[2,3,1].\nfirst[3] branches to[3,1]→[3,1,2], and[3,2]→[3,2,1].\nEach arrow APPENDS only one un-used number, no arrow skipping a level. Six complete leaves, no duplicate answers.\nSection2 detailed backtrack transition in one readable line or two rows:\n\"path=[1,2],used=[T,T,F]\" →\"选择3\"→\"[1,2,3],记录\"→\"撤销3\"→\"[1,2]\"→\"撤销2\"→\"[1]\"→\"选择3\"→\"[1,3]\"→\"选择2\"→\"[1,3,2],记录\".\nLabels used indexes correspond nums indexes0,1,2;Tmeans used,Fmeans available. Important \"撤销时 path 删除末尾, 对应 used 复原\".\nSection3 result list EXACT six permutations \"[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]\". Prominent \"3! = 6 个排列\". \"路径长度到3时复制保存, 不是保存可变路径引用\".\nFooter \"时间 O(n·n!)    辅助空间 O(n)\". \"n为互不相同元素数;路径+used+递归栈O(n),不含O(n·n!)输出\". No full code or abstract trees without values.",
+  "edits": [],
+  "review": {
+    "example": "nums=[1,2,3]的全部结果123/132/213/231/312/321,共3!=6.",
+    "steps": "下标0/1/2对应值1/2/3. 六叶均三个互异数字且无重复;回溯状态path12 usedTTF→123 TTT→12 TTF→1 TFF→13 TFT→132 TTT逐项正确. 选择/撤销箭头和值一致,结果复制而非存路径引用.",
+    "complexity": "n!答案每个复制 O(n),时间 O(n·n!),path/used/栈 O(n),输出排除.",
+    "text": "1536×1024,路径、used布尔值、下标及全六答案可读."
+  },
+  "sourceFile": "exec-e1eb7fa2-c814-4722-be2c-b5a9c84cada1.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "08817b3bbde3ceb22f1b1e0bc0de1ffa9d8fb13737729047463f436fb1e59359"
+}

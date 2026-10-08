@@ -1,0 +1,21 @@
+{
+  "order": 33,
+  "title": "排序链表",
+  "slug": "sort-list",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"33  排序链表\". Subtitle \"自底向上归并, 有序段长度每轮翻倍\". Inputhead=[4,2,1,3], n=4.\nStage1 inputtruechain4→2→1→3→null. \"先统计n=4; step=1\". Cut into four singleton segments4→null,2→null,1→null,3→null, distinctgaps. Pairwise merge4and2→2→4;1and3→1→3. Afterroundcompleteactualchain2→4→1→3→null. Brackets markfirstpair2→4 andsecondpair1→3, \"两个长度2的有序段; 跨段尚未整体有序\".\nStage2 step=2, cut into two truechains2→4→null and1→3→null. Detailed merge decisions \"2vs1:取1; 2vs3:取2; 4vs3:取3; 接剩余4\".\nStage3 finalactualchain1→2→3→4→null, onebracketlength4. \"step=4≥n, 结束\", result[1,2,3,4].\nShorthow \"切断两段 → 比较段头并合并 → 接回结果尾部\"; \"复用节点, 只重连next; 不使用递归栈\".\nFooter \"时间 O(n log n)    辅助空间 O(1)\" \"n为节点数; 每轮O(n), 共O(log n)轮; 空链/单节点直接返回\". Avoid showtree recursion splitting, use rounds withtrueactualnext.",
+  "edits": [
+    "Make two targeted corrections only. 1) In lower result row, replace heading \"第三轮: step=4\" with \"归并完成: step=4\". Replace small line \"合并完成, 得到有序链表\" with \"第二轮结束, 得到有序链表\". There is NO third merge round because step4>=n4. 2) In second-round far-right mini step \"接剩余4\", remove the duplicate depiction \"4→4\". Replace with ONE blue node4 followed by arrow to null badge, labelled \"剩余段 4→null, 直接接到结果尾部\". No second value4 node inthismini. Keep all other nodes, chain values, decision steps, result[1,2,3,4], layout and complexity unchanged."
+  ],
+  "review": {
+    "example": "[4,2,1,3], 第一轮完整链2->4->1->3, 第二轮1->2->3->4.",
+    "steps": "四单段与两次成对归并正确. 两长度2段切开后2->4->null,1->3->null. 三次比较2vs1取1,2vs3取2,4vs3取3, 剩余4接尾. 已修重复4为4->null和误称第三轮为归并完成, step4>=n4结束.",
+    "complexity": "自底向上迭代时间O(n log n), 辅助空间O(1), n为节点数, 不用递归栈或辅助数组.",
+    "text": "original全图中文、step翻倍、段长及输出准确, 结束检查明确发生在第二轮之后."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "b9ea0eca5d492921f4b60dce8f4685dd608aae84bade65efc24c87864c1570bb",
+  "sourceFile": "exec-67cf6663-77c5-48a7-9bd1-abadfbef60ec.png"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 54,
+  "title": "实现 Trie (前缀树)",
+  "slug": "implement-trie-prefix-tree",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"54  实现 Trie (前缀树)\". Subtitle: \"路径存在代表前缀, 终点标记才代表完整单词\".\nUse exact operations from source: insert(\"apple\"),search(\"apple\")true,search(\"app\")false,startsWith(\"app\")true,insert(\"app\"),search(\"app\")true.\nMain diagram AFTER insertapple: exact path root→a→p→p→l→e. root plusfive character nodes, five edges. Two DISTINCT p nodes are second and third characters. Depth labels1:a,2:p,3:p,4:l,5:e. Only e has word-end marker \"isEnd=true\"; third-character p has\"isEnd=false\". Short lookupapp follows root→a→p→p and stops at third-characterp. DO NOT omit a p or turn apple into aple.\nSection2 exact operation table \"操作 | 检查 | 返回\":\ninsert(\"apple\") | 创建路径,标记e | null\nsearch(\"apple\") | 路径存在且e是结尾 | true\nsearch(\"app\") | 第3个字符p未标记结尾 | false\nstartsWith(\"app\") | 3字符路径存在 | true\ninsert(\"app\") | 标记第3个字符p为结尾 | null\nsearch(\"app\") | 该p已是结尾 | true\nSection3 SAME existing path AFTER insertapp, root→a→p→p→l→e unchanged, both third-characterp AND e end markers true. Circle/hollow terminal indicators need legend. \"插入app复用节点, 只增结尾标记, apple仍存在\".\nRule \"search: 路径存在 AND 最后节点isEnd\";\"startsWith: 只检查路径\".\nFooter \"单次操作时间 O(L)    查询辅助空间 O(1)    Trie存储 O(S)\". \"L为本次字符串长度,S为已插入单词总字符数; 固定字母表;一次插入最多新增O(L)节点\". No full program code.",
+  "edits": [],
+  "review": {
+    "example": "源操作insertapple,searchapple,searchapp,startsWithapp,insertapp,searchapp的返回依次null/true/false/true/null/true.",
+    "steps": "两条完整Trie均root+五字符节点a/p/p/l/e,五真实边. 深度2与3两个p独立. 初始仅e isEnd=true;插入app后第三字符p与e同时true,连接完全保留. 查询app三字符路径止在深度3p.",
+    "complexity": "单次insert/search/startsWith O(L),查询辅助 O(1);固定字母表Trie总存储 O(S),一次插入最多新增 O(L)节点,L本次长度S插入总字符.",
+    "text": "1536×1024全图,两个p、全部六行返回、true/false标记和查询/存储空间区别清楚."
+  },
+  "sourceFile": "exec-edb0fe50-dc7a-48f9-931c-ba43a68b18a4.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "31d78dcc460944508e11c16af68043e1d2fa1c85c4c4da3da6898bfb53794b03"
+}

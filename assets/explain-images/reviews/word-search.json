@@ -1,0 +1,19 @@
+{
+  "order": 60,
+  "title": "单词搜索",
+  "slug": "word-search",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace. Landscape 3:2, deep charcoal #171b20 background, warm white text, muted grey secondary text, restrained mint and amber accents. Main diagrams occupy most canvas. No decorative arrows, glossy 3D, mascot, fake UI, play button, watermark, or full solution code. Distinguish coordinates, character index, and letters. Render exactly the specified content legibly.\nTitle: \"60  单词搜索\"\nSubtitle: \"四向相邻逐字匹配, 当前路径不可重复使用格子\"\nInput: \"board=[[A,B,C,E],[S,F,C,S],[A,D,E,E]], word=ABCCED\". Result top right: \"true\".\nSECTION 1 large 3-row 4-column board, column labels 0,1,2,3 and row labels 0,1,2. Exact rows:\nrow0 A B C E\nrow1 S F C S\nrow2 A D E E\nOnly six cells highlighted mint, with small sequence labels 1..6: 1 A(0,0), 2 B(0,1), 3 C(0,2), 4 C(1,2), 5 E(2,2), 6 D(2,1). Draw five short arrows CENTER TO CENTER only between these exact adjacent cells: A00 right B01, B01 right C02, C02 down C12, C12 down E22, E22 left D21. Do not include the E(0,3) or S in the path.\nSECTION 2 alongside board show exact path as six vertically readable rows, no duplicate board:\n\"k=0  (0,0) A\"\n\"k=1  (0,1) B\"\n\"k=2  (0,2) C\"\n\"k=3  (1,2) C\"\n\"k=4  (2,2) E\"\n\"k=5  (2,1) D → 全部匹配, true\"\nCaption \"k 是 word 的0-based字符下标; 进入格子加入 used, 再匹配下一字符\".\nSECTION 3 bottom left concise counterexample \"ABCB → false\". Show horizontal state chips \"A(0,0) → B(0,1) → C(0,2)\" and then a clearly separate amber rejection note: \"下一字符要 B; (0,1) 已占用, 禁止复用\". No arrow implying successful move back to B. Note \"另一起点 A(2,0) 无相邻 B; 所有起点失败\". \nSECTION 4 bottom right explicit backtrack, three state boxes connected by straight arrows labelled actions:\nLEFT \"path=[A00,B01,C02]\" → arrow \"撤销 C02\" → RIGHT \"path=[A00,B01]\"\nBelow \"失败时删除 used 中的 C02, 返回 B01 继续尝试; 起点可重新选择\".\nRule line \"只走上、下、左、右, 不走斜线\".\nFooter exact: \"时间 O(mn·3^L)    辅助空间 O(min(L,mn))\"\nFooter note: \"m,n为网格行列数,L为单词长度; 首步≤4方向, 后续≤3; used集合与递归栈只保存当前路径, 无整张访问表\".\nAll letters, arrows, coordinates, 0-based k, example results and complexity must match this specification. Avoid ambiguous decorative arrows or duplicate example numbers.",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "fdba94ed404484a77c1d32169a2b53b52114c74390d67cd70a944f53a8395923",
+  "sourceFile": "exec-6fa60e0c-f1c5-4c01-90d9-5fc112c76edd.png",
+  "review": {
+    "example": "3×4网格[[A,B,C,E],[S,F,C,S],[A,D,E,E]],ABCCED→true;ABCB→false.",
+    "steps": "六格路径A(0,0)→B(0,1)→C(0,2)→C(1,2)→E(2,2)→D(2,1),k0..5和箭头方向逐项核对. ABCB的下一B(0,1)已使用,另一起点A(2,0)无B邻格. 回溯path[A00,B01,C02]→撤销C02→[A00,B01],used同步撤销.",
+    "complexity": "m,n为行列,L为单词长. 逐起点DFS首步≤4,后续≤3,保守时间O(mn·3^L);used路径集合与递归栈O(min(L,mn)),没有整张访问表.",
+    "text": "项目实际1536×1024原图核查,中文、字母、0-based字符下标、坐标和复杂度清晰;格内箭头准确落在相邻格."
+  }
+}

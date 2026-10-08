@@ -1,0 +1,19 @@
+{
+  "order": 34,
+  "title": "合并 K 个升序链表",
+  "slug": "merge-k-sorted-lists",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. Make this exact algorithm understandable in one image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2, preferably 1536x1024. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main diagram occupies most of the canvas. Thin accurate arrows. No glossy 3D, mascot, decoration, fake app windows, play buttons, watermarks or full solution code. No excessive nested cards. Render only the specified content. All Chinese, symbols and numbers must be accurate and readable. Use English punctuation in Chinese text.\nTitle: \"34  合并 K 个升序链表\". Subtitle: \"最小堆只保存每条链表的当前候选\".\nInput directly under title: \"lists = [[1,4,5], [1,3,4], [2,6]]    k = 3, N = 8\".\nThree visual sections and compact footer:\n1. \"初始化: 三个头节点入堆\". Draw three ORIGINAL linked chains, each exactly once, with true next arrows:\nL0: 1 → 4 → 5 → null\nL1: 1 → 3 → 4 → null\nL2: 2 → 6 → null\nHighlight only initial head values 1, 1, 2. Show initial heap candidate values compactly as \"[1(L0), 1(L1), 2(L2)]\". Label \"候选按值展示, 非堆数组顺序\". Text \"每条链表最多一个候选\".\n2. \"弹出最小值, 只推进它所在的链\". A precise compact four-column table with headings \"取出\", \"后继入堆\", \"操作后的候选\", \"已确定的输出前缀\". Exactly these THREE rows:\n\"1(L0)\" | \"4(L0)\" | \"[1(L1), 2(L2), 4(L0)]\" | \"[1]\"\n\"1(L1)\" | \"3(L1)\" | \"[2(L2), 3(L1), 4(L0)]\" | \"[1,1]\"\n\"2(L2)\" | \"6(L2)\" | \"[3(L1), 4(L0), 6(L2)]\" | \"[1,1,2]\"\nLabel just above table \"同值时本例先取 L0\". Small precise rule below: \"弹出节点 → 接到结果尾部 tail → 将该节点后继入堆\". These arrows represent procedural reading order, not incorrect node pointers. No extra heap tree or invented table rows.\n3. \"重复直到堆为空\". Draw final actual next chain exactly \"1 → 1 → 2 → 3 → 4 → 4 → 5 → 6 → null\", eight value nodes, two nodes value1 and two nodes value4. Result text \"[1,1,2,3,4,4,5,6]\". Short text \"复用原节点, 重连 next; 链表耗尽则不再入堆\". All final next arrows must connect consecutive real nodes. Avoid any extra arrows across sections that could imply additional pointers.\nFooter exactly: \"时间 O(k + N log(k+1))    辅助空间 O(k)\".\nSecond footer line exactly: \"N 为全部节点总数, k 为输入链表数; 扫描链表头并建堆, 每个节点进出堆一次\".\nSmall boundary note: \"空链表不入堆; lists = [] 返回 []\".\nDo not simplify formula to only O(N log k), because k may exceed N due to empty input lists. Auxiliary space excludes the reused output nodes.",
+  "edits": [],
+  "review": {
+    "example": "题面示例 lists=[[1,4,5],[1,3,4],[2,6]], k=3,N=8. 已复算并核对输出 [1,1,2,3,4,4,5,6].",
+    "steps": "原始三条 next 链及初始头节点 1(L0),1(L1),2(L2)正确. 三行候选状态依次为 [1(L1),2(L2),4(L0)], [2(L2),3(L1),4(L0)], [3(L1),4(L0),6(L2)], 后继及输出前缀匹配. 图明确按值展示候选, 非堆数组顺序. 最终8节点真实 next 链跨行连接第一行末4到第二行首4, 再经5、6到null, 无重复或遗漏.",
+    "complexity": "时间 O(k + N log(k+1)), 辅助空间 O(k). N为全部节点总数,k为输入链表数; 扫描k个链表头并建堆, 每个节点进出堆一次. 包括空链表导致k>N与k=0/1边界, 复用输出节点不计额外节点空间.",
+    "text": "已通过项目实际PNG original全图核查. 标题、中文、L0/L1/L2、数字、tail/next/null、候选与结果清晰; 无完整提交代码或动画措辞."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "6e0dde263a65e44f4ff48af0fa2949a0f400e018a44b4a3587040eed25636ab0",
+  "sourceFile": "exec-dc5d715c-06d1-4f78-87a9-b29b1a9e6aec.png"
+}

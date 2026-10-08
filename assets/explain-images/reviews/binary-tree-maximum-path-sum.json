@@ -1,0 +1,21 @@
+{
+  "order": 50,
+  "title": "二叉树中的最大路径和",
+  "slug": "binary-tree-maximum-path-sum",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"50  二叉树中的最大路径和\". Subtitle: \"完整路径可接两边, 向父节点只能返回一边\".\nInput \"root = [-10,9,20,null,null,15,7]\". Exact five-node tree root-10 LEFT9 RIGHT20;20 LEFT15 RIGHT7, four true edges. Highlight ONLY path15→20→7, sum\"15+20+7=42\". Prominent \"返回 42\".\nSection1 leaves9,15,7 return gain9,15,7.\nSection2 node20: \"L=15,R=7\". \"经过20的完整路径=20+15+7=42\"; \"向上贡献=20+max(15,7)=35\". Arrow from20 UP to-10 labelled35, never42. Show fork complete path at20 separately from single-side upward contribution.\nSection3 root-10: \"L=9,R=35\". \"经过根的路径=-10+9+35=34\"; \"向上贡献=-10+max(9,35)=25\". \"全局最大仍42, 最优路径不经过根\".\nExact table rows node9|L0|R0|完整9|向上9;15|0|0|15|15;7|0|0|7|7;20|15|7|42|35;-10|9|35|34|25. Headers distinguish \"节点值\",\"L\",\"R\",\"完整路径和\",\"单边贡献\".\nRule \"L=max(0,leftGain), R=max(0,rightGain)\";\"更新答案: v+L+R; 返回: v+max(L,R)\". \"全局答案初始化为 -∞, 全负数时仍须选一个节点\".\nFooter \"时间 O(n)    辅助空间 O(h)\". \"n为节点数,h为树高; 后序递归栈最坏O(n)\". Accurate values/arrows, no full code.",
+  "edits": [
+    "Correct ONE diagram label. In RIGHTMOST step3 '计算根节点 -10', the green right-child CIRCLE currently contains 35. This is not a node value: actual right child is node20. Replace text INSIDE that green circle with '20'. Keep nearby external label 'R = 35' unchanged; it denotes subtree contribution. Keep all formulas using35, all other circles, table, arrows, input, final answer42 and complexity exactly unchanged. Node values stay inside circles, contribution labels outside."
+  ],
+  "review": {
+    "example": "root=[-10,9,20,null,null,15,7]→42,最佳路径15→20→7.",
+    "steps": "五节点四边核对. 叶贡献9/15/7;20的完整42与向上35;根候选34、贡献25复算. 五行(L,R,完整,单边)为9(0,0,9,9),15(0,0,15,15),7(0,0,7,7),20(15,7,42,35),-10(9,35,34,25). 定点修正根右孩子圆圈35为实际节点20,外部R=35保留.",
+    "complexity": "一次后序 O(n),栈 O(h),退化 O(n);全负数仍至少一个节点,答案初始-∞.",
+    "text": "编辑后完整1536×1024复核,节点值与贡献分开、所有负号和公式准确."
+  },
+  "sourceFile": "exec-8b89c407-03de-48c6-9bbc-454f16d7c7f9.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "7a233ea6af1124f0b91baddd77c587e9d411f21132aff545ba5887c7d84240b5"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 12,
+  "title": "最小覆盖子串",
+  "slug": "minimum-window-substring",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"12  最小覆盖子串\". Subtitle \"覆盖后持续收缩, 失效后继续扩张\". Input s=\"ADOBECODEBANC\", t=\"ABC\".\nDraw exactly 13 cells: indexes0..12, letters A D O B E C O D E B A N C. Three snapshots linked left to right or top to bottom:\n1. right=5,left=0, window \"ADOBEC\", A1 B1 C1, covered, length6. Removing left A makes A0, coverage fails; left=1.\n2. right=10, \"DOBECODEBA\" indexes1..10 is covered. Move left past D,O,B,E until left=5: shortest at this right is \"CODEBA\", indexes5..10, length6, A1 B1 C1. Then remove C at index5, fails; left=6.\n3. right=12, coverage returns. Move left6→7→8→9, skip O,D,E; window indexes9..12 \"BANC\", length4, A1 B1 C1. Removing B index9 fails. Highlight exactly four cells B A N C.\nResult \"返回 BANC\". Rule \"按需求次数计数; t=aa 需要两个 a\".\nSimple count legend need A1 B1 C1, track satisfied character types 3. Footer \"时间 O(m+n)    辅助空间 O(Σ)\" \"m、n 分别为 s、t 长度; Σ 为字符集大小, 本题英文字母固定时 O(1)\". Short accurate Chinese, no code, don't show wrong substrings.",
+  "edits": [],
+  "review": {
+    "example": "s=ADOBECODEBANC,t=ABC. 逐个复算三个窗口为ADOBEC(0-5)、CODEBA(5-10)、BANC(9-12), 长度6、6、4.",
+    "steps": "每行13格, 下标0-12与字符一致. left0/right5、left5/right10、left9/right12箭头准确. 移走A、C、B各导致对应计数降为0, 覆盖失效.",
+    "complexity": "时间O(m+n), 两指针单向移动. 空间O(Σ), Σ为字符集大小; 本题英文字母固定时O(1).",
+    "text": "中文清楚, BANC拼写和需求A1/B1/C1一致, 区间和长度公式可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "4a818b2dc8e5dd5caba869f6e342eefbaf6371e73fd46c12d1567cb0cd5c3805",
+  "sourceFile": "exec-c53a53df-f7da-4c1f-8a74-7501ba4b29a1.png"
+}

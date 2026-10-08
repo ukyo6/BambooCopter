@@ -1,0 +1,19 @@
+{
+  "order": 64,
+  "title": "搜索二维矩阵",
+  "slug": "search-a-2d-matrix",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp readable Chinese sans-serif, balanced whitespace. Landscape 3:2. Deep charcoal #171b20 background, warm white text, muted grey secondary text, restrained mint and amber accents. Main matrix and algorithm trace occupy most canvas. No glossy 3D, decorative arrows, mascot, fake app, play button, watermark, or full solution code. Distinguish matrix coordinates, virtual indexes, and values.\nTitle \"64  搜索二维矩阵\".\nSubtitle \"行尾小于下一行行首, 用虚拟下标直接二分\".\nInput \"matrix=[[1,3,5,7],[10,11,16,20],[23,30,34,60]]\".\nImmediate result \"target=3 → true; target=13 → false\".\nSECTION 1 upper left \"3×4矩阵与虚拟下标\".\nOne exact 3-row 4-column matrix, row labels \"r=0,1,2\", column labels \"c=0,1,2,3\". Each cell shows large value and small \"k=...\" below.\nExact cells:\nrow0 values1,3,5,7 and k0,1,2,3\nrow1 values10,11,16,20 and k4,5,6,7\nrow2 values23,30,34,60 and k8,9,10,11.\nMint highlight only value3 at row0col1 as found result. Amber outline on value11 at row1col1 as initial mid5, no extra cells highlighted.\nSECTION 2 upper right \"下标映射与边界\".\nFormula exact \"行 r=⌊k/n⌋, 列 c=k%n, 本例 n=4\".\nConcrete mapping \"k=5 → r=1,c=1 → matrix[1][1]=11\".\nText \"总长度 mn=12; 不真正展开或复制矩阵\".\nRule \"闭区间 [l,r], 初始[0,11]; mid=⌊(l+r)/2⌋\".\nRules \"值<target: l=mid+1\"; \"值>target: r=mid-1\"; \"值=target: true\"; \"l>r: false\".\nSECTION 3 lower left \"查找3: 四次比较\".\nTrace table column headings \"区间[l,r] | mid | 坐标 | 值 | 更新/结论\".\nExact four rows:\n\"[0,11] | 5 | [1,1] | 11 | 11>3, r=4\"\n\"[0,4] | 2 | [0,2] | 5 | 5>3, r=1\"\n\"[0,1] | 0 | [0,0] | 1 | 1<3, l=1\"\n\"[1,1] | 1 | [0,1] | 3 | 等于3, true\".\nSECTION 4 lower right \"查找13: 候选区间为空\".\nSame columns and exact three rows:\n\"[0,11] | 5 | [1,1] | 11 | 11<13, l=6\"\n\"[6,11] | 8 | [2,0] | 23 | 23>13, r=7\"\n\"[6,7] | 6 | [1,2] | 16 | 16>13, r=5\".\nBelow clear terminal state \"l=6,r=5 → l>r → false\". One short arrow between these text states, no decorative cross-panel arrows.\nFooter \"时间 O(log(mn))    辅助空间 O(1)\".\nFooter note \"m,n为行列数; mn个全局有序元素上二分; 虚拟下标映射为O(1), 只保存边界和中点\".\nEvery integer, matrix row, index, inequality, mapping and returned boolean must match this specification. Keep all table data aligned and readable, no invented examples.",
+  "edits": [],
+  "width": 1536,
+  "height": 1024,
+  "sha256": "dde3fa38a1048efaf09fb4a2bbb6546e413383b63bb7d9185f482099e180e9d1",
+  "sourceFile": "exec-80d7fdb8-242d-4eac-8863-82130f5adae1.png",
+  "review": {
+    "example": "matrix=[[1,3,5,7],[10,11,16,20],[23,30,34,60]],target3→true,target13→false.",
+    "steps": "矩阵12值、k0..11与坐标逐项核对. k5→[1,1]值11. 查3:[0,11]mid5值11→r4;[0,4]mid2值5→r1;[0,1]mid0值1→l1;[1,1]mid1值3成功. 查13:[0,11]mid5值11→l6;[6,11]mid8值23→r7;[6,7]mid6值16→r5;l6>r5失败. 两表无错位,结束箭头准确.",
+    "complexity": "m,n矩阵行列数,mn元素因行序性质全局有序,虚拟映射floor(k/n),k%n为O(1),二分时间O(log(mn)),仅边界与中点O(1),未真实展开或复制.",
+    "text": "项目实际1536×1024原图核查,0-based k、坐标、floor符号、闭区间、比较及true/false清楚;目标3与初始mid11分别用mint/amber标记."
+  }
+}

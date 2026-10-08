@@ -1,0 +1,18 @@
+{
+  "order": 9,
+  "title": "找到字符串中所有字母异位词",
+  "slug": "find-all-anagrams-in-a-string",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"09  找到字符串中所有字母异位词\". Subtitle: \"长度固定，比较字符频次\".\nInput: 's = \"cbaebabacd\"    p = \"abc\"'. tenletter cells c,b,a,e,b,a,b,a,c,d, separateindexes0-9.\nTargetfrequency \"a:1  b:1  c:1\"; windowlength3.\nThree snapshots on exactsame10characters: starting0highlight[0,2] \"cba\", counts a1b1c1, \"频次相同 → 记录 0\". starting1highlight[1,3] \"bae\", counts a1b1e1, \"缺 c、多 e → 不匹配\". starting6highlight[6,8] \"bac\", counts a1b1c1, \"频次相同 → 记录 6\".\nWindowupdate precise: transitionfromfirstcba tobae draws \"移出 c\" atoldindex0 and \"加入 e\" atnewindex3; \"每次只更新离开和进入的字符\". Rule \"不要求字符顺序相同，必须频次完全相同\". Allwindows exactly3charactersnot4.\nResult \"返回起始下标 [0, 6]\".\nFooter \"时间 O(n+m)    辅助空间 O(1)\". \"n = |s|，m = |p|；仅小写字母，26 项比较为常数；不含结果\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "b242d698fc3fde67cabb280b4b19a8a877f246a6e8de9e0522e0e9d42a2e26d3",
+  "review": {
+    "example": "s=cbaebabacd,p=abc -> 起点[0,6]",
+    "steps": "窗口[0,2]cba/[1,3]bae/[6,8]bac, 长度均3; 频次一致两次, 移出c加入e箭头正确",
+    "complexity": "O(n+m); O(1). n = |s|, m = |p|. 初始化目标频次并扫描固定长度窗口; 26 项小写字母频次比较视为常数. 不含结果; r 个匹配起点另占 O(r).",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}

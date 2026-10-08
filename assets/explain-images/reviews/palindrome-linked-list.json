@@ -1,0 +1,21 @@
+{
+  "order": 24,
+  "title": "回文链表",
+  "slug": "palindrome-linked-list",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"24  回文链表\". Subtitle \"找到中点, 反转后半段, 对齐比较\".\nInput head=[1,2,2,1]. Give node identities A(1),B(2),C(2),D(1), original A→B→C→D→null. Three sections:\n1 Fast/slow to firsthalfend. slow startsA,fastA. One iteration slowB,fastC. Stop because fast.next.next=null. Pointer arrows must land slow onB (second node), fast onC (thirdnode). \"slow停在前半段尾节点 B\".\n2 Detach B.next=null and reverse second half C→D→null to D→C→null. Draw TWO separate true chains A(1)→B(2)→null and D(1)→C(2)→null, aligned vertically to compare. p arrowA, qarrowD. Pair1 compare1=1; pair2 compare2=2. No link across halves in this stage.\n3 q hitsnull after two matches, resulttrue. Restore secondhalf toC→D→null and B.next=C, show restoredA→B→C→D→null. Small rule \"奇数长度跳过中间节点; 按后半段长度比较\". Label \"比较结束再反转并接回, 恢复原链表\".\nFooter \"时间 O(n)    辅助空间 O(1)\" \"n为节点数; 快慢定位与两次原地反转均线性\". All valuesunchanged; identities distinguishtwovalues2.",
+  "edits": [
+    "Text correction only in the upper paragraph of panel1 \"快慢指针找到前半段尾节点\". Replace the incorrect phrase \"当 fast.next = null 时停止\" with accurate exact wording \"当 fast.next 或 fast.next.next 为 null 时停止\". Reflow this short paragraph as needed, maintaining font readability. Keep the initial and after-one-iteration pointer drawings, bottom correct fast.next.next=null callout, all node identities, separate reversed halves, comparisons, restoration and complexity unchanged. No other changes."
+  ],
+  "review": {
+    "example": "[1,2,2,1]为回文, 返回true. 身份A/B/C/D与值1/2/2/1保持一致.",
+    "steps": "初始slow/fast均A, 一轮后slowB/fastC. 已修停止文字为fast.next或fast.next.next为null. 断开B.next后A->B->null与D->C->null无跨链连接; 比较1=1,2=2; 恢复A->B->C->D->null.",
+    "complexity": "时间O(n), 辅助空间O(1), n为节点数, 常数次线性遍历与原地反转.",
+    "text": "original全图中文清晰, 身份标签区分两个2节点, 停止条件与恢复语义一致."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "5e025950deae02e12b41e4d60c7bffadecc570e76da8b32ab3eeca39e1cf30e0",
+  "sourceFile": "exec-f2e63c05-baaa-47b1-8c69-08bea1ae3d71.png"
+}

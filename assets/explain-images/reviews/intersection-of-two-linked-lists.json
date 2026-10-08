@@ -1,0 +1,19 @@
+{
+  "order": 22,
+  "title": "相交链表",
+  "slug": "intersection-of-two-linked-lists",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"22  相交链表\". Subtitle \"走完自己的链, 再走对方的链, 抵消长度差\".\nUse official example A=[4,1,8,4,5], B=[5,6,1,8,4,5]. Identity labels:\nA prefix A1(value4)→A2(value1), B prefix B1(value5)→B2(value6)→B3(value1).\nThey BOTH connect to SAME SHARED C1(value8)→C2(value4)→C3(value5)→null. Draw one shared tail ONLY, with two precise arrows A2→C1 andB3→C1. The two value1 nodes A2/B3 are distinct boxes. Label \"相交看节点对象, 不是数值\".\nShow p firstA thenB, q firstB thenA, reset only when pointer is null.\nCompact complete state table t0..9 p/q:\n0 A1/B1\n1 A2/B2\n2 C1/B3\n3 C2/C1\n4 C3/C2\n5 null/C3\n6 B1/null\n7 B2/A1\n8 B3/A2\n9 C1/C1, highlight meeting.\nExplain one iteration advances non-null to next, null switches tootherhead. \"指针到 null 后, 下一轮切换到另一条链的头\". \"共同走过两条链, 长度差自动抵消\".\nResult \"返回共享节点 C1, 值8\". No return just8, must node.\nFooter \"时间 O(m+n)    辅助空间 O(1)\" \"m、n为两链长度; 不修改链表, 无交点时二者同时为null\".",
+  "edits": [],
+  "review": {
+    "example": "A=[4,1,8,4,5], B=[5,6,1,8,4,5], 共享C1(8)->C2(4)->C3(5), 返回C1.",
+    "steps": "实际next箭头A2和B3都指向同一个C1, 只有一份公共尾. 完整t0-9表逐步复算, t5为null/C3,t6为B1/null,t7为B2/A1,t8为B3/A2,t9为C1/C1.",
+    "complexity": "时间O(m+n), 辅助空间O(1), m和n分别为链长度, 常数个指针.",
+    "text": "original全图标签身份与值分开, null切换语义明确, 返回节点对象与值8表达准确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "e040ec3a9271aa65e4997923b548d23095780804f5b50d94b99771a0accae6fe",
+  "sourceFile": "exec-eb90b1a6-1f30-4a23-93a9-bb5d5c2ecb76.png"
+}

@@ -1,0 +1,19 @@
+{
+  "order": 36,
+  "title": "二叉树的中序遍历",
+  "slug": "binary-tree-inorder-traversal",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"36  二叉树的中序遍历\". Subtitle: \"沿左链入栈, 弹栈访问, 再转向右子树\".\nInput: \"root = [1, null, 2, 3]\". Draw exact tree at upper left: root node 1 has NO left child, RIGHT child 2; node 2 has LEFT child 3 and NO right child. Only two actual solid tree edges 1→2 (right) and 2→3 (left), clearly labelled right and left. Do not put 3 under 1.\nStep 1: \"入栈 1\". stack bottom→top [1]. \"左边为空, 弹出 1 并访问\". result [1]. current moves to right child 2.\nStep 2: \"沿左链入栈 2, 再入栈 3\". stack bottom→top [2,3], top is 3. \"3 左边为空, 弹出并访问 3\". stack [2], result [1,3].\nStep 3: \"3 右边为空, 弹出并访问 2\". stack [], result [1,3,2].\nDraw the four stack snapshots in reading order and give an unambiguous top label. Visually highlight visited nodes in order 1,3,2. Result prominently: \"返回 [1, 3, 2]\". Rule: \"左子树 → 根节点 → 右子树\". Small note \"空树 → []\".\nFooter verbatim: \"时间 O(n)    辅助空间 O(h)\". \"n 为节点数, h 为树高; 不含 O(n) 的结果; 最坏栈 O(n)\". No pseudo-code blocks. All tree and stack arrows must terminate on correct nodes.",
+  "edits": [],
+  "review": {
+    "example": "root=[1,null,2,3], 中序输出 [1,3,2]; 空树输出 [].",
+    "steps": "核对树仅有 1.right=2 和 2.left=3 两条实线边. 栈底到顶依次 [1]→[]→[2,3]→[2]→[], 顶端 3 先于 2 弹出, 结果依次 [1]、[1,3]、[1,3,2].",
+    "complexity": "每节点入栈、出栈一次, 时间 O(n); 显式栈 O(h), h 为树高, 最坏 O(n). O(n) 结果不计入辅助空间.",
+    "text": "核对中文标题、left/right 标记、数组值和栈顶标签, 原始 PNG 1536×1024, 文字清楚且无代码块."
+  },
+  "sourceFile": "exec-901f18f9-fd04-45dd-a58d-6500d2d42768.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "2ae3de79ecb26352888fb06478e803a03249c6d5d90a799c9d2b23f51dfb5f74"
+}

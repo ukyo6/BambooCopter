@@ -1,0 +1,19 @@
+{
+  "order": 72,
+  "title": "每日温度",
+  "slug": "daily-temperatures",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"72  每日温度\". Subtitle \"更暖的一天, 结算栈中等待的日期\". Input \"T=[73,74,75,71,69,72,76,73]\". Eight-cell row with separate indexes0-7. Main snapshot \"扫描到 i=5, T[i]=72\". Stack bottom→top before scan exactly indexes[2,3,4], with paired temps[75,71,69]. Show pop index4 because72>69 givesanswer[4]=5-4=1; popindex3 because72>71 givesanswer[3]=5-3=2; stopindex2 because72<75, push5 givesstack[2,5]. Next small snapshot i=6,T=76: pop5→1天,pop2→4天. Final exact 8cells \"answer=[1,1,4,2,1,1,0,0]\". Highlight final indexes6,7 \"右侧没有更暖的日子\". Rule \"栈保存下标, 温度单调不增; 答案为下标之差\". Footer \"时间 O(n)    辅助空间 O(n)\" \"每个下标至多入栈出栈一次, 不含返回数组\".",
+  "edits": [],
+  "review": {
+    "example": "[73,74,75,71,69,72,76,73]返回[1,1,4,2,1,1,0,0], 与题面示例一致.",
+    "steps": "i=5温度72时栈下标[2,3,4], 弹4得1天, 弹3得2天, 遇2的75停止, 入5后[2,5]. i=6温度76弹5得1、弹2得4. 下标与温度区别清晰, 末尾6、7保持0.",
+    "complexity": "n为温度数组长度, 每个下标至多入栈出栈一次, 时间O(n), 辅助栈O(n), 返回数组另占O(n).",
+    "text": "栈顶与栈底箭头分别落在下标4/2和5/2, 每个栈行的温度配对正确. 输入及答案均8格, 末尾两个0合并括注正确, 温度单调不增及下标差表达可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "e7296883084773a582e4908978be5aa65a98fa0b1f275f821bc3dd198811bea2",
+  "sourceFile": "exec-0db55a57-dd11-440b-87cb-645b5e01a80a.png"
+}

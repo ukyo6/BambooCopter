@@ -1,0 +1,21 @@
+{
+  "order": 21,
+  "title": "搜索二维矩阵 II",
+  "slug": "search-a-2d-matrix-ii",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"21  搜索二维矩阵 II\". Subtitle \"从右上角出发, 每一步排除一行或一列\".\nInput target=5. Exact5×5matrix rows:\n[1,4,7,11,15]\n[2,5,8,12,19]\n[3,6,9,16,22]\n[10,13,14,17,24]\n[18,21,23,26,30].\nMain large matrix with separate row/column0..4, highlight search path cells (0,4)=15,(0,3)=11,(0,2)=7,(0,1)=4,(1,1)=5. Thin arrows:15←11? Direction must search from15 left TO11, then11 TO7,7 TO4, then4 downTO5. Use small arrows in gaps and distinct numbered1..5.\nState table (r,c),value,decision exactly: (0,4)15>5 left;(0,3)11>5 left;(0,2)7>5 left;(0,1)4<5 down;(1,1)5=5 found.\nExplanation \"当前值大于目标: 当前列剩余值更大, 排除此列, c--\"; \"当前值小于目标: 当前行剩余值更小, 排除此行, r++\". Context remaining region crucial, do not say whole original row smaller universally.\nResult \"找到(1,1), 返回 true\". Failure rule \"行或列越界则返回 false\". Footer \"时间 O(m+n)    辅助空间 O(1)\" \"m行n列; 每一步只向左或向下, 最多走m+n步\". No second numeric example.",
+  "edits": [
+    "Correct ONLY the green key-rule card \"当前值小于目标 (<)\" in lower right. Because search starts at the right edge of the remaining region, the smaller values to exclude are to the LEFT of current x, not to its right. Redraw its tiny row as [...][...][x], with x at RIGHTMOST cell, and a thin LEFTWARD arrow under the preceding cells, label \"左侧都更小\". Keep its main text \"当前行剩余值更小, 排除此行.\" and action \"r++\". Keep every other part of the image, including5x5matrix, path arrows, five-row table, result, footer, colors and layout unchanged."
+  ],
+  "review": {
+    "example": "题面5x5矩阵逐格一致, target5搜索15->11->7->4->5, 在(1,1)返回true.",
+    "steps": "25格与索引0-4正确, 三个左箭头与最后4向下到5落点准确. 状态表五行坐标与比较正确. 已修规则小图, x在剩余行最右侧, 左侧更小, 排除行后r++.",
+    "complexity": "时间O(m+n), 辅助空间O(1), m行n列, 每步排除一行或一列.",
+    "text": "original全图中文清晰, II标题、true/false与终止条件r=m或c<0准确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "09e0908dbc2d30ac8fe9400dee4f09c96ea4a1ae7bc64d3919c8a77e864cc6f4",
+  "sourceFile": "exec-e3e8f198-6c88-494c-8164-3ddd0f1a90aa.png"
+}

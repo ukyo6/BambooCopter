@@ -1,0 +1,19 @@
+{
+  "order": 11,
+  "title": "滑动窗口最大值",
+  "slug": "sliding-window-maximum",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"11  滑动窗口最大值\". Subtitle \"队列保存下标, 队首就是最大值\".\nInput nums = [1,3,-1,-3,5,3,6,7], k = 3. Draw 8 cells with separate indexes 0..7.\nThree sections:\n1. Build first window [1,3,-1]. Monotonic deque entries \"下标1:值3 → 下标2:值-1\", max3. Label \"队首到队尾, 值递减\".\n2. At i=3: new -3, deque [1,2,3] values [3,-1,-3], window indexes1..3, max3. At i=4: index1 expires (1 < 4-3+1=2), remove front; new5 removes smaller/equal tail values -3 and-1; deque becomes only \"下标4:值5\", window [-1,-3,5], max5. Show exact before/after deque and clear removal arrows.\n3. Compact six-row table of windows and maxima: 0..2→3;1..3→3;2..4→5;3..5→5;4..6→6;5..7→7. Result [3,3,5,5,6,7].\nRule \"先删过期队首, 再删不大于新值的队尾, 最后入队\". Footer \"时间 O(n)    辅助空间 O(k)\" \"每个下标最多入队一次、出队一次; n 为数组长度, k 为窗口大小\". Do not use array position as value; all pointers exact.",
+  "edits": [],
+  "review": {
+    "example": "输入 [1,3,-1,-3,5,3,6,7], k=3. 六个窗口最大值复算为 [3,3,5,5,6,7].",
+    "steps": "核对8格下标和值. 首窗口队列下标[1,2]. i=3队列[1,2,3]. i=4队首1过期, 从队尾删除3与2, 入队4, 队首值5. 删除箭头指向真实被移除下标.",
+    "complexity": "时间O(n), 辅助空间O(k). n为数组长度, k为窗口大小, 每个下标入出队至多一次.",
+    "text": "中文与负数清晰, 索引和数值分行, 六行窗口及页脚复杂度可读."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "4b0d5b12640c16d37b7c5405e97868bbbfa56054e6af4147fff88a424cbd48c2",
+  "sourceFile": "exec-35f489e4-daae-452f-9282-d28d775df13b.png"
+}

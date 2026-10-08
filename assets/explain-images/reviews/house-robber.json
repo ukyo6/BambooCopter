@@ -1,0 +1,21 @@
+{
+  "order": 83,
+  "title": "打家劫舍",
+  "slug": "house-robber",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"83  打家劫舍\". Subtitle \"偷当前房, 必须跳过前一间\". Input \"nums=[2,7,9,3,1]\". Fivehouseamountcells2,7,9,3,1 separate房号1-5, no decorativehouseart. Highlight houses1,3,5 path, \"2+9+1=12\". DPdefinition \"dp[i]: 前i间房的最高金额; dp[0]=0\". Exacttable rows i1value2:不偷0,偷0+2=2,dp2; i2value7:不偷2,偷0+7=7,dp7; i3value9:不偷7,偷2+9=11,dp11; i4value3:不偷11,偷7+3=10,dp11; i5value1:不偷11,偷11+1=12,dp12. State rowdp0..5 values0,2,7,11,11,12. Formula \"dp[i]=max(dp[i-1],dp[i-2]+nums[i-1])\". Result \"最高金额12\". Footer \"时间 O(n)    辅助空间 O(n), 本图保留dp与回溯\" \"只求金额可用两个滚动状态降至O(1)\".",
+  "edits": [
+    "仅补齐打家劫舍DP的边界, 避免i=1读取dp[-1]. 在左侧第1区dp[0]=0下新增清晰一行“dp[1]=nums[0]=2”. 在第2区状态转移公式下新增一行“i≥2 时使用转移; i=1 直接初始化”. 右侧第3区表第一行i=1的“偷第i间”格当前是“0+2=2”, 把这一个格替换为“初始化:2”, 这样不把i=1套入dp[i-2]公式. 保留其他所有表值、公式、房号、箭头、布局和复杂度不变."
+  ],
+  "review": {
+    "example": "[2,7,9,3,1]最高12, 选第1、3、5间金额2+9+1.",
+    "steps": "dp前缀为0,2,7,11,11,12. 每间比较不偷与前两间dp+当前金额, 第4间max(11,7+3)=11, 第5间max(11,11+1)=12. 选房互不相邻.",
+    "complexity": "n为房数, O(n)填表和回溯, 本图保留dp及选房回溯辅助O(n), 仅求金额滚动O(1).",
+    "text": "官方编辑补齐dp1=nums0=2及i≥2转移范围, 第一行改初始化避免dp[-1]. 房号1-5与nums[i-1]区别清楚, 两条选择弧落第1→3→5房. 全部DP/取舍值与独立计算一致."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "32977c96e5567dca7311f072db9cae254808254f3b3723d25e2f477bd3825e05",
+  "sourceFile": "exec-d57ac257-5fa0-4193-847a-bc6daa423d9b.png"
+}

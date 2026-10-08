@@ -1,0 +1,22 @@
+{
+  "order": 51,
+  "title": "岛屿数量",
+  "slug": "number-of-islands",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\n\nTitle: \"51  岛屿数量\". Subtitle: \"发现一块未访问陆地, 标记整座岛屿后才继续扫描\".\nInput EXACT four-row five-column grid, draw exactly20 cells:\nrow0:1,1,0,0,0\nrow1:1,1,0,0,0\nrow2:0,0,1,0,0\nrow3:0,0,0,1,1\nRows indexed0..3,columns0..4. Land1,water0. Result prominent \"返回 3\".\nMain large grid color ONLY seven land cells: island1 mint (0,0),(0,1),(1,0),(1,1);island2 amber (2,2);island3 muted blue (3,3),(3,4). Every cell still shows its original0/1, colors mean visited island, not a new grid value. Clear thin cell borders.\nThree steps with explicit row,col starts:\n\"① 扫到(0,0), 岛屿数=1\". DFS adjacent traversal(0,0)→(0,1)→(1,1)→(1,0), four cells visited; arrows only between these actual neighboring cells.\n\"② 扫到(2,2), 岛屿数=2\". Its four adjacent cells arewater, one-cell island.\n\"③ 扫到(3,3), 岛屿数=3\". Flood also visits(3,4), two-cell island.\nRule \"只连上下左右, 对角线不连通\". Specifically \"(2,2) 与(3,3) 虽斜邻, 属于不同岛\". \"已访问陆地跳过, 不重复计数\".\nFooter \"时间 O(mn)    辅助空间 O(mn)\". \"m为行数,n为列数;独立访问集合+DFS栈,每格最多访问常数次\". No copy of whole input needed.",
+  "edits": [
+    "Correct only DFS arrows and one color legend sentence, preserve all20-cell grids and values, title, count3, table and complexity. In STEP1 first small grid, remove its current four white arrows and draw ONLY these THREE arrows matching printed DFS order: (0,0) RIGHT to(0,1), then(0,1) DOWN to(1,1), then(1,1) LEFT to(1,0). No arrow from(0,0) to(1,0), no upward arrow. Arrowheads land at correct cell centers without obscuring1 values. Also replace left note '颜色表示该格子属于哪个已访问的岛屿' with '颜色表示所属岛屿, 各步骤按顺序访问并标记'. This avoids suggesting future island colors imply already visited. Preserve the coordinate order line (0,0)→(0,1)→(1,1)→(1,0).",
+    "Remove ONLY ALL white arrows INSIDE the first small grid in STEP1 '扫到(0,0),岛屿数=1'. Do not replace them with any arrows. Restore all four mint cells to clean original digit1 centered in each cell: (0,0),(0,1),(1,0),(1,1). Keep the grid20 cells/colors/other values exactly unchanged. The printed coordinate visiting-order line below already clearly shows (0,0)→(0,1)→(1,1)→(1,0), preserve that line. Keep step2 four neighbor arrows and step3 rightward arrow unchanged. Keep all other layout,text,answer,complexity identical."
+  ],
+  "review": {
+    "example": "源例4×5网格11000/11000/00100/00011→3,陆地共7格分成4/1/2格.",
+    "steps": "四幅矩阵均20格、行0-3列0-4,七个1落点正确. 访问顺序(0,0)→(0,1)→(1,1)→(1,0)均四向相邻;孤立(2,2)四邻都0;末岛(3,3)→(3,4)两格. 删除错误双向DFS图内箭头后以坐标序列清楚表达,第二步四邻箭头与第三步右箭头正确.",
+    "complexity": "独立访问集合与DFS栈最坏 O(mn),逐格扫描每格常数次 O(mn),m/n为行列.",
+    "text": "两轮实际官方编辑后完整1536×1024复核,0/1原值与岛颜色语义分清,节点数与坐标准确."
+  },
+  "sourceFile": "exec-f7f34e2c-51fa-4138-aba8-8cd0cf8f06d4.png",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "c54902a931097e6deb483b34e4981ed7209d14d6aa42eccf38fa278a264b7a8f"
+}

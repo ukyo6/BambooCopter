@@ -1,0 +1,19 @@
+{
+  "order": 20,
+  "title": "旋转图像",
+  "slug": "rotate-image",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle \"20  旋转图像\". Subtitle \"先转置, 再反转每一行\". Input matrix=[[1,2,3],[4,5,6],[7,8,9]].\nThree large accurate3×3 matrices connected by stage arrows:\nOriginal rows123/456/789.\nAfter transpose rows147/258/369. Label \"交换 matrix[i][j] 与 matrix[j][i], 只处理 i<j\". Plain swap coordinate list \"(0,1)↔(1,0), (0,2)↔(2,0), (1,2)↔(2,1)\", no crossing arcs. Mark diagonal1,5,9 unchanged.\nAfter reverse each row rows741/852/963. Label \"每行左右交换, 行内次序反转\". Exact output [[7,4,1],[8,5,2],[9,6,3]].\nHighlight original value2 at(0,1), transpose2at(1,0), final2at(1,2) with same mint. Short coordinate example \"(0,1) → (1,0) → (1,2)\" and general mapping \"(i,j) → (j,n-1-i)\".\nResult \"顺时针90°, 原地完成\".\nFooter \"时间 O(n²)    辅助空间 O(1)\" \"n 为正方形边长; 两轮交换, 不创建新矩阵\". Separate row/column indices0,1,2; every gridexactly9cells.",
+  "edits": [],
+  "review": {
+    "example": "原矩阵123/456/789, 转置147/258/369, 旋转741/852/963, 逐格复算一致.",
+    "steps": "三个3x3矩阵都有完整行列索引. 主对角线1/5/9不变, 三对交换坐标正确. 元素2的三个高亮落在(0,1),(1,0),(1,2), 一般映射(i,j)->(j,n-1-i)正确.",
+    "complexity": "时间O(n²), 辅助空间O(1), n为矩阵边长, 原地交换.",
+    "text": "original全图中文与平方指数清晰, 90度方向、交换条件i<j及输出矩阵准确."
+  },
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "bcf45bdb4ada3580a2f513f234b407d06d1050f50f328a2329acf02cea8c0d26",
+  "sourceFile": "exec-57b6185f-7a80-4ae6-8719-a9b9419947dd.png"
+}

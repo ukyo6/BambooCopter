@@ -1,0 +1,18 @@
+{
+  "order": 1,
+  "title": "两数之和",
+  "slug": "two-sum",
+  "status": "passed",
+  "generator": "built-in image_gen",
+  "prompt": "Use case: infographic-diagram.\nAsset type: One complete static Chinese algorithm explanation image for Bamboo Copter's dark desktop app. The user finds the old animation abstract; make the algorithm concrete and understandable on this single image.\nStyle: refined modern editorial educational infographic, flat precise diagrams, crisp Chinese sans-serif typography, balanced whitespace, readable labels. Landscape around 3:2. Deep charcoal background #171b20, warm white text, muted grey secondary text, restrained mint and amber accents. Main algorithm diagram occupies most of the canvas. Thin accurate arrows, small clean step numbers, distinguish indexes from values. No glossy 3D, mascot, decorative illustration, dashboard widgets, fake app window, play buttons, watermarks or full solution code. No excessive nested cards or huge empty areas. Use visual steps connected in reading order. ALL examples, indexes, formulas and Chinese labels below must be accurate and readable. Render only the specified content, with short explanatory Chinese labels; do not invent additional numerical examples. Main title top left, input directly underneath, 3-4 visual sections, and a compact complexity footer. The result should be visible immediately and the intermediate steps must explain how it was obtained.\nTitle: \"01  两数之和\". Subtitle: \"先找补数，再记录当前位置\".\nInput: \"nums = [2, 7, 11, 15]    target = 9\". Draw four array cells, values 2,7,11,15 and separate index row 0,1,2,3.\nStep 1: \"i = 0，当前值 2\"; show \"补数 = 9 - 2 = 7\"; hash table empty, lookup 7 miss; then insert \"2 → 0\" into table labeled \"数值 → 下标\".\nStep 2: \"i = 1，当前值 7\"; show \"补数 = 9 - 7 = 2\"; arrow to existing hash entry \"2 → 0\", found. Visually connect array values 2 and 7, annotate \"2 + 7 = 9\".\nResult: \"返回下标 [0, 1]\". Emphasize indexes not values. Small rule: \"先查后存，避免重复使用同一个元素\"; edge example: \"[3, 3]，target = 6 → [0, 1]\".\nFooter exact: \"时间 O(n)，平均    辅助空间 O(n)\". \"n 为数组长度；哈希操作按平均 O(1) 计\".",
+  "width": 1536,
+  "height": 1024,
+  "sha256": "76adfdd32804383f1092f90b7e57d4a2f8198bdde94b82508133cceb3c79f49a",
+  "review": {
+    "example": "[2,7,11,15], target=9 -> 下标[0,1]",
+    "steps": "先查7未命中, 插入2→0; 再查2命中; 数值与下标分开, [3,3]使用两个不同位置",
+    "complexity": "O(n), 平均; O(n). n 为数组长度. 一次扫描, 哈希查找和插入按平均 O(1) 计; 哈希冲突退化时最坏时间 O(n²). 哈希表最多记录 n 个元素.",
+    "text": "上一轮逐张实际PNG全图检查, 中文/数字/公式清楚; 真实题解UI已逐题验证解码、缩放和播放器隐藏"
+  },
+  "reviewContext": "沿用前10题上一轮已完成的生成后审阅, 本轮复核文件完整性与hash"
+}
