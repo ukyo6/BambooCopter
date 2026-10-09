@@ -45,6 +45,11 @@ jobs:
         run: node scripts/check-explains.js
       - name: 检查提交评审
         run: node scripts/check-reviews.js
+      - name: 检查聊天渲染与图片
+        run: |
+          node scripts/check-chat-markdown.js
+          node scripts/check-chat-images.js
+          node scripts/check-chat-attachments.js
       - name: 检查 CLI 协议
         run: node scripts/check-agents.js
       - name: 打包

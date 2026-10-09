@@ -24,7 +24,7 @@
     <section class="record-board" aria-label="进度">
       <div class="record-head">
         <span>进度</span>
-        <span id="recordRatio" class="eyebrow">0/100</span>
+        <span id="recordRatio" class="eyebrow">0/0</span>
       </div>
       <div class="record-stats">
         <button id="filterPass" class="record-stat" type="button"><strong>0</strong><span>通过</span></button>
@@ -53,7 +53,7 @@
         </a>
       </div>
     </header>
-    <div id="problemBody" class="problem-body">从左侧选择题目. 题面按热题 100 官网内容加载.</div>
+    <div id="problemBody" class="problem-body">从左侧选择题目. 题面来自 LeetCode 官网.</div>
   </section>
   <div class="col-resizer" data-pane=".problem-pane" data-min="280" data-max="860" title="拖动调整题面宽度"></div>
   <main class="work-pane">
@@ -99,12 +99,17 @@
       <div id="agentPath" class="agent-path"></div>
       <form id="composer" class="composer">
         <textarea id="chatInput" rows="2" placeholder="问问这道题" title="Enter 发送, Shift+Enter 换行"></textarea>
+        <input id="chatImagePicker" type="file" accept="image/png,image/jpeg,image/webp" multiple hidden>
+        <div id="chatAttachments" class="composer-attachments" aria-label="待发送图片" hidden></div>
         <div class="composer-bar">
           <div id="agentNotice" class="agent-notice" hidden>
             <span id="agentNoticeText"></span>
           </div>
           <span id="status" class="status"></span>
           <div class="composer-tools">
+            <button id="addChatImage" class="chat-attach" type="button" aria-label="添加图片" data-tip="添加图片 · 最多 4 张, 单张 10 MB" hidden>
+              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m5 8 4.5-4.5a2 2 0 0 1 2.8 2.8l-6 6a3 3 0 0 1-4.2-4.2l6-6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </button>
             <select id="modelSelect" aria-label="模型"></select>
             <select id="effortSelect" aria-label="推理强度" title="推理强度" hidden></select>
             <button id="fastToggle" class="fast-toggle" type="button" aria-pressed="false" title="开启 Codex fast" hidden>fast</button>
@@ -177,6 +182,10 @@
       </section>
     </div>
   </dialog>
+  <script src="vendor/marked.js"></script>
+  <script src="vendor/purify.js"></script>
+  <script src="chat-markdown.js"></script>
+  <script src="chat-images.js"></script>
   <script src="vendor/vs/loader.js"></script>
   <script src="java-library.js"></script>
   <script src="java-complete.js"></script>

@@ -9,6 +9,7 @@ let historyDecorations = [];
 let historyRequest = 0;
 let problems = [];
 let currentSlug = '';
+let problemSelectionRevision = 0;
 let currentJavaTemplate = '';
 let recordFilter = '';
 let problemQuery = '';
@@ -19,6 +20,8 @@ let busy = false;
 let agentRequest = 0;
 let agentPending = false;
 let currentAgentState = null;
+let chatImages;
+let chatPreparing = false;
 let explainNatural = { width: 640, height: 420 };
 let explainScale = 1;
 let currentExplainHtml = '';
@@ -635,11 +638,26 @@ function bindControls() {
   setControlTip(document.getElementById('reviewCode'), '提交', mac ? '⌘Enter' : 'Ctrl+Enter');
   setControlTip(document.getElementById('toggleChat'), '显示/隐藏对话', mac ? '⌘⌥B' : 'Ctrl+Alt+B');
   setControlTip(document.getElementById('toggleExplain'), document.getElementById('toggleExplain').dataset.tip || '题解', mac ? '⌘E' : 'Ctrl+E');
+  let leftShiftPressed = false;
+  window.addEventListener('keyup', (event) => {
+    if (event.code === 'ShiftLeft' || !event.shiftKey) leftShiftPressed = false;
+  }, true);
+  window.addEventListener('blur', () => { leftShiftPressed = false; });
   window.addEventListener('keydown', (event) => {
+    if (event.code === 'ShiftLeft') leftShiftPressed = true;
+    else if (!event.shiftKey) leftShiftPressed = false;
     if (event.isComposing) return;
     const command = event.metaKey || event.ctrlKey;
     if (!command) return;
     const key = event.key.toLowerCase();
+    const problemCommand = mac ? event.metaKey && !event.ctrlKey : event.ctrlKey && !event.metaKey;
+    if ((key === 'b' || event.code === 'KeyB') && problemCommand && event.shiftKey && leftShiftPressed && !event.altKey) {
+      if (document.getElementById('historyDialog').open || document.body.classList.contains('is-resizing')) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (!event.repeat) setProblemOpen(document.body.classList.contains('problem-closed'));
+      return;
+    }
     if ((key === 'b' || event.code === 'KeyB') && event.altKey && !event.shiftKey) {
       if (document.getElementById('historyDialog').open) return;
       event.preventDefault();
@@ -681,6 +699,7 @@ function bindControls() {
     event.preventDefault();
   });
   setSidebarOpen(localStorage.getItem('lc-sidebar') !== '0');
+  setProblemOpen(localStorage.getItem('lc-problem-open') !== '0');
   setChatOpen(localStorage.getItem('lc-chat-open') !== '0');
   setExplainOpen(localStorage.getItem('lc-explain-open') === '1');
   const toggleChat = document.getElementById('toggleChat');
@@ -756,26 +775,60 @@ function bindControls() {
     const button = document.getElementById('fastToggle');
     await changeAgent({ fast: button.getAttribute('aria-pressed') !== 'true' });
   };
+  chatImages = BambooChatImages.bindComposer({
+    input: document.getElementById('chatInput'),
+    picker: document.getElementById('chatImagePicker'),
+    button: document.getElementById('addChatImage'),
+    previews: document.getElementById('chatAttachments'),
+    onError: setStatus,
+    onChange: resizeComposer,
+    isBusy: () => busy || agentPending || chatPreparing,
+    canAttach: canAttachChatImages,
+  });
   document.getElementById('composer').onsubmit = async (event) => {
     event.preventDefault();
     const input = document.getElementById('chatInput');
     const text = input.value.trim();
-    if (!text || !currentSlug || busy || agentPending) return;
+    if ((!text && !chatImages.count()) || !currentSlug || busy || agentPending || chatPreparing) return;
     const slug = currentSlug;
+    const selectionRevision = problemSelectionRevision;
+    let attachments;
+    chatPreparing = true;
+    syncAgentControls();
+    try { attachments = await chatImages.payload(); }
+    catch (error) { setStatus(error.message || '读取图片失败.'); return; }
+    finally { chatPreparing = false; syncAgentControls(); }
+    if (currentSlug !== slug || problemSelectionRevision !== selectionRevision || busy || agentPending) return;
     const code = editor.getValue();
+    const files = chatImages.files();
+    const previews = chatImages.previews();
     input.value = '';
     resizeComposer();
-    appendChatMessage('user', text);
+    appendChatMessage('user', text, Date.now(), previews);
+    chatImages.clear();
     const pending = appendPendingAssistant();
     scrollChatToEnd();
     await withStatus('正在回复', async () => {
       try {
-        const result = await window.lc.sendChat({ slug, code, text });
+        const result = await window.lc.sendChat({ slug, code, text, attachments });
         if (!result.ok) throw new Error(result.error || '发送失败');
         if (currentSlug === slug) await loadChat(slug);
       } catch (error) {
-        if (pending.isConnected) {
-          const body = pending.querySelector('.message-body');
+        let errorItem = pending;
+        if (currentSlug === slug) {
+          await loadChat(slug);
+          if (currentSlug === slug) {
+            errorItem = appendPendingAssistant();
+            scrollChatToEnd();
+          }
+        }
+        if (currentSlug === slug && !input.value && !chatImages.count()) {
+          input.value = text;
+          chatImages.restore(files);
+          resizeComposer();
+        }
+        if (errorItem.isConnected) {
+          const body = errorItem.querySelector('.message-body');
           body.classList.remove('is-pending');
           body.replaceChildren();
           body.textContent = error.message || String(error);
@@ -811,7 +864,7 @@ async function loadAgent() {
 }
 
 async function changeAgent(settings) {
-  if (busy || agentPending) return;
+  if (busy || agentPending || chatPreparing) return;
   const request = ++agentRequest;
   const provider = settings.provider || currentAgentState?.provider || 'codex';
   agentPending = true;
@@ -833,12 +886,20 @@ async function changeAgent(settings) {
 }
 
 function syncAgentControls() {
-  const disabled = busy || agentPending || !currentAgentState;
+  const disabled = busy || agentPending || chatPreparing || !currentAgentState;
   for (const id of ['providerSelect', 'modelSelect', 'effortSelect', 'fastToggle']) {
     document.getElementById(id).disabled = disabled;
   }
-  document.getElementById('reviewCode').disabled = busy || agentPending;
-  document.querySelector('#composer .send').disabled = busy || agentPending;
+  document.getElementById('reviewCode').disabled = busy || agentPending || chatPreparing;
+  document.querySelector('#composer .send').disabled = busy || agentPending || chatPreparing;
+  document.getElementById('addChatImage').disabled = busy || agentPending || chatPreparing;
+  document.getElementById('chatInput').readOnly = chatPreparing;
+}
+
+function canAttachChatImages() {
+  const state = currentAgentState;
+  return Boolean(state?.links.some(link => link.id === state.provider)
+    && state.models.find(model => model.id === state.model)?.supportsImages);
 }
 
 function renderAgent(state) {
@@ -859,6 +920,8 @@ function renderAgent(state) {
   if (state.model) model.value = state.model;
   const effort = document.getElementById('effortSelect');
   const activeModel = state.models.find((item) => item.id === state.model);
+  document.getElementById('addChatImage').hidden = !canAttachChatImages();
+  if (!canAttachChatImages()) chatImages?.clear();
   const efforts = activeModel?.efforts || [];
   effort.innerHTML = '';
   effort.hidden = provider.value !== 'codex' || efforts.length === 0;
@@ -1034,6 +1097,8 @@ function stepProblem(delta) {
 }
 
 async function selectProblem(slug) {
+  problemSelectionRevision += 1;
+  if (currentSlug !== slug && chatImages) chatImages.clear();
   if (currentSlug && editor) await saveDraft();
   clearTimeout(saveTimer);
   currentSlug = slug;
@@ -1068,6 +1133,33 @@ function setSidebarOpen(open) {
   const pane = document.querySelector('.list-pane');
   const finish = () => {
     document.body.classList.remove('sidebar-anim');
+    if (editor) editor.layout();
+  };
+  const timer = setTimeout(finish, 220);
+  const onEnd = (event) => {
+    if (event.target !== pane || event.propertyName !== 'width') return;
+    pane.removeEventListener('transitionend', onEnd);
+    clearTimeout(timer);
+    finish();
+  };
+  pane.addEventListener('transitionend', onEnd);
+}
+
+function setProblemOpen(open) {
+  const pane = document.querySelector('.problem-pane');
+  const closed = !open;
+  const moveFocus = closed && pane.contains(document.activeElement);
+  const changed = document.body.classList.contains('problem-closed') !== closed;
+  if (changed) document.body.classList.add('problem-anim');
+  document.body.classList.toggle('problem-closed', closed);
+  pane.inert = closed;
+  pane.setAttribute('aria-hidden', closed ? 'true' : 'false');
+  localStorage.setItem('lc-problem-open', open ? '1' : '0');
+  if (moveFocus && editor) editor.focus();
+  if (editor) editor.layout();
+  if (!changed) return;
+  const finish = () => {
+    document.body.classList.remove('problem-anim');
     if (editor) editor.layout();
   };
   const timer = setTimeout(finish, 220);
@@ -1277,7 +1369,7 @@ function playVerdictToast(verdict, { detail = false, onDetail } = {}) {
 }
 
 async function submitReview() {
-  if (!currentSlug || busy || agentPending) return;
+  if (!currentSlug || busy || agentPending || chatPreparing) return;
   const slug = currentSlug;
   const code = editor.getValue();
   const button = document.getElementById('reviewCode');
@@ -1643,10 +1735,11 @@ function syncAllVerdictBodies(open) {
   }
 }
 
-function fillMessageBody(body, bodyText, { collapsible = false } = {}) {
+function fillMessageBody(body, bodyText, { collapsible = false, markdown = false } = {}) {
   const parsed = collapsible ? parseVerdictMessage(bodyText) : null;
   if (!parsed) {
-    body.textContent = bodyText;
+    if (markdown) BambooChatMarkdown.render(body, bodyText);
+    else body.textContent = bodyText;
     return;
   }
   body.classList.add('is-verdict');
@@ -1672,13 +1765,14 @@ function fillMessageBody(body, bodyText, { collapsible = false } = {}) {
   applyVerdictBodyState(body, isVerdictDetailOpen());
 }
 
-function appendChatMessage(role, bodyText, createdAt = Date.now()) {
+function appendChatMessage(role, bodyText, createdAt = Date.now(), attachments = []) {
   const root = document.getElementById('messages');
   const item = document.createElement('div');
   item.className = `message ${role === 'user' ? 'user' : 'assistant'}`;
   const body = document.createElement('div');
   body.className = 'message-body';
-  fillMessageBody(body, bodyText);
+  fillMessageBody(body, bodyText, { markdown: role !== 'user' });
+  BambooChatImages.renderAttachments(body, attachments);
   const time = document.createElement('time');
   time.className = 'message-time';
   time.dateTime = new Date(Number(createdAt)).toISOString();
@@ -1709,6 +1803,7 @@ async function loadChat(slug) {
   const result = await window.lc.listChat(slug);
   if (currentSlug !== slug) return;
   const root = document.getElementById('messages');
+  BambooChatImages.releasePreviews(root);
   root.innerHTML = '';
   if (!result.ok) {
     root.textContent = result.error;
@@ -1716,7 +1811,7 @@ async function loadChat(slug) {
   }
   for (const message of result.data) {
     if (message.kind === 'review') continue;
-    appendChatMessage(message.role === 'user' ? 'user' : 'assistant', message.body, message.created_at);
+    appendChatMessage(message.role === 'user' ? 'user' : 'assistant', message.body, message.created_at, message.attachments || []);
   }
   scrollChatToEnd();
 }

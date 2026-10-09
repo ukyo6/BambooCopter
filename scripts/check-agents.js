@@ -28,6 +28,140 @@ function answer(text, reason = { kind: 'completed' }) {
   return stream([{ type: 'status', phase: 'turn_end', reason }, { type: 'final', text }]);
 }
 
+function imageFiles() {
+  const files = ['image with spaces.png', 'second-image.png'].map((name) => path.join(work, name));
+  const data = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jP1sAAAAASUVORK5CYII=', 'base64');
+  for (const file of files) fs.writeFileSync(file, data);
+  return files.map((file) => ({ path: file, mimeType: 'image/png' }));
+}
+
+function sdkCli({ reason = { kind: 'completed' }, errorMethod = '', invalidJson = false, hang = false, earlyExit = false, exitCode = 0, splitBytes = false, emptyAnswer = false } = {}) {
+  const capture = path.join(work, `sdk-${fixtureId + 1}.json`);
+  const link = cli();
+  fs.writeFileSync(link.path, `#!/usr/bin/env node
+const fs=require('fs'); const readline=require('readline'); const args=process.argv.slice(2); const at=args.indexOf('--patch');
+const request={args,patchFile:args[at+1],patch:fs.readFileSync(args[at+1],'utf8'),frames:[],pid:process.pid};
+const save=()=>fs.writeFileSync(${JSON.stringify(capture)},JSON.stringify(request)); save();
+const emit=value=>{const bytes=Buffer.from(JSON.stringify(value)+'\\n'); if(${splitBytes}){for(let i=0;i<bytes.length;i++)process.stdout.write(bytes.subarray(i,i+1));}else process.stdout.write(bytes);};
+readline.createInterface({input:process.stdin}).on('line',line=>{
+ const frame=JSON.parse(line); request.frames.push(frame); save();
+ if(frame.method===${JSON.stringify(errorMethod)}){emit({jsonrpc:'2.0',id:frame.id,error:{code:-32603,message:'SDK fixture error'}});return;}
+ if(frame.method==='initialize'){emit({jsonrpc:'2.0',id:frame.id,result:{serverInfo:{name:'deepseek-harness-sdk-runtime',version:'0.0.1'}}});return;}
+ if(frame.method==='session/prompt'){
+   const sessionId=frame.params.sessionId;
+   emit({jsonrpc:'2.0',method:'session.event',params:{sessionId:'unrelated-session',event:{type:'turn/end',data:{reason:{kind:'completed'}}}}});
+   if(${invalidJson}){process.stdout.write('{truncated\\n');return;}
+   if(${hang})return;
+   emit({jsonrpc:'2.0',method:'session.event',params:{sessionId,event:{type:'turn/start',data:{}}}});
+   emit({jsonrpc:'2.0',method:'session.event',params:{sessionId,event:{type:'assistant/message',data:{message:{content:[{type:'reasoning',text:'PRIVATE_THINKING'},{type:'text',text:${JSON.stringify(emptyAnswer ? ' ' : '图片中文答复')}}]}}}}});
+   emit({jsonrpc:'2.0',method:'session.event',params:{sessionId:'unrelated-session',event:{type:'assistant/message',data:{message:{content:[{type:'text',text:'WRONG_SESSION'}]}}}}});
+   emit({jsonrpc:'2.0',method:'session.event',params:{sessionId,event:{type:'turn/end',data:{reason:${JSON.stringify(reason)}}}}});
+   if(${earlyExit}){process.exit(0);return;}
+   emit({jsonrpc:'2.0',id:frame.id,result:{messageId:'message-fixture'}});return;
+ }
+ if(frame.method==='shutdown'){emit({jsonrpc:'2.0',id:frame.id,result:{}});setImmediate(()=>process.exit(${exitCode}));}
+});
+`, { mode: 0o700 });
+  return { link, capture };
+}
+
+test('Codex sends every image through real --image arguments while keeping prompt on stdin', async () => {
+  const capture = path.join(work, 'codex-image-request.json');
+  const link = cli({ inspect: true });
+  link.id = 'codex';
+  fs.writeFileSync(link.path, fs.readFileSync(link.path, 'utf8').replace('process.stdout.write(text);', `fs.writeFileSync(${JSON.stringify(capture)},text); fs.writeFileSync(args[args.indexOf('-o')+1],'image answer');`));
+  const images = imageFiles();
+  assert.equal(await agent.complete(link, { model: 'codex-model', prompt: '图文问题', images }), 'image answer');
+  const request = JSON.parse(fs.readFileSync(capture, 'utf8'));
+  const paths = request.args.flatMap((arg, index) => arg === '--image' ? [request.args[index + 1]] : []);
+  assert.deepEqual(paths, images.map((image) => image.path));
+  assert.equal(request.input, '图文问题');
+});
+
+test('DeepSeek SDK transmits image bytes, isolates its session, and shuts down after a completed turn', async () => {
+  const { link, capture } = sdkCli({ splitBytes: true });
+  const images = imageFiles();
+  assert.equal(await agent.complete(link, { model: 'deepseek-flash', prompt: '图文问题', images, timeoutMs: 1500 }), '图片中文答复');
+  const request = JSON.parse(fs.readFileSync(capture, 'utf8'));
+  assert.deepEqual(request.args, ['--profile', 'sdk', '--patch', request.patchFile]);
+  assert.deepEqual(request.frames.map((frame) => frame.method), ['initialize', 'session/prompt', 'shutdown']);
+  assert.equal(request.frames[0].params.provider, 'deepseek-account');
+  assert.equal(request.frames[0].params.model, 'deepseek-flash');
+  assert.equal(request.frames[1].params.contentBlocks[0].text, '图文问题');
+  assert.match(request.frames[1].params.sessionId, /^bamboo-/);
+  assert.deepEqual(request.frames[1].params.contentBlocks.slice(1), images.map((image) => ({ type: 'image', data: fs.readFileSync(image.path).toString('base64'), mimeType: image.mimeType })));
+  assert.equal(fs.existsSync(request.patchFile), false);
+  const builderRequire = createRequire(require.resolve('electron-builder'));
+  const rows = builderRequire('js-yaml').load(request.patch);
+  for (const id of ['agent-instructions', 'tool-bash', 'tool-fs', 'tool-subagent', 'session-title-llm']) assert.equal(rows.find((row) => row.id === id)?.disabled, true);
+  const directory = path.dirname(request.patchFile);
+  assert.equal(rows.find((row) => row.id === 'session-persistence-jsonl').config.root, path.join(directory, 'sessions'));
+  assert.equal(rows.find((row) => row.id === 'attachment-local').config.dshHome, directory);
+  assert.equal(rows.find((row) => row.id === 'storage-json').config.root, path.join(directory, 'storages'));
+});
+
+test('DeepSeek SDK rejects failed or cancelled image turns even when partial text exists', async () => {
+  for (const reason of [{ kind: 'cancelled' }, { kind: 'error', error: { code: 'IMAGE_ERROR', message: 'image request failed' } }]) {
+    const { link, capture } = sdkCli({ reason });
+    await assert.rejects(agent.complete(link, { model: 'deepseek-flash', prompt: 'test', images: imageFiles(), timeoutMs: 1500 }), /取消|image request failed/);
+    const request = JSON.parse(fs.readFileSync(capture, 'utf8'));
+    assert.equal(request.frames.at(-1).method, 'shutdown');
+    assert.equal(fs.existsSync(request.patchFile), false);
+  }
+});
+
+test('DeepSeek SDK rejects JSON-RPC errors during initialize, admission, and shutdown', async () => {
+  for (const errorMethod of ['initialize', 'session/prompt', 'shutdown']) {
+    const { link, capture } = sdkCli({ errorMethod });
+    await assert.rejects(agent.complete(link, { model: 'deepseek-flash', prompt: 'test', images: imageFiles(), timeoutMs: 1500 }), /SDK fixture error/);
+    const request = JSON.parse(fs.readFileSync(capture, 'utf8'));
+    assert.equal(fs.existsSync(request.patchFile), false);
+    assert.throws(() => process.kill(request.pid, 0), { code: 'ESRCH' });
+  }
+});
+
+test('DeepSeek SDK rejects malformed streams, empty answers, early exits, and nonzero exits', async () => {
+  for (const options of [{ invalidJson: true }, { emptyAnswer: true }, { earlyExit: true }, { exitCode: 7 }]) {
+    const { link, capture } = sdkCli(options);
+    await assert.rejects(agent.complete(link, { model: 'deepseek-flash', prompt: 'test', images: imageFiles(), timeoutMs: 1500 }));
+    const request = JSON.parse(fs.readFileSync(capture, 'utf8'));
+    assert.equal(fs.existsSync(request.patchFile), false);
+  }
+});
+
+test('DeepSeek SDK timeout stops the process before cleaning temporary state', async () => {
+  const { link, capture } = sdkCli({ hang: true });
+  await assert.rejects(agent.complete(link, { model: 'deepseek-flash', prompt: 'test', images: imageFiles(), timeoutMs: 1000 }), /超时/);
+  const request = JSON.parse(fs.readFileSync(capture, 'utf8'));
+  assert.equal(fs.existsSync(request.patchFile), false);
+  assert.throws(() => process.kill(request.pid, 0), { code: 'ESRCH' });
+});
+
+test('Windows SDK .cmd preserves Chinese text and base64 images through interactive stdio', async () => {
+  const { link, capture } = sdkCli({ splitBytes: true });
+  const images = imageFiles();
+  const prompt = '中文图文 "$() `literal` %PATH% & | < > ^ ! ( )"';
+  assert.equal(await agent.complete(windowsShim(link, '.cmd'), { model: 'deepseek-flash', prompt, images, timeoutMs: 3000 }), '图片中文答复');
+  const request = JSON.parse(fs.readFileSync(capture, 'utf8'));
+  assert.equal(request.frames[1].params.contentBlocks[0].text, prompt);
+  assert.equal(request.frames[1].params.contentBlocks[1].data, fs.readFileSync(images[0].path).toString('base64'));
+  assert.equal(fs.existsSync(request.patchFile), false);
+}, { skip: process.platform !== 'win32' });
+
+test('DeepSeek rejects image input for a text-only model before launching its CLI', async () => {
+  const { link, capture } = sdkCli();
+  await assert.rejects(agent.complete(link, { model: 'deepseek-v4-pro', prompt: 'test', images: imageFiles(), timeoutMs: 1500 }), /图片.*Flash|Flash.*图片/);
+  assert.equal(fs.existsSync(capture), false);
+});
+
+test('Models advertise whether the current CLI route accepts image input', async () => {
+  const models = await agent.listModels({ id: 'deepseek', path: '/not-executed' });
+  assert.equal(models.find((model) => model.id === 'deepseek-flash').supportsImages, true);
+  assert.equal(models.find((model) => model.id === 'deepseek-v4-pro').supportsImages, false);
+  const link = cli({ stdout: JSON.stringify({ models: [{ slug: 'codex-model', visibility: 'list' }] }) });
+  assert.equal((await agent.listModels({ ...link, id: 'codex' }))[0].supportsImages, true);
+});
+
 test('DeepSeek returns only the final answer instead of reasoning or intermediate content', async () => {
   const link = cli({ stdout: stream([
     { type: 'session', sessionId: 'session-test', cwd: work },

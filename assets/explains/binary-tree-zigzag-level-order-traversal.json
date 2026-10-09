@@ -1,0 +1,10 @@
+{
+  "kind": "image",
+  "caption": "用普通 FIFO 队列逐层遍历, 每层先固定 size, 只弹出本层节点. 孩子始终按左、右顺序入队, 每层结果的写入方向交替: 正向写 i, 反向写 size-1-i. 示例第二层先弹出 9 再弹出 20, 但结果为 [20,9], 最终返回 [[3],[20,9],[15,7]]. 空树返回 [].",
+  "html": "",
+  "svg": "",
+  "media": "../assets/explain-images/binary-tree-zigzag-level-order-traversal.png",
+  "time_complexity": "O(n)",
+  "space_complexity": "O(w)",
+  "complexity_note": "n 是节点数, w 是树的最大层宽. 每个节点入队、出队和写入结果各一次. 队列与当前层结果数组的辅助空间为 O(w), 最坏 O(n). 返回全部层节点另外需要 O(n) 空间."
+}

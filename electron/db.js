@@ -77,7 +77,8 @@ async function openDatabase(file) {
       role TEXT NOT NULL,
       body TEXT NOT NULL,
       created_at INTEGER NOT NULL,
-      kind TEXT NOT NULL DEFAULT 'chat'
+      kind TEXT NOT NULL DEFAULT 'chat',
+      attachments_json TEXT NOT NULL DEFAULT '[]'
     );
     CREATE TABLE IF NOT EXISTS settings (
       key TEXT PRIMARY KEY,
@@ -87,6 +88,9 @@ async function openDatabase(file) {
   if (!all('PRAGMA table_info(messages)').some((column) => column.name === 'kind')) {
     db.run("ALTER TABLE messages ADD COLUMN kind TEXT NOT NULL DEFAULT 'chat'");
     markLegacyReviewMessages();
+  }
+  if (!all('PRAGMA table_info(messages)').some((column) => column.name === 'attachments_json')) {
+    db.run("ALTER TABLE messages ADD COLUMN attachments_json TEXT NOT NULL DEFAULT '[]'");
   }
   persist();
   return { all, run, runQuiet, flush: persist, getSetting, setSetting };

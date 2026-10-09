@@ -3,13 +3,14 @@ const spawn = require('cross-spawn');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { completeDeepseekImages } = require('./deepseek-images');
 
 const reviewSchema = path.join(__dirname, 'review-schema.json');
 const explainSchema = path.join(__dirname, 'explain-schema.json');
 // DeepSeek Harness 0.2 的官方账号模型目录. 账号可用性由 CLI 调用时检查.
 const deepseekModels = [
-  { id: 'deepseek-flash', label: 'DeepSeek-V41-Flash', defaultEffort: '', efforts: [] },
-  { id: 'deepseek-v4-pro', label: 'DeepSeek-V4-Pro', defaultEffort: '', efforts: [] },
+  { id: 'deepseek-flash', label: 'DeepSeek-V41-Flash', defaultEffort: '', efforts: [], supportsImages: true },
+  { id: 'deepseek-v4-pro', label: 'DeepSeek-V4-Pro', defaultEffort: '', efforts: [], supportsImages: false },
 ];
 
 function which(command) {
@@ -98,6 +99,7 @@ async function listModels(link) {
     .map((model) => ({
       id: model.slug,
       label: model.display_name || model.slug,
+      supportsImages: true,
       defaultEffort: model.default_reasoning_level || '',
       efforts: (model.supported_reasoning_levels || []).map((level) => level.effort).filter(Boolean),
     }));
@@ -110,12 +112,12 @@ function stageSchema(schema) {
   return dest;
 }
 
-async function complete(link, { model, prompt, schema, timeoutMs, reasoning, fast }) {
-  if (link.id === 'deepseek') return completeDeepseek(link, { model, prompt, schema, timeoutMs });
+async function complete(link, { model, prompt, schema, timeoutMs, reasoning, fast, images = [] }) {
+  if (link.id === 'deepseek') return completeDeepseek(link, { model, prompt, schema, timeoutMs, images });
   const outputFile = path.join(os.tmpdir(), `lc-${Date.now()}-${Math.random().toString(16).slice(2)}.txt`);
   const stagedSchema = stageSchema(schema);
   try {
-    const result = await runProcess(link.path, codexArgs({ model, schema: stagedSchema, outputFile, reasoning, fast }), {
+    const result = await runProcess(link.path, codexArgs({ model, schema: stagedSchema, outputFile, reasoning, fast, images }), {
       stdin: prompt,
       timeoutMs,
     });
@@ -132,21 +134,29 @@ async function complete(link, { model, prompt, schema, timeoutMs, reasoning, fas
   }
 }
 
-async function completeDeepseek(link, { model, prompt, schema, timeoutMs }) {
+async function completeDeepseek(link, { model, prompt, schema, timeoutMs, images }) {
   if (!deepseekModels.some((item) => item.id === model)) throw new Error('不支持的 DeepSeek 模型, 请重新选择模型');
+  if (images.length && !deepseekModels.find((item) => item.id === model).supportsImages) throw new Error('这个 DeepSeek 模型不支持图片, 请切换到 DeepSeek-V41-Flash');
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'bamboo-deepseek-'));
   const patchFile = path.join(directory, 'invocation.yml');
   try {
     const patch = fs.readFileSync(path.join(__dirname, 'deepseek-patch.yml'), 'utf8');
-    fs.writeFileSync(patchFile, `${patch}\n- id: agent-default-model\n  config:\n    provider: deepseek-account\n    model: ${JSON.stringify(model)}\n`, { mode: 0o600 });
+    const imageStorage = images.length ? `\n- id: session-persistence-jsonl\n  config:\n    root: ${JSON.stringify(path.join(directory, 'sessions'))}\n- id: attachment-local\n  config:\n    dshHome: ${JSON.stringify(directory)}\n- id: storage-json\n  config:\n    root: ${JSON.stringify(path.join(directory, 'storages'))}\n` : '';
+    fs.writeFileSync(patchFile, `${patch}\n- id: agent-default-model\n  config:\n    provider: deepseek-account\n    model: ${JSON.stringify(model)}\n${imageStorage}`, { mode: 0o600 });
     let input = prompt;
     let shape;
     if (schema) {
       shape = JSON.parse(fs.readFileSync(schema, 'utf8'));
       input += `\n\n输出要求: 只返回符合下列 JSON Schema 的 JSON 对象, 不使用 Markdown 代码围栏, 不添加其他文字.\n${JSON.stringify(shape)}`;
     }
-    const result = await runProcess(link.path, ['--profile', 'headless', '--patch', patchFile, '--json', '-'], { stdin: input, timeoutMs });
-    const text = extractDeepseek(result);
+    let text;
+    if (images.length) {
+      try { text = await completeDeepseekImages(link.path, { model, prompt: input, images, patchFile, timeoutMs }); }
+      catch (error) { throw deepseekError(error.message); }
+    } else {
+      const result = await runProcess(link.path, ['--profile', 'headless', '--patch', patchFile, '--json', '-'], { stdin: input, timeoutMs });
+      text = extractDeepseek(result);
+    }
     if (shape) validateJsonShape(parseJsonText(text), shape);
     return text;
   } finally {
@@ -205,7 +215,7 @@ function extractDeepseek({ code, stdout, stderr }) {
   return text;
 }
 
-function codexArgs({ model, schema, outputFile, reasoning, fast }) {
+function codexArgs({ model, schema, outputFile, reasoning, fast, images }) {
   const args = [
     'exec',
     '--json',
@@ -229,6 +239,7 @@ function codexArgs({ model, schema, outputFile, reasoning, fast }) {
   if (reasoning) args.push('-c', `model_reasoning_effort="${reasoning}"`);
   args.push(fast ? '--enable' : '--disable', 'fast_mode');
   if (schema) args.push('--output-schema', schema);
+  for (const image of images) args.push('--image', image.path);
   args.push('-');
   return args;
 }

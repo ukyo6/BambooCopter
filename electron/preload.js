@@ -15,5 +15,7 @@ contextBridge.exposeInMainWorld('lc', {
   practiceBoard: () => call('records:board'),
   listChat: (slug) => call('chat:list', { slug }),
   sendChat: (payload) => call('chat:send', payload),
+  openChatImage: (id) => call('chat:image-open', { id }),
+  openExternalLink: (url) => call('link:open', { url }),
   submitReview: (payload) => call('review:submit', payload),
 });

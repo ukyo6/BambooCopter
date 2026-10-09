@@ -23,7 +23,14 @@ function checkAssets() {
   const catalog = JSON.parse(fs.readFileSync(path.join(root, 'assets', 'catalog.json'), 'utf8'));
   assert(Array.isArray(catalog.problems), 'catalog.problems must be an array');
   const slugs = catalog.problems.map((problem) => problem.slug);
-  assert.equal(slugs.length, 100, 'catalog must contain all 100 problems');
+  const extras = ['implement-stack-using-queues', 'binary-tree-zigzag-level-order-traversal'];
+  const hot100 = catalog.problems.filter((problem) => problem.groupName !== '其他');
+  const other = catalog.problems.filter((problem) => problem.groupName === '其他');
+  assert.equal(hot100.length, 100, 'catalog must retain all 100 Hot 100 problems');
+  assert.deepEqual(hot100.map((problem) => problem.sortIndex), Array.from({ length: 100 }, (_, index) => index), 'Hot 100 order changed');
+  assert.deepEqual(other.map((problem) => problem.slug), extras, 'other group must contain the two extra problems');
+  assert.deepEqual(other.map((problem) => problem.sortIndex), [100, 101], 'extra problems must follow Hot 100');
+  assert.equal(slugs.length, 100 + extras.length, 'catalog must contain Hot 100 and the extra problems');
   assert.equal(new Set(slugs).size, slugs.length, 'catalog contains duplicate slugs');
   slugs.forEach((slug) => assert(/^[a-z0-9-]+$/.test(slug), `Invalid slug: ${slug}`));
   const directory = path.join(root, 'assets', 'explains');
