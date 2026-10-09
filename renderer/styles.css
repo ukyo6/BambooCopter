@@ -220,6 +220,19 @@ body.sidebar-closed .col-resizer[data-pane=".list-pane"] {
   pointer-events: none;
   overflow: hidden;
 }
+body.problem-closed .problem-pane {
+  width: 0 !important;
+  min-width: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+body.problem-closed .col-resizer[data-pane=".problem-pane"] {
+  flex: 0 0 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+body:not(.darwin).sidebar-closed.problem-closed .editor-bar { padding-left: 52px; }
 body.chat-closed .chat {
   width: 0 !important;
   min-width: 0 !important;
@@ -253,6 +266,12 @@ body.darwin.sidebar-closed .problem-head { padding-left: 14px; }
 body.sidebar-anim .list-pane {
   transition: width 180ms ease-out, min-width 180ms ease-out, opacity 180ms ease-out;
 }
+body.problem-anim .problem-pane {
+  transition: width 180ms ease-out, opacity 180ms ease-out;
+}
+.col-resizer[data-pane=".problem-pane"] {
+  transition: flex-basis 180ms ease-out, opacity 180ms ease-out;
+}
 .col-resizer[data-pane=".list-pane"] {
   opacity: 1;
   transition: flex-basis 180ms ease-out, opacity 180ms ease-out;
@@ -262,11 +281,15 @@ body.sidebar-anim .list-pane {
 }
 body:not(.motion-ready) .list-pane,
 body:not(.motion-ready) .col-resizer[data-pane=".list-pane"],
+body:not(.motion-ready) .problem-pane,
+body:not(.motion-ready) .col-resizer[data-pane=".problem-pane"],
 body:not(.motion-ready) .chat,
 body:not(.motion-ready) .col-resizer[data-pane=".chat"],
 body:not(.motion-ready) .problem-head,
 body.is-resizing .list-pane,
 body.is-resizing .col-resizer[data-pane=".list-pane"],
+body.is-resizing .problem-pane,
+body.is-resizing .col-resizer[data-pane=".problem-pane"],
 body.is-resizing .chat,
 body.is-resizing .col-resizer[data-pane=".chat"] {
   transition: none !important;

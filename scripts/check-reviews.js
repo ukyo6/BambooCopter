@@ -195,6 +195,49 @@ test('real review IPC writes only a submission and returns verified line numbers
   assert.equal(saved[0].line_start, 4);
 });
 
+test('review fails incorrect comments and retains the original comment line ranges', async () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'bamboo-comment-review-')), 'practice.db');
+  const commentedCode = [
+    'import java.util.*;',
+    'class Solution {',
+    '',
+    '  // 用哈希表查找补数.',
+    '  /* 每个元素最多处理一次.',
+    '   * 时间复杂度 O(1), 辅助空间 O(1).',
+    '   */',
+    '  public int[] twoSum(int[] nums, int target) {',
+    '    Map<Integer, Integer> seen = new HashMap<>();',
+    '    for (int i = 0; i < nums.length; i++) {',
+    '      Integer j = seen.get(target - nums[i]);',
+    '      if (j != null) return new int[] {j, i};',
+    '      seen.put(nums[i], i);',
+    '    }',
+    '    return new int[0];',
+    '  }',
+    '}',
+  ].join('\r\n');
+  const excerpt = '/* 每个元素最多处理一次.\n   * 时间复杂度 O(1), 辅助空间 O(1).\n   */';
+  let prompt;
+  const { handlers, db } = await startIpc(file, async (_link, options) => {
+    prompt = options.prompt;
+    return JSON.stringify({ verdict: 'fail', summary: '代码逻辑可以通过, 但复杂度注释有误, 本次评审不通过.', issues: [{ message: '注释错误: 复杂度不是常数.', hint: '平均时间 O(n), 辅助空间 O(n).', line_start: 2, line_end: 2, code_excerpt: excerpt }] });
+  });
+  const result = await handlers.get('review:submit')({}, { slug: 'two-sum', code: commentedCode });
+  assert.equal(result.ok, true, result.error);
+  assert.ok(prompt.includes('4 |   // 用哈希表查找补数.'));
+  assert.ok(prompt.includes('5 |   /* 每个元素最多处理一次.\n6 |    * 时间复杂度 O(1), 辅助空间 O(1).\n7 |    */'));
+  assert.match(prompt, /同时检查.*注释/, 'review must explicitly request comment correctness');
+  assert.ok(prompt.includes('注释有误也必须判 fail'), 'incorrect comments must fail the review even when code is correct');
+  assert.equal(result.data.verdict, 'fail');
+  assert.deepEqual([result.data.issues[0].line_start, result.data.issues[0].line_end], [5, 7]);
+  assert.equal(result.data.issues[0].code_excerpt, excerpt);
+  const saved = db.all('SELECT code, verdict, issues_json FROM submissions')[0];
+  assert.equal(saved.code, commentedCode);
+  assert.equal(saved.verdict, 'fail');
+  assert.deepEqual(JSON.parse(saved.issues_json), result.data.issues);
+  assert.equal(db.all('SELECT COUNT(*) AS total FROM messages')[0].total, 0);
+});
+
 test('real chat IPC excludes marked review messages from UI and LLM context', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'bamboo-chat-ipc-'));
   const file = path.join(dir, 'practice.db');

@@ -635,11 +635,26 @@ function bindControls() {
   setControlTip(document.getElementById('reviewCode'), '提交', mac ? '⌘Enter' : 'Ctrl+Enter');
   setControlTip(document.getElementById('toggleChat'), '显示/隐藏对话', mac ? '⌘⌥B' : 'Ctrl+Alt+B');
   setControlTip(document.getElementById('toggleExplain'), document.getElementById('toggleExplain').dataset.tip || '题解', mac ? '⌘E' : 'Ctrl+E');
+  let leftShiftPressed = false;
+  window.addEventListener('keyup', (event) => {
+    if (event.code === 'ShiftLeft' || !event.shiftKey) leftShiftPressed = false;
+  }, true);
+  window.addEventListener('blur', () => { leftShiftPressed = false; });
   window.addEventListener('keydown', (event) => {
+    if (event.code === 'ShiftLeft') leftShiftPressed = true;
+    else if (!event.shiftKey) leftShiftPressed = false;
     if (event.isComposing) return;
     const command = event.metaKey || event.ctrlKey;
     if (!command) return;
     const key = event.key.toLowerCase();
+    const problemCommand = mac ? event.metaKey && !event.ctrlKey : event.ctrlKey && !event.metaKey;
+    if ((key === 'b' || event.code === 'KeyB') && problemCommand && event.shiftKey && leftShiftPressed && !event.altKey) {
+      if (document.getElementById('historyDialog').open || document.body.classList.contains('is-resizing')) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (!event.repeat) setProblemOpen(document.body.classList.contains('problem-closed'));
+      return;
+    }
     if ((key === 'b' || event.code === 'KeyB') && event.altKey && !event.shiftKey) {
       if (document.getElementById('historyDialog').open) return;
       event.preventDefault();
@@ -681,6 +696,7 @@ function bindControls() {
     event.preventDefault();
   });
   setSidebarOpen(localStorage.getItem('lc-sidebar') !== '0');
+  setProblemOpen(localStorage.getItem('lc-problem-open') !== '0');
   setChatOpen(localStorage.getItem('lc-chat-open') !== '0');
   setExplainOpen(localStorage.getItem('lc-explain-open') === '1');
   const toggleChat = document.getElementById('toggleChat');
@@ -1068,6 +1084,33 @@ function setSidebarOpen(open) {
   const pane = document.querySelector('.list-pane');
   const finish = () => {
     document.body.classList.remove('sidebar-anim');
+    if (editor) editor.layout();
+  };
+  const timer = setTimeout(finish, 220);
+  const onEnd = (event) => {
+    if (event.target !== pane || event.propertyName !== 'width') return;
+    pane.removeEventListener('transitionend', onEnd);
+    clearTimeout(timer);
+    finish();
+  };
+  pane.addEventListener('transitionend', onEnd);
+}
+
+function setProblemOpen(open) {
+  const pane = document.querySelector('.problem-pane');
+  const closed = !open;
+  const moveFocus = closed && pane.contains(document.activeElement);
+  const changed = document.body.classList.contains('problem-closed') !== closed;
+  if (changed) document.body.classList.add('problem-anim');
+  document.body.classList.toggle('problem-closed', closed);
+  pane.inert = closed;
+  pane.setAttribute('aria-hidden', closed ? 'true' : 'false');
+  localStorage.setItem('lc-problem-open', open ? '1' : '0');
+  if (moveFocus && editor) editor.focus();
+  if (editor) editor.layout();
+  if (!changed) return;
+  const finish = () => {
+    document.body.classList.remove('problem-anim');
     if (editor) editor.layout();
   };
   const timer = setTimeout(finish, 220);

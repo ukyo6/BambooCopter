@@ -1,0 +1,10 @@
+{
+  "kind": "image",
+  "caption": "用两个列表模拟队列, 只在队尾加入、队头查看或移除. 维护 Q1 队头为栈顶, Q2 作为辅助队列: push(x) 先把 x 加入空 Q2, 再依次把 Q1 的所有元素移到 Q2 队尾, 最后交换两个队列的引用. top() 查看 Q1 队头, pop() 移除 Q1 队头, empty() 检查 Q1 是否为空. 示例依次压入 1、2 后 Q1 为 [2, 1], top 和 pop 都返回 2, 弹出后仍有 1, 因此 empty 返回 false.",
+  "html": "",
+  "svg": "",
+  "media": "../assets/explain-images/implement-stack-using-queues.png",
+  "time_complexity": "push: O(n); pop / top / empty: O(1)",
+  "space_complexity": "O(n)",
+  "complexity_note": "n 为当前栈内元素数. 本题解采用让新元素成为队头的两队列方案, 每次 push 搬移全部已有元素; 其他操作只访问主队列队头或判断空. 两队列共保存 n 个元素. 基本队列操作按 O(1) 计, Java 可用 ArrayDeque (入队摊还 O(1)) 或 LinkedList; 不能用 ArrayList.remove(0) 后仍声称出队为 O(1)."
+}
