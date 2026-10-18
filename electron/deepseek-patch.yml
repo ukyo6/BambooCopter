@@ -1,5 +1,12 @@
 # 只处理应用传入的题目和代码, 不加载项目指令或启用外部工具.
 # 此补丁仅随本次 CLI 调用传入, 不修改 DeepSeek Harness 的用户配置.
+# headless 默认关闭账号依赖, 显式复用 Harness 已保存的登录态.
+- id: credentials
+  disabled: false
+- id: authorization
+  disabled: false
+- id: deepseek-account
+  disabled: false
 - id: tools
   config:
     mode: native
