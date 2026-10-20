@@ -144,7 +144,7 @@ function createWindow() {
     minHeight: 680,
     title: 'Bamboo Copter',
     icon,
-    backgroundColor: '#171717',
+    backgroundColor: '#1e1f22',
     autoHideMenuBar: true,
     titleBarStyle: darwin ? 'hiddenInset' : 'default',
     trafficLightPosition: darwin ? { x: 12, y: 18 } : undefined,

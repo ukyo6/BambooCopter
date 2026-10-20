@@ -566,7 +566,7 @@ function registerJava() {
     inherit: true,
     rules: [],
     colors: {
-      'editor.background': '#171717',
+      'editor.background': '#1e1f22',
       'editor.foreground': '#ececec',
       'editorLineNumber.foreground': '#5c5c5c',
       'editorLineNumber.activeForeground': '#cfcfcf',
@@ -576,7 +576,7 @@ function registerJava() {
       'scrollbarSlider.background': '#3a3a3a',
       'scrollbarSlider.hoverBackground': '#4d4d4d',
       'scrollbarSlider.activeBackground': '#4d4d4d',
-      'editorWidget.background': '#212121',
+      'editorWidget.background': '#25282c',
       'editorWidget.border': '#3a3a3a',
     },
   });
