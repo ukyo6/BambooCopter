@@ -26,6 +26,11 @@ let explainNatural = { width: 640, height: 420 };
 let explainScale = 1;
 let currentExplainHtml = '';
 let explainMeasured = false;
+let randomChallenge = null;
+let challengeLoaded = false;
+let challengeStarting = false;
+let challengeTimer = 0;
+let challengeSyncing = false;
 
 if (/Macintosh/.test(navigator.userAgent)) document.body.classList.add('darwin');
 
@@ -566,7 +571,7 @@ function registerJava() {
     inherit: true,
     rules: [],
     colors: {
-      'editor.background': '#171717',
+      'editor.background': '#1e1f22',
       'editor.foreground': '#ececec',
       'editorLineNumber.foreground': '#5c5c5c',
       'editorLineNumber.activeForeground': '#cfcfcf',
@@ -576,7 +581,7 @@ function registerJava() {
       'scrollbarSlider.background': '#3a3a3a',
       'scrollbarSlider.hoverBackground': '#4d4d4d',
       'scrollbarSlider.activeBackground': '#4d4d4d',
-      'editorWidget.background': '#212121',
+      'editorWidget.background': '#25282c',
       'editorWidget.border': '#3a3a3a',
     },
   });
@@ -632,6 +637,7 @@ function hideBootSkeleton() {
 
 function bindControls() {
   document.getElementById('toggleSidebar').onclick = () => setSidebarOpen(document.body.classList.contains('sidebar-closed'));
+  document.getElementById('startChallenge').onclick = startRandomChallenge;
   const mac = isMacPlatform();
   setControlTip(document.getElementById('toggleSidebar'), '显示/隐藏侧边栏', mac ? '⌘B' : 'Ctrl+B');
   setControlTip(document.getElementById('formatCode'), '格式化', mac ? '⌘⇧F' : 'Ctrl+Shift+F');
@@ -886,14 +892,16 @@ async function changeAgent(settings) {
 }
 
 function syncAgentControls() {
-  const disabled = busy || agentPending || chatPreparing || !currentAgentState;
+  const pending = busy || agentPending || chatPreparing || challengeStarting;
+  const disabled = pending || !currentAgentState;
   for (const id of ['providerSelect', 'modelSelect', 'effortSelect', 'fastToggle']) {
     document.getElementById(id).disabled = disabled;
   }
-  document.getElementById('reviewCode').disabled = busy || agentPending || chatPreparing;
-  document.querySelector('#composer .send').disabled = busy || agentPending || chatPreparing;
-  document.getElementById('addChatImage').disabled = busy || agentPending || chatPreparing;
-  document.getElementById('chatInput').readOnly = chatPreparing;
+  document.getElementById('reviewCode').disabled = pending;
+  document.querySelector('#composer .send').disabled = pending;
+  document.getElementById('addChatImage').disabled = pending;
+  document.getElementById('chatInput').readOnly = chatPreparing || challengeStarting;
+  syncChallengeControls();
 }
 
 function canAttachChatImages() {
@@ -966,11 +974,100 @@ async function loadProblems(refresh) {
   }
   problems = result.data;
   await loadBoard();
+  await loadChallenge();
   setStatus('');
-  if (!currentSlug && problems[0]) {
+  if (randomChallenge?.status === 'active' && currentSlug !== randomChallenge.slug) {
+    await selectProblem(randomChallenge.slug);
+  } else if (!currentSlug && problems[0]) {
     const last = localStorage.getItem('lc-last-slug');
     const initial = problems.find((problem) => problem.slug === last) || problems[0];
     await selectProblem(initial.slug);
+  }
+}
+
+function syncChallengeControls() {
+  const active = randomChallenge?.status === 'active';
+  document.getElementById('startChallenge').disabled = !challengeLoaded || !problems.length || active || challengeStarting || busy || agentPending || chatPreparing;
+  for (const button of document.querySelectorAll('#problemList .problem-item')) {
+    button.disabled = !challengeLoaded || challengeStarting || (active && button.dataset.slug !== randomChallenge.slug);
+  }
+}
+
+function renderChallenge() {
+  const bar = document.getElementById('challengeBar');
+  bar.hidden = !randomChallenge;
+  if (randomChallenge) {
+    const active = randomChallenge.status === 'active';
+    const passed = randomChallenge.status === 'pass';
+    const remaining = Math.max(0, Math.ceil((randomChallenge.deadline_at - Date.now()) / 1000));
+    bar.classList.toggle('is-pass', passed);
+    bar.classList.toggle('is-fail', randomChallenge.status === 'fail');
+    bar.classList.toggle('is-urgent', active && remaining <= 60);
+    const title = randomChallenge.translated_title || randomChallenge.title;
+    document.getElementById('challengeTitle').textContent = `${active ? '随机挑战' : passed ? '挑战成功' : '挑战失败'} · ${title}`;
+    const countdown = document.getElementById('challengeCountdown');
+    countdown.hidden = !active;
+    countdown.textContent = `${String(Math.floor(remaining / 60)).padStart(2, '0')}:${String(remaining % 60).padStart(2, '0')}`;
+    const description = active ? '题目已锁定. 必须在倒计时结束前收到通过结果, 评审等待计入时间.'
+      : passed ? '已在 15 分钟内通过. 可以继续抽题或自由选择题目.'
+        : '15 分钟内未收到通过结果. 本次挑战已记为失败, 可以重新抽题.';
+    const message = document.getElementById('challengeDescription');
+    if (message.textContent !== description) message.textContent = description;
+  }
+  syncChallengeControls();
+}
+
+function applyChallenge(state) {
+  // 已结束的挑战不会被较早发出的状态请求重新变成进行中.
+  if (randomChallenge && state && (state.id < randomChallenge.id
+    || (state.id === randomChallenge.id && randomChallenge.status !== 'active' && state.status === 'active'))) return;
+  randomChallenge = state;
+  challengeLoaded = true;
+  clearInterval(challengeTimer);
+  renderChallenge();
+  if (randomChallenge?.status === 'active') {
+    challengeTimer = setInterval(() => {
+      renderChallenge();
+      loadChallenge().catch((error) => setStatus(error.message));
+    }, 1000);
+  }
+}
+
+async function loadChallenge() {
+  if (challengeSyncing) return;
+  challengeSyncing = true;
+  try {
+    const result = await window.lc.challengeState();
+    if (!result.ok) throw new Error(result.error || '读取随机挑战失败');
+    applyChallenge(result.data);
+  } finally {
+    challengeSyncing = false;
+  }
+}
+
+async function startRandomChallenge() {
+  if (!challengeLoaded || !problems.length || randomChallenge?.status === 'active' || challengeStarting || busy || agentPending || chatPreparing) return;
+  challengeStarting = true;
+  problemSelectionRevision += 1;
+  setBusy(true);
+  try {
+    clearTimeout(saveTimer);
+    await saveDraft();
+    const result = await window.lc.startChallenge();
+    if (!result.ok) throw new Error(result.error || '随机抽题失败');
+    applyChallenge(result.data);
+    recordFilter = '';
+    problemQuery = '';
+    document.getElementById('problemSearch').value = '';
+    renderBoard();
+    setProblemOpen(true);
+    await selectProblem(randomChallenge.slug, { saveCurrentDraft: false });
+    editor.focus();
+  } catch (error) {
+    setStatus(error.message);
+  } finally {
+    challengeStarting = false;
+    setBusy(busy);
   }
 }
 
@@ -1013,6 +1110,7 @@ function renderProblemList() {
     empty.textContent = recordFilter || problemQuery.trim() ? '没有符合的题目' : '没有题目';
     root.appendChild(empty);
   }
+  syncChallengeControls();
 }
 
 async function loadBoard() {
@@ -1085,7 +1183,7 @@ function isTypingTarget(target) {
 }
 
 function stepProblem(delta) {
-  if (!currentSlug || busy) return false;
+  if (!currentSlug || busy || challengeStarting || randomChallenge?.status === 'active') return false;
   const slugs = visibleProblemSlugs();
   if (!slugs.length) return false;
   const index = slugs.indexOf(currentSlug);
@@ -1096,16 +1194,23 @@ function stepProblem(delta) {
   return true;
 }
 
-async function selectProblem(slug) {
-  problemSelectionRevision += 1;
+async function selectProblem(slug, { saveCurrentDraft = true } = {}) {
+  if ((challengeStarting && randomChallenge?.status !== 'active')
+    || (randomChallenge?.status === 'active' && randomChallenge.slug !== slug)) {
+    setStatus('随机挑战进行中, 当前题目已锁定');
+    return;
+  }
+  const selectionRevision = ++problemSelectionRevision;
   if (currentSlug !== slug && chatImages) chatImages.clear();
-  if (currentSlug && editor) await saveDraft();
+  if (saveCurrentDraft && currentSlug && editor) await saveDraft();
+  if (selectionRevision !== problemSelectionRevision) return;
   clearTimeout(saveTimer);
   currentSlug = slug;
   localStorage.setItem('lc-last-slug', slug);
   if (!setActiveProblem(slug)) renderProblemList();
   setStatus('正在加载题目');
   const result = await window.lc.problemDetail(slug);
+  if (selectionRevision !== problemSelectionRevision || currentSlug !== slug) return;
   if (!result.ok) {
     setStatus(result.error);
     return;
@@ -1311,7 +1416,7 @@ function launchFireworks(parent) {
   requestAnimationFrame(frame);
 }
 
-function playVerdictToast(verdict, { detail = false, onDetail } = {}) {
+function playVerdictToast(verdict, { detail = false, onDetail, titleText } = {}) {
   document.querySelector('.verdict-layer')?.remove();
   const pass = verdict === 'pass';
   const uncertain = verdict === 'uncertain';
@@ -1322,7 +1427,7 @@ function playVerdictToast(verdict, { detail = false, onDetail } = {}) {
   toast.className = `verdict-toast ${pass ? 'pass' : uncertain ? 'uncertain' : 'fail'}`;
   const title = document.createElement('div');
   title.className = 'verdict-title';
-  title.textContent = pass ? '可以通过' : uncertain ? '不确定' : '不能通过';
+  title.textContent = titleText || (pass ? '可以通过' : uncertain ? '不确定' : '不能通过');
   const rule = document.createElement('span');
   rule.className = 'verdict-rule';
   const hit = document.createElement('div');
@@ -1369,8 +1474,9 @@ function playVerdictToast(verdict, { detail = false, onDetail } = {}) {
 }
 
 async function submitReview() {
-  if (!currentSlug || busy || agentPending || chatPreparing) return;
+  if (!currentSlug || busy || agentPending || chatPreparing || challengeStarting) return;
   const slug = currentSlug;
+  const challengeId = randomChallenge?.status === 'active' ? randomChallenge.id : null;
   const code = editor.getValue();
   const button = document.getElementById('reviewCode');
   button.classList.add('is-loading');
@@ -1381,12 +1487,16 @@ async function submitReview() {
       await window.lc.saveDraft(slug, code);
       const result = await window.lc.submitReview({ slug, code });
       if (!result.ok) throw new Error(result.error);
-      await loadBoard();
       const review = result.data;
+      if (Object.hasOwn(review, 'challenge')) applyChallenge(review.challenge);
+      await loadBoard();
       const hasReason = Boolean((review.summary || '').trim()) || (review.issues || []).length > 0;
       if (currentSlug !== slug) return;
-      setStatus(verdictLabel[review.verdict] || '已记录');
-      playVerdictToast(review.verdict, {
+      const challengeResult = challengeId && review.challenge?.id === challengeId ? review.challenge.status : '';
+      const late = challengeResult === 'fail';
+      setStatus(late ? '挑战已超时失败. 本次评审仍保存在提交记录中.' : verdictLabel[review.verdict] || '已记录');
+      playVerdictToast(late ? 'fail' : review.verdict, {
+        titleText: late ? '挑战失败' : challengeResult === 'pass' ? '挑战成功' : '',
         detail: review.verdict !== 'pass' && hasReason,
         onDetail: () => openHistory({ slug, submissionId: review.submissionId }),
       });

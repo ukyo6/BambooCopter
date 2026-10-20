@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 const { openDatabase } = require('./db');
+const { createChallengeStore } = require('./challenges');
 const { htmlToText, defaultJavaTemplate } = require('./leetcode');
 const {
   detectLinks,
@@ -122,6 +123,7 @@ function adoptPracticeData() {
 adoptPracticeData();
 
 let api;
+let challenges;
 let modelCache = { key: '', at: 0, models: [], error: '' };
 
 function handle(channel, fn) {
@@ -144,7 +146,7 @@ function createWindow() {
     minHeight: 680,
     title: 'Bamboo Copter',
     icon,
-    backgroundColor: '#171717',
+    backgroundColor: '#1e1f22',
     autoHideMenuBar: true,
     titleBarStyle: darwin ? 'hiddenInset' : 'default',
     trafficLightPosition: darwin ? { x: 12, y: 18 } : undefined,
@@ -273,6 +275,7 @@ function listProblemRows() {
 }
 
 async function problemDetail(slug) {
+  challenges.assertSelectable(slug);
   const rows = api.all('SELECT * FROM problems WHERE slug = ?', [slug]);
   if (rows.length === 0) throw new Error('题目不存在');
   const draft = api.all('SELECT code FROM drafts WHERE slug = ?', [slug])[0];
@@ -322,6 +325,9 @@ app.whenReady().then(async () => {
   const database = await openDatabase(path.join(app.getPath('userData'), 'practice.db'));
   api = database;
   installCatalog();
+  challenges = createChallengeStore(api);
+  handle('challenge:state', () => challenges.get());
+  handle('challenge:start', () => challenges.start());
   handle('agent:state', () => agentState());
   handle('agent:select', async ({ provider, model, reasoning, fast }) => {
     const selected = provider || api.getSetting('provider') || 'codex';
@@ -400,6 +406,8 @@ app.whenReady().then(async () => {
     return { reply, model, provider: link.id };
   });
   handle('review:submit', async ({ slug, code }) => {
+    const challenge = challenges.assertSelectable(slug);
+    const challengeId = challenge?.status === 'active' ? challenge.id : null;
     const problem = await problemDetail(slug);
     const { link, model, reasoning, fast } = await requireAgent();
     const prompt = contextPrompt(
@@ -416,12 +424,13 @@ app.whenReady().then(async () => {
     );
     const text = await complete(link, { model, reasoning, fast, prompt, schema: reviewSchema, timeoutMs: 180000 });
     const review = normalizeReview(parseJsonText(text), code);
+    const completedAt = Date.now();
     api.run(
       'INSERT INTO submissions(slug, code, created_at, verdict, summary, issues_json, provider, model) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
       [slug, code, Date.now(), review.verdict, review.summary, JSON.stringify(review.issues || []), link.id, model],
     );
     const submissionId = api.all('SELECT id FROM submissions ORDER BY id DESC LIMIT 1')[0].id;
-    return { ...review, submissionId };
+    return { ...review, submissionId, challenge: challenges.finishReview(challengeId, review.verdict, submissionId, completedAt) };
   });
   if (process.platform === 'darwin' && app.dock) {
     app.dock.setIcon(path.join(__dirname, '..', 'assets', 'icon.png'));

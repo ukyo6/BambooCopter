@@ -63,6 +63,10 @@
         <button id="toggleChat" class="nav-button" type="button" data-tip="显示/隐藏对话" data-keys="⌘⌥B" aria-label="显示/隐藏对话">
           <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M10 2.5v11" stroke="currentColor" stroke-width="1.3"/></svg>
         </button>
+        <button id="startChallenge" class="challenge-start" type="button" data-tip="随机抽题: 15 分钟内通过, 期间不能换题" aria-label="随机抽题" disabled>
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5 5h.01M11 5h.01M8 8h.01M5 11h.01M11 11h.01" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span>随机抽题</span>
+        </button>
         <div class="bar-actions">
           <button id="reviewCode" class="submit-button" type="button" data-tip="提交" data-keys="⌘Enter" aria-label="提交">提交</button>
           <button id="clearCode" class="icon-button bar-icon" type="button" data-tip="清除代码" aria-label="清除代码">
@@ -76,6 +80,10 @@
           </button>
         </div>
       </div>
+      <section id="challengeBar" class="challenge-bar" aria-label="随机挑战" hidden>
+        <div class="challenge-heading"><strong id="challengeTitle"></strong><time id="challengeCountdown" role="timer" aria-label="挑战剩余时间"></time></div>
+        <p id="challengeDescription" role="status"></p>
+      </section>
       <div id="editor"></div>
     </div>
   </main>

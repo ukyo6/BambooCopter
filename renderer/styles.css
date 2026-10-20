@@ -1,8 +1,8 @@
 :root {
   color-scheme: dark;
-  --bg: #171717;
-  --raised: #212121;
-  --composer: #2f2f2f;
+  --bg: #1e1f22;
+  --raised: #25282c;
+  --composer: #2d2e32;
   --text: #ececec;
   --muted: #8d8d8d;
   --line: #3a3a3a;
@@ -652,7 +652,7 @@ body:not(.motion-ready) .explain-pip {
   display: grid;
   place-items: center;
   font-family: "SF Mono", Monaco, Menlo, Courier, monospace;
-  background: #171717;
+  background: var(--bg);
 }
 .cell.active { background: #f3f3f3; border-color: #f3f3f3; color: #171717; }
 .board .cell { border-radius: 5px; }
@@ -667,6 +667,31 @@ body:not(.motion-ready) .explain-pip {
 }
 .editor-wrap { flex: 1 1 auto; min-height: 160px; display: flex; flex-direction: column; }
 .editor-bar { color: var(--muted); font-size: 12px; }
+.challenge-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.challenge-start:hover:not(:disabled) { background: var(--hover); }
+.challenge-start:disabled { opacity: 0.45; cursor: default; }
+.challenge-bar { flex: none; margin: 0 14px 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--raised); }
+.challenge-bar[hidden] { display: none; }
+.challenge-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.challenge-heading strong { min-width: 0; overflow-wrap: anywhere; font-size: 12px; }
+.challenge-heading time { flex: none; font: 14px "SF Mono", Monaco, Menlo, monospace; font-variant-numeric: tabular-nums; color: #e2c56a; }
+.challenge-bar p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+.challenge-bar.is-urgent time, .challenge-bar.is-fail strong { color: #f0a8a0; }
+.challenge-bar.is-pass strong { color: #7dcea0; }
+.problem-item:disabled:not(.active) { opacity: 0.4; cursor: not-allowed; }
+.problem-item:disabled:not(.active):hover { background: transparent; }
 .bar-actions { display: flex; align-items: center; gap: 6px; }
 .bar-actions .submit-button { margin-right: 4px; }
 .bar-icon {
@@ -1146,7 +1171,7 @@ dialog[open].is-closing::backdrop { background: rgba(0, 0, 0, 0); }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #171717;
+  background: var(--bg);
   color: #f3f3f3;
   pointer-events: auto;
 }

@@ -84,6 +84,15 @@ async function openDatabase(file) {
       key TEXT PRIMARY KEY,
       value TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS random_challenges (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      slug TEXT NOT NULL,
+      started_at INTEGER NOT NULL,
+      deadline_at INTEGER NOT NULL,
+      status TEXT NOT NULL,
+      finished_at INTEGER,
+      submission_id INTEGER
+    );
   `);
   if (!all('PRAGMA table_info(messages)').some((column) => column.name === 'kind')) {
     db.run("ALTER TABLE messages ADD COLUMN kind TEXT NOT NULL DEFAULT 'chat'");

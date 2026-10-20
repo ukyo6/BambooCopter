@@ -9,6 +9,8 @@ contextBridge.exposeInMainWorld('lc', {
   selectAgent: (payload) => call('agent:select', payload),
   listProblems: () => call('problems:list'),
   refreshProblems: () => call('problems:refresh'),
+  challengeState: () => call('challenge:state'),
+  startChallenge: () => call('challenge:start'),
   problemDetail: (slug) => call('problems:detail', { slug }),
   saveDraft: (slug, code) => call('draft:save', { slug, code }),
   listHistory: (slug) => call('history:list', { slug }),
