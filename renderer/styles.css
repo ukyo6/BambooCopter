@@ -687,6 +687,10 @@ body:not(.motion-ready) .explain-pip {
 .challenge-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .challenge-heading strong { min-width: 0; overflow-wrap: anywhere; font-size: 12px; }
 .challenge-heading time { flex: none; font: 14px "SF Mono", Monaco, Menlo, monospace; font-variant-numeric: tabular-nums; color: #e2c56a; }
+.challenge-close { display: grid; place-items: center; flex: none; align-self: flex-start; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer; }
+.challenge-close[hidden] { display: none; }
+.challenge-close:hover { background: var(--hover); color: var(--text); }
+.challenge-close:focus-visible { outline: 1px solid var(--text); outline-offset: 2px; }
 .challenge-bar p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
 .challenge-bar.is-urgent time, .challenge-bar.is-fail strong { color: #f0a8a0; }
 .challenge-bar.is-pass strong { color: #7dcea0; }

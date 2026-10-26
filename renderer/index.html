@@ -81,7 +81,13 @@
         </div>
       </div>
       <section id="challengeBar" class="challenge-bar" aria-label="随机挑战" hidden>
-        <div class="challenge-heading"><strong id="challengeTitle"></strong><time id="challengeCountdown" role="timer" aria-label="挑战剩余时间"></time></div>
+        <div class="challenge-heading">
+          <strong id="challengeTitle"></strong>
+          <time id="challengeCountdown" role="timer" aria-label="挑战剩余时间"></time>
+          <button id="closeChallenge" class="challenge-close" type="button" data-tip="关闭挑战提示" aria-label="关闭挑战提示" hidden>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </button>
+        </div>
         <p id="challengeDescription" role="status"></p>
       </section>
       <div id="editor"></div>

@@ -638,6 +638,7 @@ function hideBootSkeleton() {
 function bindControls() {
   document.getElementById('toggleSidebar').onclick = () => setSidebarOpen(document.body.classList.contains('sidebar-closed'));
   document.getElementById('startChallenge').onclick = startRandomChallenge;
+  document.getElementById('closeChallenge').onclick = dismissChallenge;
   const mac = isMacPlatform();
   setControlTip(document.getElementById('toggleSidebar'), '显示/隐藏侧边栏', mac ? '⌘B' : 'Ctrl+B');
   setControlTip(document.getElementById('formatCode'), '格式化', mac ? '⌘⇧F' : 'Ctrl+Shift+F');
@@ -995,9 +996,11 @@ function syncChallengeControls() {
 
 function renderChallenge() {
   const bar = document.getElementById('challengeBar');
-  bar.hidden = !randomChallenge;
+  const active = randomChallenge?.status === 'active';
+  const dismissed = randomChallenge && localStorage.getItem('lc-dismissed-challenge') === String(randomChallenge.id);
+  bar.hidden = !randomChallenge || (!active && dismissed);
   if (randomChallenge) {
-    const active = randomChallenge.status === 'active';
+    document.getElementById('closeChallenge').hidden = active;
     const passed = randomChallenge.status === 'pass';
     const remaining = Math.max(0, Math.ceil((randomChallenge.deadline_at - Date.now()) / 1000));
     bar.classList.toggle('is-pass', passed);
@@ -1015,6 +1018,13 @@ function renderChallenge() {
     if (message.textContent !== description) message.textContent = description;
   }
   syncChallengeControls();
+}
+
+function dismissChallenge() {
+  if (!randomChallenge || randomChallenge.status === 'active') return;
+  localStorage.setItem('lc-dismissed-challenge', String(randomChallenge.id));
+  renderChallenge();
+  if (editor) editor.layout();
 }
 
 function applyChallenge(state) {

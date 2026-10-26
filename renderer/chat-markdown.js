@@ -3,6 +3,16 @@
   const parser = new root.marked.Marked({
     gfm: true,
     breaks: true,
+    extensions: [{
+      name: 'quotedStrong',
+      level: 'inline',
+      start: source => source.indexOf('**'),
+      tokenizer(source) {
+        // 兼容紧贴中文正文的引号加粗, 例如 表示**“最远下标”**.
+        const match = /^\*\*((?:“[^\n]+?”|「[^\n]+?」|『[^\n]+?』|"(?:\\.|[^"\\\n])+"))\*\*/.exec(source);
+        if (match) return { type: 'strong', raw: match[0], text: match[1], tokens: this.lexer.inlineTokens(match[1]) };
+      },
+    }],
     renderer: {
       html: token => escape(token.text),
       image: token => `<a href="${escape(token.href)}">${escape(token.text || '图片')}</a>`,
